@@ -1,0 +1,45 @@
+@import "../fonts/geist-mono.css";
+@import "../fonts/ibm-plex-sans.css";
+@import "tailwindcss";
+@import "./theme.css";
+@import "./toast.css";
+
+@theme {
+  /* UI Colors */
+  --color-primary: var(--color-accent);
+  --color-success: rgb(33 202 137);
+  --color-warning: rgb(240 170 60);
+  --color-error: rgb(220 70 70);
+
+  /* Fonts */
+  --font-ui: "Geist Mono", Inter, "Segoe UI", sans-serif;
+  --font-reader: "Geist Mono", Inter, "Segoe UI", sans-serif;
+  --font-sans: "IBM Plex Sans", Inter, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", monospace;
+  --font-serif: "Times New Roman", serif;
+}
+
+@layer base {
+  button:not([disabled]),
+  [role="button"]:not([disabled]) {
+    cursor: pointer;
+  }
+}
+
+* {
+  scrollbar-color: var(--color-muted) var(--color-surface);
+}
+
+html {
+  font-size: 14px;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: var(--font-ui);
+}
+
+#reader {
+  font-family: var(--font-reader);
+}
