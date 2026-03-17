@@ -7,6 +7,7 @@ import useUIStore from "@renderer/stores/use-ui-store";
 import assetURL from "@renderer/utils/asset-url";
 import debounce from "@renderer/utils/debounce";
 import { FullBook } from "src/main/database/schema";
+import Logo from "../global/Logo.vue";
 
 interface Props {
   book?: FullBook | null;
@@ -49,11 +50,13 @@ const onMouseLeave = debounce(() => {
         >
           <!-- Book Cover & Info -->
           <div class="hidden md:flex items-center gap-2">
-            <div
-              v-if="book.coverImagePath"
-              class="border-2 border-border p-0.5 h-16 w-16 shrink-0 bg-surface"
-            >
-              <img :src="assetURL(book.coverImagePath)" class="w-full h-full object-cover" />
+            <div class="border-2 border-border p-0.5 h-16 w-16 shrink-0 bg-surface flex items-center justify-center">
+              <img
+                v-if="book.coverImagePath && book.coverImagePath.length > 2"
+                :src="assetURL(book.coverImagePath)"
+                class="w-full h-full object-cover"
+              />
+              <Logo v-else :width="40" color="var(--color-text)" />
             </div>
 
             <div class="min-w-0">
@@ -71,7 +74,7 @@ const onMouseLeave = debounce(() => {
               <p class="text-xs">{{ location.current?.page }}/{{ location.current?.total }}</p>
             </div>
 
-            <p class="text-xs">slider and progress here (pages or percentages)</p>
+            <!-- <p class="text-xs">slider and progress here (pages or percentages)</p> -->
           </div>
 
           <div>
@@ -83,9 +86,9 @@ const onMouseLeave = debounce(() => {
                   variant="ghost"
                   size="sm"
                   icon="lucide:info"
-                  class="text-surface hover:bg-surface/20  hover:text-surface"
+                  class="text-surface hover:bg-surface/20 hover:text-surface"
                 />
-                
+
                 <template #body>
                   <BookInfo :book />
                 </template>
