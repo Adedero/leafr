@@ -3,6 +3,7 @@ import type { Book, FullBook } from "../main/database/schema";
 import type { SyncBooksReturn } from "../main/handlers/books/sync-books";
 import type { BeforeBookCloseInput } from "../main/handlers/books/before-book-close";
 import { GetAllBooksReturn } from "src/main/handlers/books/get-all-books";
+import { SaveBookLocationsInput } from "src/main/handlers/books/save-book-locations";
 
 declare global {
   interface Window {
@@ -21,6 +22,7 @@ declare global {
         getFullBook: (bookId: string) => Promise<FullBook>;
         beforeBookOpen: (bookId: string) => Promise<boolean>;
         beforeBookClose: (input: BeforeBookCloseInput) => Promise<boolean>;
+        saveBookLocation: (input: SaveBookLocationsInput) => Promise<boolean>;
       };
     };
   }

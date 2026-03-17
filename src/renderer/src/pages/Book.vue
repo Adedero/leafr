@@ -3,7 +3,7 @@ import useBook from "@renderer/hooks/use-book";
 import { onKeyStroke, useAsyncState } from "@vueuse/core";
 import useSWRV from "swrv";
 import { onBeforeRouteLeave, useRoute } from "vue-router";
-import epub, { type Rendition, type Book } from "epubjs";
+import epub, { type Rendition, type Book, NavItem } from "epubjs";
 import { ref, useTemplateRef, watch } from "vue";
 import assetURL from "@renderer/utils/asset-url";
 import { onUnmounted } from "vue";
@@ -13,13 +13,17 @@ import type { Location } from "epubjs/types/rendition";
 import Spinner from "@renderer/components/ui/Spinner.vue";
 import ErrorAlert from "@renderer/components/global/ErrorAlert.vue";
 import BookFooter from "@renderer/components/book/BookFooter.vue";
+import BookSidebar from "@renderer/components/book/BookSidebar.vue";
+import useClickZone from "@renderer/hooks/use-click-zone";
+import Char from "@renderer/utils/char";
 
 const route = useRoute();
-const { getBook, onBeforeClose } = useBook();
+const { getBook, onBeforeClose, saveBookLocations } = useBook();
 const { theme } = useTheme();
 
 const bookId = route.params.bookId.toString();
 
+// reregister event listeners when rendition resizes
 const {
   data,
   isLoading: isFetchingBook,
@@ -33,25 +37,43 @@ const {
   }
 );
 
-watch(data, initBook);
+watch(data, initBook, { deep: false });
+
+export type TBookLocation = Location & {
+  current?: {
+    navItem?: NavItem;
+    label?: string;
+    page: number;
+    total: number;
+  };
+};
 
 const book = ref<Book | null>(null);
 const rendition = ref<Rendition | null>(null);
-const location = ref<Location | null>(null);
+const location = ref<TBookLocation | null>(null);
 const pages = ref<number>(0);
-const iFrame = ref<HTMLIFrameElement | null>(null);
+const iFrames = ref<NodeListOf<HTMLIFrameElement> | null>(null);
 const pageRef = useTemplateRef("pageRef");
+const footerRef = useTemplateRef("footerRef");
+const sidebarRef = useTemplateRef("sidebarRef");
+const footerOpen = ref(false);
 
+// Handle left and right click on page; does not affect rendition
+useClickZone(pageRef, {
+  onZone: (zone) => navigate(zone),
+  ignore: [() => footerRef.value?.$el, () => sidebarRef.value?.$el]
+});
+// Handle wheel scroll on page; affects rendition
 const { onWheel } = useWheel(pageRef, {
   onGesture: ({ dir }) => navigate(dir),
   threshold: 10,
   passive: true
 });
+// Handle arrow key navigation; affects rendition
 onKeyStroke("ArrowRight", () => navigate(1));
 onKeyStroke("ArrowLeft", () => navigate(-1));
 
 const isBookLoaded = ref(false);
-
 async function initBook() {
   isBookLoaded.value = false;
 
@@ -60,18 +82,22 @@ async function initBook() {
       return;
     }
     book.value = epub(assetURL(data.value.fileURL));
-    await book.value.ready;
-    pages.value = (await book.value.locations.generate(1024)).length;
-    // book.value.ready.then(() => {
-    //   book.value?.locations.generate(1024).then((locs) => {
-    //     pages.value = locs.length;
-    //   });
-    // });
+    let locs: string[] = [];
+    if (data.value.locations?.locations) {
+      locs = book.value.locations.load(data.value.locations.locations);
+      pages.value = locs.length;
+    } else {
+      await book.value.ready;
+      locs = await book.value.locations.generate(1024);
+      pages.value = locs.length;
+      saveBookLocations({ bookId, locations: book.value.locations.save() });
+    }
 
     rendition.value = book.value.renderTo("viewer", {
       height: "100%",
       width: "100%",
-      spread: "always",
+      manager: "continuous",
+      flow: "paginated",
       allowScriptedContent: true
     });
     //rendition.value.annotations.highlight
@@ -82,15 +108,42 @@ async function initBook() {
         navigate(-1);
       }
     });
+
     rendition.value.on("rendered", () => {
-      iFrame.value = document.querySelector("#viewer iframe");
-      if (iFrame.value?.contentWindow) {
-        iFrame.value.contentWindow.addEventListener("wheel", onWheel, { passive: false });
-      }
+      iFrames.value = document.querySelectorAll("#viewer iframe");
+      iFrames.value.forEach((iFrame) => {
+        iFrame.contentWindow?.addEventListener("wheel", onWheel, { passive: false });
+      });
     });
 
     rendition.value.on("relocated", (loc: Location) => {
-      location.value = loc;
+      if (!book.value) return;
+      const targetHref = loc.start.href;
+      const current = findTocItem(book.value.navigation.toc, targetHref);
+
+      let page: number = 0;
+      let total: number = 0;
+
+      const { page: startPage, total: startTotal } = loc.start.displayed;
+      const { page: endPage } = loc.end.displayed;
+
+      if (startPage === endPage) {
+        page = startPage;
+        total = startTotal;
+      } else {
+        page = Math.ceil((endPage == 1 ? startPage : endPage) / 2);
+        total = startTotal / 2;
+      }
+
+      location.value = {
+        ...loc,
+        current: {
+          navItem: current?.item,
+          label: current?.label.trim(),
+          page,
+          total
+        }
+      };
     });
 
     await rendition.value.display(data.value.readingProgress?.cfi);
@@ -98,6 +151,39 @@ async function initBook() {
   } finally {
     isBookLoaded.value = true;
   }
+}
+
+function findTocItem(
+  toc: NavItem[],
+  href: string,
+  parentLabel?: string // Accumulate the label path
+): { item: NavItem; label: string } | undefined {
+  for (const item of toc) {
+    // Better matching logic: Use canonical or at least strip query params
+    const itemHref = item.href.split("#")[0];
+    const targetHref = href.split("#")[0];
+    const trimmed = Char.collapseWhitespace(item.label);
+
+    const currentLabel = parentLabel ? `${parentLabel} >> ${trimmed}` : trimmed;
+
+    if (itemHref.includes(targetHref) || targetHref.includes(itemHref)) {
+      return { item, label: currentLabel };
+    }
+
+    if (item.subitems?.length) {
+      const found = findTocItem(item.subitems, href, currentLabel);
+      if (found) return found;
+    }
+  }
+  return undefined;
+}
+
+function onSelectTocItem(item: NavItem) {
+  if (!rendition.value || !book.value) return;
+  const href = item.href;
+  // @ts-ignore
+  const spineItem = book.value.spine.items.find((s: any) => s.href.endsWith(href.split("#")[0]));
+  rendition.value.display(spineItem?.href ?? href);
 }
 
 async function applyThemes() {
@@ -126,21 +212,23 @@ async function applyThemes() {
 
 watch(theme, applyThemes);
 
-async function navigate(dir: 1 | -1) {
+async function navigate(dir: 1 | -1 | string) {
   if (!book.value || !rendition.value) {
     return;
   }
-  if (dir === 1) {
+  if (dir === 1 || dir === "right") {
     rendition.value.next();
-  } else {
+  } else if (dir === -1 || dir === "left") {
     rendition.value.prev();
   }
 }
 
 onUnmounted(() => {
   book.value?.destroy();
-  if (iFrame.value?.contentWindow) {
-    iFrame.value.contentWindow.removeEventListener("wheel", onWheel);
+  if (iFrames.value) {
+    iFrames.value.forEach((iFrame) => {
+      iFrame.contentWindow?.removeEventListener("wheel", onWheel);
+    });
   }
 });
 
@@ -162,7 +250,7 @@ onBeforeRouteLeave(async (_to, _from, next) => {
 </script>
 
 <template>
-  <div ref="pageRef" class="h-full space-y-16 px-4 py-6">
+  <div ref="pageRef" class="h-full space-y-16 px-4 py-6 select-none">
     <div
       v-if="isFetchingBook || !isBookLoaded || isClosingBook"
       class="absolute left-0 top-0 h-full w-full z-10 bg-background flex items-center justify-center"
@@ -180,10 +268,15 @@ onBeforeRouteLeave(async (_to, _from, next) => {
     <div>
       <div
         id="viewer"
-        class="md:border-2 md:border-border h-[80dvh] mx-auto w-full lg:max-w-[80%] xl:max-w-[85%] text-red!"
+        class="md:border-2 md:border-border h-[80dvh] mx-auto w-full lg:max-w-[80%] xl:max-w-[85%]"
       />
 
-      <BookFooter />
+      <BookSidebar
+        ref="sidebarRef"
+        :toc="book?.navigation?.toc"
+        @select:toc-item="onSelectTocItem"
+      />
+      <BookFooter ref="footerRef" v-model:open="footerOpen" :book="data" :location />
     </div>
   </div>
 </template>

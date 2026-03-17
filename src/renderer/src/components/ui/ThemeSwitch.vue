@@ -3,22 +3,34 @@ import Modal from "./Modal.vue";
 import Button from "./Button.vue";
 import useTheme from "@renderer/hooks/use-theme";
 import Char from "@renderer/utils/char";
+import InputText from "./InputText.vue";
+import { computed, ref } from "vue";
 
 const theme = useTheme();
+const search = ref("");
+
+const filteredSections = computed(() => {
+  const q = search.value.toLowerCase();
+  return (["light", "dark"] as const).map((section) => ({
+    section,
+    themes: theme[`${section}Themes`].filter((t) => t.displayName.toLowerCase().includes(q))
+  }));
+});
 </script>
 
 <template>
-  <Modal title="Theme">
+  <Modal title="Theme" @close="search = ''">
     <Button color="neutral" variant="outline" icon="lucide:palette" />
-
     <template #body>
       <div class="space-y-10">
-        <div v-for="section in ['light', 'dark']" :key="section" class="space-y-4">
+        <div v-for="{ section, themes } in filteredSections" :key="section" class="space-y-4">
           <h2>{{ Char.toCase(section, "capitalize") }}</h2>
-
-          <div class="grid grid-cols-[repeat(auto-fill,minmax(5rem,1fr))] gap-2 items-start">
+          <p v-if="themes.length === 0" class="text-sm text-muted-foreground">
+            No {{ section }} themes found.
+          </p>
+          <div v-else class="grid grid-cols-[repeat(auto-fill,minmax(5rem,1fr))] gap-2 items-start">
             <button
-              v-for="t in theme[`${section}Themes`]"
+              v-for="t in themes"
               :key="t.name"
               :class="[
                 'p-2 relative flex flex-col items-center',
@@ -41,10 +53,10 @@ const theme = useTheme();
         </div>
       </div>
     </template>
-
     <template #footer="{ close }">
-      <div class="flex justify-end">
-        <Button color="neutral" variant="outline" @click="close"> Done </Button>
+      <div class="flex justify-between items-center gap-2">
+        <InputText v-model="search" placeholder="Search themes..." icon="lucide:search" size="sm" />
+        <Button color="neutral" variant="outline" @click="close"> Close </Button>
       </div>
     </template>
   </Modal>

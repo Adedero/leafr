@@ -2,6 +2,7 @@ import { contextBridge, ipcRenderer } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 import { PROTOCOL_NAME } from "../main/utils/constants";
 import { BeforeBookCloseInput } from "../main/handlers/books/before-book-close";
+import { SaveBookLocationsInput } from "../main/handlers/books/save-book-locations";
 
 // Custom APIs for renderer
 const api = {
@@ -17,7 +18,8 @@ const api = {
     sync: () => ipcRenderer.invoke("books:sync"),
     getFullBook: (bookId: string) => ipcRenderer.invoke("books:get-full-book", bookId),
     beforeBookOpen: (bookId: string) => ipcRenderer.invoke("books:before-book-open", bookId),
-    beforeBookClose: (input: BeforeBookCloseInput) => ipcRenderer.invoke("books:before-book-close", input)
+    beforeBookClose: (input: BeforeBookCloseInput) => ipcRenderer.invoke("books:before-book-close", input),
+    saveBookLocation: (input: SaveBookLocationsInput) => ipcRenderer.invoke("books:save-book-locations", input),
   }
 };
 

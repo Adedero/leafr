@@ -1,6 +1,7 @@
 import { BeforeBookCloseInput } from "src/main/handlers/books/before-book-close";
 import { useRouter } from "vue-router";
 import useToast from "./use-toast";
+import { SaveBookLocationsInput } from "src/main/handlers/books/save-book-locations";
 
 export default function useBook() {
   const router = useRouter();
@@ -25,9 +26,17 @@ export default function useBook() {
     return book;
   };
 
+  const saveBookLocations = async (input: SaveBookLocationsInput) => {
+    const res = await window.api.books.saveBookLocation(input);
+    return res;
+  };
+  
+  
+
   return {
     open,
     onBeforeClose,
-    getBook
+    getBook,
+    saveBookLocations,
   };
 }

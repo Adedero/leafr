@@ -9,18 +9,22 @@ const { toasts } = useToast();
 const toastHeaderClass = (color: UIColor) => {
   switch (color) {
     case "neutral":
-      return "bg-transparent";
+      return "bg-transparent text-text";
     default:
       return `bg-${color}  text-surface`;
   }
 };
 
-const meterBgColor = (color: UIColor) => {
+const meterBgStyle = (color: UIColor) => {
   switch (color) {
     case "neutral":
-      return "bg-text";
+      return {
+        backgroundColor: "var(--color-text)"
+      };
     default:
-      return `bg-${color}`;
+      return {
+        backgroundColor: `var(--color-${color})`
+      };
   }
 };
 </script>
@@ -49,11 +53,11 @@ const meterBgColor = (color: UIColor) => {
     <ToastDescription v-if="toast.description" class="text-sm p-2">
       {{ toast.description }}
     </ToastDescription>
-
+    
     <div v-if="duration" class="border-2 border-border">
       <div
-        :class="['h-1', meterBgColor(toast.color)]"
-        :style="{ width: `${(remaining / duration) * 100}%` }"
+        class="h-1"
+        :style="{ width: `${(remaining / duration) * 100}%`, ...meterBgStyle(toast.color) }"
       />
     </div>
 

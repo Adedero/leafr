@@ -26,6 +26,7 @@ export type FullBook = Book & {
   readingProgress: ReadingProgress | null;
   // readingSessions: ReadingSession[];
   favoriteRecord: Favorite | null;
+  locations: BookLocation | null;
 };
 
 export const books = sqliteTable("books", {
@@ -44,6 +45,20 @@ export const books = sqliteTable("books", {
     .notNull()
     .$default(() => new Date().toISOString()),
   lastOpenedAt: text("last_opened_at"),
+  createdAt,
+  updatedAt
+});
+
+// ─── Book Locations ─────────────────────────────────────────────────────────
+export type BookLocation = typeof bookLocations.$inferSelect;
+export type NewBookLocation = typeof bookLocations.$inferInsert;
+export const bookLocations = sqliteTable("book_locations", {
+  id,
+  bookId: text("book_id")
+    .notNull()
+    .unique()
+    .references(() => books.id, { onDelete: "cascade" }),
+  locations: text("locations").notNull(),
   createdAt,
   updatedAt
 });
@@ -159,6 +174,7 @@ export const settings = sqliteTable("settings", {
 export const relations = defineRelations(
   {
     books,
+    bookLocations,
     readingProgress,
     bookmarks,
     favorites,
@@ -180,6 +196,10 @@ export const relations = defineRelations(
       favoriteRecord: r.one.favorites({
         from: r.books.id,
         to: r.favorites.bookId
+      }),
+      locations: r.one.bookLocations({
+        from: r.books.id,
+        to: r.bookLocations.bookId
       })
     },
 

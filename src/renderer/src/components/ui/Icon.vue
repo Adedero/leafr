@@ -36,6 +36,20 @@ import LucideSearch from "~icons/lucide/search";
 import LucideBookOpen from "~icons/lucide/book-open";
 // @ts-ignore
 import LucideCircleAlert from "~icons/lucide/circle-alert";
+// @ts-ignore
+import LucideLockOpen from "~icons/lucide/lock-open";
+// @ts-ignore
+import LucideLock from "~icons/lucide/lock";
+// @ts-ignore
+import LucideInfo from "~icons/lucide/info";
+// @ts-ignore
+import LucideTableOfContents from "~icons/lucide/table-of-contents";
+// @ts-ignore
+import LucideType from "~icons/lucide/type";
+// @ts-ignore
+import LucideChevronDown from "~icons/lucide/chevron-down";
+// @ts-ignore
+import LucideHighlighter from "~icons/lucide/highlighter";
 
 export interface IconProps {
   name: IconName;
@@ -63,6 +77,13 @@ const iconMap = {
   "lucide:search": LucideSearch,
   "lucide:book-open": LucideBookOpen,
   "lucide:circle-alert": LucideCircleAlert,
+  "lucide:lock-open": LucideLockOpen,
+  "lucide:lock": LucideLock,
+  "lucide:info": LucideInfo,
+  "lucide:table-of-contents": LucideTableOfContents,
+  "lucide:type": LucideType,
+  "lucide:chevron-down": LucideChevronDown,
+  "lucide:highlighter": LucideHighlighter
 } as const;
 
 export type IconName = keyof typeof iconMap;

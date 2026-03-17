@@ -2,14 +2,17 @@ import { useLocalStorage } from "@vueuse/core";
 import { defineStore } from "pinia";
 
 const useUIStore = defineStore("ui", () => {
-  const navbar = useLocalStorage<Navbar>("navbar:width", { width: "5.5rem" });
+  const navbarWidth = useLocalStorage<string>("navbar:width", "5.5rem");
+  const bookFooterLocked = useLocalStorage<boolean>("book-footer:locked", false);
+  const toggleBookFooterLocked = () => {
+    bookFooterLocked.value = !bookFooterLocked.value;
+  };
 
   return {
-    navbar
+    navbarWidth,
+    bookFooterLocked,
+    toggleBookFooterLocked
   };
 });
 
 export default useUIStore;
-export interface Navbar {
-  width: string;
-}

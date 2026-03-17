@@ -14,7 +14,7 @@ const UIStore = useUIStore();
   <main class="flex h-screen">
     <aside
       class="grid grid-rows-12 border-r-2 border-r-border h-full overflow-hidden shrink-0"
-      :style="{ width: UIStore.navbar.width }"
+      :style="{ width: UIStore.navbarWidth }"
     >
       <header class="flex justify-center items-center row-span-1 p-2">
         <Logo :width="40" />

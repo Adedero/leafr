@@ -1,5 +1,6 @@
 export default [
   // ─── Parchment (default) ───────────────────────────────────────────────────
+
   {
     name: "light",
     displayName: "Parchment",
@@ -31,6 +32,8 @@ export default [
   },
 
   // ─── Sepia ─────────────────────────────────────────────────────────────────
+  // accent: warm brown rgb(160 90 30) → secondary: dusty mauve (opposite hue family)
+
   {
     name: "sepia",
     displayName: "Sepia",
@@ -39,7 +42,7 @@ export default [
       background: "rgb(245 230 200)",
       text: "rgb(55 35 15)",
       accent: "rgb(160 90 30)",
-      secondary: "rgb(200 150 80)",
+      secondary: "rgb(175 135 160)",
       surface: "rgb(238 220 185)",
       muted: "rgb(160 130 90)",
       border: "rgb(105 88 68)"
@@ -53,7 +56,7 @@ export default [
       background: "rgb(22 16 10)",
       text: "rgb(220 195 155)",
       accent: "rgb(180 120 55)",
-      secondary: "rgb(200 150 80)",
+      secondary: "rgb(130 95 120)",
       surface: "rgb(35 25 15)",
       muted: "rgb(110 85 55)",
       border: "rgb(100 85 68)"
@@ -61,6 +64,8 @@ export default [
   },
 
   // ─── Coffee ────────────────────────────────────────────────────────────────
+  // accent: warm reddish-brown rgb(140 80 50) → secondary: cool slate-blue (complementary)
+
   {
     name: "coffee",
     displayName: "Coffee",
@@ -69,7 +74,7 @@ export default [
       background: "rgb(248 244 236)",
       text: "rgb(60 40 30)",
       accent: "rgb(140 80 50)",
-      secondary: "rgb(180 140 100)",
+      secondary: "rgb(110 135 170)",
       surface: "rgb(240 230 215)",
       muted: "rgb(150 130 115)",
       border: "rgb(210 190 175)"
@@ -83,7 +88,7 @@ export default [
       background: "rgb(26 22 20)",
       text: "rgb(210 190 175)",
       accent: "rgb(200 130 80)",
-      secondary: "rgb(140 90 60)",
+      secondary: "rgb(80 105 140)",
       surface: "rgb(35 30 28)",
       muted: "rgb(110 90 80)",
       border: "rgb(60 50 45)"
@@ -91,6 +96,8 @@ export default [
   },
 
   // ─── Matcha ────────────────────────────────────────────────────────────────
+  // accent: sage green rgb(95 135 85) → secondary: warm clay/terracotta (opposite hue)
+
   {
     name: "matcha",
     displayName: "Matcha",
@@ -99,7 +106,7 @@ export default [
       background: "rgb(242 245 235)",
       text: "rgb(40 55 35)",
       accent: "rgb(95 135 85)",
-      secondary: "rgb(160 185 145)",
+      secondary: "rgb(195 140 110)",
       surface: "rgb(230 235 215)",
       muted: "rgb(110 130 100)",
       border: "rgb(190 205 180)"
@@ -113,7 +120,7 @@ export default [
       background: "rgb(20 25 18)",
       text: "rgb(200 215 190)",
       accent: "rgb(120 165 110)",
-      secondary: "rgb(70 95 60)",
+      secondary: "rgb(150 100 75)",
       surface: "rgb(28 35 25)",
       muted: "rgb(85 105 75)",
       border: "rgb(45 55 40)"
@@ -121,6 +128,8 @@ export default [
   },
 
   // ─── Forest ────────────────────────────────────────────────────────────────
+  // accent: bright green rgb(52 168 83) → secondary: cool periwinkle/blue (complementary)
+
   {
     name: "forest",
     displayName: "Forest",
@@ -129,7 +138,7 @@ export default [
       background: "rgb(244 250 244)",
       text: "rgb(20 35 20)",
       accent: "rgb(52 168 83)",
-      secondary: "rgb(139 195 74)",
+      secondary: "rgb(100 130 200)",
       surface: "rgb(232 245 233)",
       muted: "rgb(120 160 120)",
       border: "rgb(80 90 82)"
@@ -143,7 +152,7 @@ export default [
       background: "rgb(10 18 12)",
       text: "rgb(200 230 205)",
       accent: "rgb(52 168 83)",
-      secondary: "rgb(139 195 74)",
+      secondary: "rgb(70 100 165)",
       surface: "rgb(15 28 18)",
       muted: "rgb(70 110 75)",
       border: "rgb(90 105 92)"
@@ -151,6 +160,7 @@ export default [
   },
 
   // ─── Sunset ────────────────────────────────────────────────────────────────
+
   {
     name: "sunset",
     displayName: "Sunset",
@@ -181,6 +191,8 @@ export default [
   },
 
   // ─── Ember ─────────────────────────────────────────────────────────────────
+  // accent: burnt orange rgb(210 100 20) → secondary: cool teal (complementary)
+
   {
     name: "ember",
     displayName: "Ember",
@@ -189,7 +201,7 @@ export default [
       background: "rgb(255 248 235)",
       text: "rgb(45 25 10)",
       accent: "rgb(210 100 20)",
-      secondary: "rgb(240 175 80)",
+      secondary: "rgb(80 170 165)",
       surface: "rgb(252 238 210)",
       muted: "rgb(185 145 100)",
       border: "rgb(120 95 65)"
@@ -203,7 +215,7 @@ export default [
       background: "rgb(14 8 4)",
       text: "rgb(255 225 185)",
       accent: "rgb(240 120 30)",
-      secondary: "rgb(160 75 15)",
+      secondary: "rgb(50 130 125)",
       surface: "rgb(24 14 6)",
       muted: "rgb(110 70 35)",
       border: "rgb(55 32 14)"
@@ -211,6 +223,7 @@ export default [
   },
 
   // ─── Inferno ───────────────────────────────────────────────────────────────
+
   {
     name: "inferno",
     displayName: "Inferno",
@@ -241,6 +254,7 @@ export default [
   },
 
   // ─── Rose ──────────────────────────────────────────────────────────────────
+
   {
     name: "rose",
     displayName: "Rose",
@@ -271,6 +285,7 @@ export default [
   },
 
   // ─── Ocean ─────────────────────────────────────────────────────────────────
+
   {
     name: "ocean",
     displayName: "Ocean",
@@ -301,6 +316,7 @@ export default [
   },
 
   // ─── Frostbite ─────────────────────────────────────────────────────────────
+
   {
     name: "frostbite",
     displayName: "Frostbite",
@@ -331,6 +347,7 @@ export default [
   },
 
   // ─── Nord ──────────────────────────────────────────────────────────────────
+
   {
     name: "nord",
     displayName: "Nord",
@@ -366,13 +383,13 @@ export default [
     displayName: "Slate",
     type: "light",
     colors: {
-      background: "rgb(241 245 249)",
-      text: "rgb(15 23 42)",
-      accent: "rgb(37 99 235)",
-      secondary: "rgb(100 116 139)",
-      surface: "rgb(226 232 240)",
-      muted: "rgb(100 116 139)",
-      border: "rgb(203 213 225)"
+      background: "rgb(232 236 240)",
+      text: "rgb(28 38 52)",
+      accent: "rgb(78 108 148)",
+      secondary: "rgb(155 175 200)",
+      surface: "rgb(220 226 234)",
+      muted: "rgb(90 105 122)",
+      border: "rgb(170 180 192)"
     }
   },
   {
@@ -380,17 +397,48 @@ export default [
     displayName: "Dark Slate",
     type: "dark",
     colors: {
-      background: "rgb(15 23 42)",
-      text: "rgb(241 245 249)",
-      accent: "rgb(59 130 246)",
-      secondary: "rgb(148 163 184)",
-      surface: "rgb(30 41 59)",
-      muted: "rgb(71 85 105)",
-      border: "rgb(51 65 85)"
+      background: "rgb(18 24 32)",
+      text: "rgb(210 220 232)",
+      accent: "rgb(100 140 185)",
+      secondary: "rgb(55 72 92)",
+      surface: "rgb(26 34 46)",
+      muted: "rgb(100 120 142)",
+      border: "rgb(45 58 72)"
+    }
+  },
+
+  // ─── Wood ─────────────────────────────────────────────────────────────────
+  {
+    name: "wood",
+    displayName: "Wood",
+    type: "light",
+    colors: {
+      background: "rgb(242 240 237)",
+      text: "rgb(28 26 24)",
+      accent: "rgb(155 115 75)",
+      secondary: "rgb(195 185 175)",
+      surface: "rgb(230 227 222)",
+      muted: "rgb(145 138 130)",
+      border: "rgb(195 188 180)"
+    }
+  },
+  {
+    name: "dark-wood",
+    displayName: "Dark Wood",
+    type: "dark",
+    colors: {
+      background: "rgb(22 20 18)",
+      text: "rgb(225 220 212)",
+      accent: "rgb(185 145 100)",
+      secondary: "rgb(100 92 84)",
+      surface: "rgb(35 32 28)",
+      muted: "rgb(100 92 85)",
+      border: "rgb(58 54 50)"
     }
   },
 
   // ─── Dusk ──────────────────────────────────────────────────────────────────
+
   {
     name: "dusk",
     displayName: "Dusk",
@@ -421,6 +469,7 @@ export default [
   },
 
   // ─── Volt ──────────────────────────────────────────────────────────────────
+
   {
     name: "volt",
     displayName: "Volt",
@@ -451,6 +500,7 @@ export default [
   },
 
   // ─── Cyber ─────────────────────────────────────────────────────────────────
+
   {
     name: "cyber",
     displayName: "Cyber",
@@ -481,6 +531,8 @@ export default [
   },
 
   // ─── Mono ──────────────────────────────────────────────────────────────────
+  // Pure black/white/grays — no green, accent is near-black charcoal
+
   {
     name: "mono",
     displayName: "Mono",
@@ -488,7 +540,7 @@ export default [
     colors: {
       background: "rgb(255 255 255)",
       text: "rgb(0 0 0)",
-      accent: "rgb(34 160 64)",
+      accent: "rgb(30 30 30)",
       secondary: "rgb(115 115 115)",
       surface: "rgb(245 245 245)",
       muted: "rgb(160 160 160)",
@@ -502,7 +554,7 @@ export default [
     colors: {
       background: "rgb(10 10 10)",
       text: "rgb(245 245 245)",
-      accent: "rgb(52 200 80)",
+      accent: "rgb(220 220 220)",
       secondary: "rgb(140 140 140)",
       surface: "rgb(22 22 22)",
       muted: "rgb(100 100 100)",
@@ -511,6 +563,7 @@ export default [
   },
 
   // ─── Dracula ───────────────────────────────────────────────────────────────
+
   {
     name: "dracula",
     displayName: "Dracula",
@@ -539,7 +592,9 @@ export default [
       border: "rgb(80 85 110)"
     }
   },
+
   // ─── Neon Noir ─────────────────────────────────────────────────────────────
+
   {
     name: "neon-noir",
     displayName: "Neon Noir",
@@ -570,6 +625,7 @@ export default [
   },
 
   // ─── Synthwave ─────────────────────────────────────────────────────────────
+
   {
     name: "synthwave",
     displayName: "Synthwave",
@@ -600,6 +656,7 @@ export default [
   },
 
   // ─── Bubblegum Cyber ───────────────────────────────────────────────────────
+
   {
     name: "bubblegum",
     displayName: "Bubblegum Cyber",
@@ -630,6 +687,7 @@ export default [
   },
 
   // ─── Deep Space ────────────────────────────────────────────────────────────
+
   {
     name: "space",
     displayName: "Deep Space",
@@ -660,6 +718,7 @@ export default [
   },
 
   // ─── Washed Film ───────────────────────────────────────────────────────────
+
   {
     name: "film",
     displayName: "Washed Film",
@@ -690,6 +749,7 @@ export default [
   },
 
   // ─── Retro Gameboy ─────────────────────────────────────────────────────────
+
   {
     name: "gameboy",
     displayName: "Game Boy Classic",
@@ -720,6 +780,7 @@ export default [
   },
 
   // ─── Lavender Dream ────────────────────────────────────────────────────────
+
   {
     name: "lavender",
     displayName: "Lavender Dream",
@@ -750,6 +811,7 @@ export default [
   },
 
   // ─── Toxic Sludge ──────────────────────────────────────────────────────────
+
   {
     name: "toxic",
     displayName: "Toxic Sludge",
@@ -780,6 +842,7 @@ export default [
   },
 
   // ─── Midnight Peach ────────────────────────────────────────────────────────
+
   {
     name: "midnight-peach",
     displayName: "Midnight Peach",
@@ -807,5 +870,307 @@ export default [
       muted: "rgb(200 140 150)",
       border: "rgb(240 190 180)"
     }
-  }
+  },
+  // ─── Sand Dune ─────────────────────────────────────────────────────────────
+  {
+    name: "sand-dune",
+    displayName: "Sand Dune",
+    type: "light",
+    colors: {
+      background: "rgb(250 245 235)",
+      text: "rgb(60 45 30)",
+      accent: "rgb(210 125 65)",      // warm terracotta/sunset sand
+      secondary: "rgb(245 225 190)",  // pale creamy sand
+      surface: "rgb(255 240 220)",
+      muted: "rgb(180 150 120)",
+      border: "rgb(200 170 140)"
+    }
+  },
+  {
+    name: "dark-sand-dune",
+    displayName: "Desert Night",
+    type: "dark",
+    colors: {
+      background: "rgb(28 22 15)",
+      text: "rgb(240 220 190)",
+      accent: "rgb(230 140 80)",
+      secondary: "rgb(140 100 70)",
+      surface: "rgb(40 32 24)",
+      muted: "rgb(110 90 70)",
+      border: "rgb(70 55 40)"
+    }
+  },
+
+  // ─── Teal Whisper ──────────────────────────────────────────────────────────
+  {
+    name: "teal-whisper",
+    displayName: "Teal Whisper",
+    type: "light",
+    colors: {
+      background: "rgb(240 250 248)",
+      text: "rgb(20 50 55)",
+      accent: "rgb(40 160 140)",      // soft teal
+      secondary: "rgb(180 230 220)",  // very pale mint-teal
+      surface: "rgb(225 245 240)",
+      muted: "rgb(120 170 160)",
+      border: "rgb(90 140 130)"
+    }
+  },
+  {
+    name: "dark-teal-whisper",
+    displayName: "Deep Lagoon",
+    type: "dark",
+    colors: {
+      background: "rgb(10 28 30)",
+      text: "rgb(200 240 230)",
+      accent: "rgb(60 180 160)",
+      secondary: "rgb(40 100 90)",
+      surface: "rgb(18 40 42)",
+      muted: "rgb(70 110 105)",
+      border: "rgb(50 80 75)"
+    }
+  },
+
+  // ─── Clay ──────────────────────────────────────────────────────────────────
+  {
+    name: "clay",
+    displayName: "Clay",
+    type: "light",
+    colors: {
+      background: "rgb(248 242 235)",
+      text: "rgb(65 40 35)",
+      accent: "rgb(190 110 90)",      // warm terracotta clay
+      secondary: "rgb(230 190 170)",  // soft dusty rose-beige
+      surface: "rgb(240 225 210)",
+      muted: "rgb(170 130 115)",
+      border: "rgb(180 140 125)"
+    }
+  },
+  {
+    name: "dark-clay",
+    displayName: "Burnt Clay",
+    type: "dark",
+    colors: {
+      background: "rgb(30 20 18)",
+      text: "rgb(235 200 180)",
+      accent: "rgb(210 120 100)",
+      secondary: "rgb(130 90 80)",
+      surface: "rgb(45 30 28)",
+      muted: "rgb(100 70 60)",
+      border: "rgb(70 50 45)"
+    }
+  },
+
+  // ─── Charcoal ──────────────────────────────────────────────────────────────
+  {
+    name: "charcoal",
+    displayName: "Charcoal",
+    type: "light",
+    colors: {
+      background: "rgb(245 245 245)",
+      text: "rgb(30 30 35)",
+      accent: "rgb(90 90 110)",       // deep charcoal gray
+      secondary: "rgb(160 160 170)",  // lighter cool gray
+      surface: "rgb(235 235 240)",
+      muted: "rgb(140 140 150)",
+      border: "rgb(200 200 210)"
+    }
+  },
+  {
+    name: "dark-charcoal",
+    displayName: "Obsidian",
+    type: "dark",
+    colors: {
+      background: "rgb(12 12 15)",
+      text: "rgb(235 235 240)",
+      accent: "rgb(160 160 180)",
+      secondary: "rgb(90 90 110)",
+      surface: "rgb(22 22 26)",
+      muted: "rgb(70 70 85)",
+      border: "rgb(45 45 55)"
+    }
+  },
+
+  // ─── Honey ─────────────────────────────────────────────────────────────────
+  {
+    name: "honey",
+    displayName: "Honey",
+    type: "light",
+    colors: {
+      background: "rgb(255 248 220)",
+      text: "rgb(70 45 20)",
+      accent: "rgb(230 160 40)",      // rich honey gold
+      secondary: "rgb(255 230 160)",  // pale soft gold
+      surface: "rgb(255 240 200)",
+      muted: "rgb(190 150 90)",
+      border: "rgb(220 180 120)"
+    }
+  },
+  {
+    name: "dark-honey",
+    displayName: "Amber Night",
+    type: "dark",
+    colors: {
+      background: "rgb(32 22 10)",
+      text: "rgb(255 235 180)",
+      accent: "rgb(240 180 60)",
+      secondary: "rgb(160 110 50)",
+      surface: "rgb(45 32 18)",
+      muted: "rgb(120 85 45)",
+      border: "rgb(80 55 30)"
+    }
+  },
+
+  // ─── Mist ──────────────────────────────────────────────────────────────────
+  {
+    name: "mist",
+    displayName: "Mist",
+    type: "light",
+    colors: {
+      background: "rgb(245 248 252)",
+      text: "rgb(35 45 60)",
+      accent: "rgb(100 140 200)",     // soft steel blue
+      secondary: "rgb(190 210 230)",  // pale blue-gray mist
+      surface: "rgb(235 240 248)",
+      muted: "rgb(140 160 190)",
+      border: "rgb(180 200 220)"
+    }
+  },
+  {
+    name: "dark-mist",
+    displayName: "Fog",
+    type: "dark",
+    colors: {
+      background: "rgb(18 22 30)",
+      text: "rgb(220 230 245)",
+      accent: "rgb(130 170 220)",
+      secondary: "rgb(80 100 130)",
+      surface: "rgb(28 34 45)",
+      muted: "rgb(90 110 140)",
+      border: "rgb(60 75 100)"
+    }
+  },
+  // ─── Ash ───────────────────────────────────────────────────────────────────
+
+  {
+    name: "ash",
+    displayName: "Ash",
+    type: "light",
+    colors: {
+      background: "rgb(238 238 240)",
+      text: "rgb(28 28 30)",
+      accent: "rgb(100 100 108)",
+      secondary: "rgb(178 178 185)",
+      surface: "rgb(225 225 228)",
+      muted: "rgb(140 140 146)",
+      border: "rgb(200 200 205)"
+    }
+  },
+  {
+    name: "dark-ash",
+    displayName: "Dark Ash",
+    type: "dark",
+    colors: {
+      background: "rgb(22 22 25)",
+      text: "rgb(215 215 220)",
+      accent: "rgb(190 190 198)",
+      secondary: "rgb(65 65 72)",
+      surface: "rgb(34 34 38)",
+      muted: "rgb(105 105 112)",
+      border: "rgb(48 48 54)"
+    }
+  },
+
+  // ─── Pitch ─────────────────────────────────────────────────────────────────
+
+  {
+    name: "candlelight",
+    displayName: "Candlelight",
+    type: "light",
+    colors: {
+      background: "rgb(250 248 242)",
+      text: "rgb(30 25 12)",
+      accent: "rgb(175 125 30)",
+      secondary: "rgb(195 180 145)",
+      surface: "rgb(238 232 215)",
+      muted: "rgb(155 140 108)",
+      border: "rgb(215 208 190)"
+    }
+  },
+  {
+    name: "pitch",
+    displayName: "Pitch",
+    type: "dark",
+    colors: {
+      background: "rgb(8 8 8)",
+      text: "rgb(240 235 222)",
+      accent: "rgb(215 158 52)",
+      secondary: "rgb(68 62 48)",
+      surface: "rgb(18 17 14)",
+      muted: "rgb(105 98 80)",
+      border: "rgb(32 30 25)"
+    }
+  },
+
+  // ─── Brass ─────────────────────────────────────────────────────────────────
+
+  {
+    name: "brass",
+    displayName: "Brass",
+    type: "light",
+    colors: {
+      background: "rgb(248 242 222)",
+      text: "rgb(48 35 12)",
+      accent: "rgb(178 132 28)",
+      secondary: "rgb(120 158 128)",
+      surface: "rgb(235 226 198)",
+      muted: "rgb(160 138 88)",
+      border: "rgb(210 195 155)"
+    }
+  },
+  {
+    name: "dark-brass",
+    displayName: "Dark Brass",
+    type: "dark",
+    colors: {
+      background: "rgb(20 16 8)",
+      text: "rgb(228 210 165)",
+      accent: "rgb(205 158 48)",
+      secondary: "rgb(80 108 85)",
+      surface: "rgb(32 26 12)",
+      muted: "rgb(110 88 42)",
+      border: "rgb(55 45 20)"
+    }
+  },
+
+  // ─── Sahara ────────────────────────────────────────────────────────────────
+
+  {
+    name: "sahara",
+    displayName: "Sahara",
+    type: "light",
+    colors: {
+      background: "rgb(250 238 215)",
+      text: "rgb(60 38 15)",
+      accent: "rgb(192 85 48)",
+      secondary: "rgb(88 158 138)",
+      surface: "rgb(238 222 192)",
+      muted: "rgb(165 128 78)",
+      border: "rgb(210 185 148)"
+    }
+  },
+  {
+    name: "dark-sahara",
+    displayName: "Dark Sahara",
+    type: "dark",
+    colors: {
+      background: "rgb(22 14 6)",
+      text: "rgb(235 210 168)",
+      accent: "rgb(210 105 62)",
+      secondary: "rgb(55 115 100)",
+      surface: "rgb(36 24 10)",
+      muted: "rgb(118 85 42)",
+      border: "rgb(65 45 22)"
+    }
+  },
 ];

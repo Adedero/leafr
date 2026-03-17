@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { UIAction } from "@renderer/types/ui.type";
 import { computed, watch, useTemplateRef, useSlots, useAttrs } from "vue";
-import { IconName } from "./Icon.vue";
+import Icon, { type IconName } from "./Icon.vue";
 import Overlay from "./Overlay.vue";
 import Button from "./Button.vue";
 import { onClickOutside, onKeyStroke, useDraggable, useWindowSize } from "@vueuse/core";
@@ -20,6 +20,7 @@ interface ModalUI {
 
 interface Props {
   title?: string;
+  icon?: IconName;
   description?: string;
   body?: string;
   dismissable?: boolean;
@@ -34,6 +35,7 @@ interface Props {
 
 const {
   title = undefined,
+  icon = undefined,
   description = undefined,
   body = undefined,
   dismissable = true,
@@ -187,13 +189,16 @@ const modalStyle = computed(() => {
             >
               <slot name="header" :toggle-fullscreen="toggleFullscreen" :close="closeModal">
                 <div class="flex flex-col gap-1 flex-1 min-w-0">
-                  <h2
-                    v-if="title"
-                    id="modal-title"
-                    :class="twMerge('text-lg font-semibold font-ui truncate', ui?.title)"
-                  >
-                    {{ title }}
-                  </h2>
+                  <div :class="icon ? 'flex items-center gap-1' : undefined">
+                    <Icon v-if="icon" :name="icon" />
+                    <h2
+                      v-if="title"
+                      id="modal-title"
+                      :class="twMerge('text-lg font-semibold font-ui truncate', ui?.title)"
+                    >
+                      {{ title }}
+                    </h2>
+                  </div>
                   <p
                     v-if="description"
                     id="modal-desc"
