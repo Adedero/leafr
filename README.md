@@ -4,6 +4,8 @@
 
 Leafr is a minimal desktop EPUB reader built for people who just want to read. No clutter, no subscriptions, no cloud sync required — just you and your books.
 
+![Home screen (light)](./.github/assets/home-screen-light.png)
+
 ---
 
 ## Features
@@ -19,8 +21,9 @@ Leafr is a minimal desktop EPUB reader built for people who just want to read. N
 
 ## Screenshots
 
-![Home screen (light)](./.github/assets/home-screen-light.png)
+
 ![Home screen (dark)](./.github/assets/home-screen-dark.png)
+
 ![Reader view](./.github/assets/reader-light.png)
 
 ---
