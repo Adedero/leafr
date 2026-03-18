@@ -1,8 +1,9 @@
-import { contextBridge, ipcRenderer } from "electron";
+import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 import { PROTOCOL_NAME } from "../main/utils/constants";
 import type { BeforeBookCloseInput } from "../main/handlers/books/before-book-close";
 import type { SaveBookLocationsInput } from "../main/handlers/books/save-book-locations";
+import type { Emits } from "../main/utils/emit";
 
 // Custom APIs for renderer
 const api = {
@@ -21,7 +22,15 @@ const api = {
     beforeBookClose: (input: BeforeBookCloseInput) =>
       ipcRenderer.invoke("books:before-book-close", input),
     saveBookLocation: (input: SaveBookLocationsInput) =>
-      ipcRenderer.invoke("books:save-book-locations", input)
+      ipcRenderer.invoke("books:save-book-locations", input),
+    on: <T extends keyof Emits>(channel: T, fn: (payload: Emits[T]) => void) => {
+      const wrapper = (_event: IpcRendererEvent, payload: Emits[T]) => fn(payload);
+      ipcRenderer.on(channel, wrapper);
+      return wrapper; // return so it can be removed
+    },
+    off: <T extends keyof Emits>(channel: T, fn: (...args: unknown[]) => void) => {
+      ipcRenderer.removeListener(channel, fn);
+    }
   }
 };
 

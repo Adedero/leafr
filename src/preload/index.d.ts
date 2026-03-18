@@ -1,5 +1,5 @@
 import type { ElectronAPI } from "@electron-toolkit/preload";
-import type { Book, FullBook } from "../main/database/schema";
+import type { FullBook } from "../main/database/schema";
 import type { SyncBooksReturn } from "../main/handlers/books/sync-books";
 import type { BeforeBookCloseInput } from "../main/handlers/books/before-book-close";
 import type { GetAllBooksReturn } from "src/main/handlers/books/get-all-books";
@@ -23,6 +23,8 @@ declare global {
         beforeBookOpen: (bookId: string) => Promise<boolean>;
         beforeBookClose: (input: BeforeBookCloseInput) => Promise<boolean>;
         saveBookLocation: (input: SaveBookLocationsInput) => Promise<boolean>;
+        on: <T extends keyof Emits>(channel: T, fn: (payload: Emits[T]) => void) => void;
+        off: <T extends keyof Emits>(channel: T, fn: (...args: unknown[]) => void) => void;
       };
     };
   }
