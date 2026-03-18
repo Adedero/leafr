@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import AllBooksSearchBar from './AllBooksSearchBar.vue';
-import CurrentBookSearchBar from './CurrentBookSearchBar.vue';
+import AllBooksSearchBar from "./AllBooksSearchBar.vue";
+import CurrentBookSearchBar from "./CurrentBookSearchBar.vue";
 
 const route = useRoute();
 

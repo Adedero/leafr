@@ -12,7 +12,7 @@ declare global {
   const Numerics: typeof import('./src/utils/numerics/index').Numerics
   const TTLCache: typeof import('./src/utils/ttl-cache/ttl-cache').TTLCache
   const acceptHMRUpdate: typeof import('pinia').acceptHMRUpdate
-  const assetURL: typeof import('./src/utils/asset-url').assetURL
+  const assetURL: typeof import("./src/utils/asset-url").assetURL
   const assetUrl: typeof import('./src/utils/asset-url').assetUrl
   const asyncComputed: typeof import('@vueuse/core').asyncComputed
   const autoResetRef: typeof import('@vueuse/core').autoResetRef
