@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import Numerics from "@renderer/utils/numerics";
-
 interface Props {
   width?: string | number;
   height?: string | number;

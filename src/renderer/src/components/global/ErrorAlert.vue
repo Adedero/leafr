@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { UIAction } from "@renderer/types/ui.type";
-import { toErrorMessage } from "@renderer/utils/to-error";
 
 interface Props {
   title?: string;

@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import type { TBookLocation } from "@renderer/pages/Book.vue";
-import useUIStore from "@renderer/stores/use-ui-store";
-import assetURL from "@renderer/utils/asset-url";
-import debounce from "@renderer/utils/debounce";
 import { FullBook } from "src/main/database/schema";
 import Logo from "../global/Logo.vue";
 
@@ -39,16 +36,16 @@ const onMouseLeave = debounce(() => {
       <div
         v-if="book && (open || UIStore.bookFooterLocked)"
         ref="footerRef"
-        class="absolute z-50 bottom-0 left-0 w-full pb-3 px-4"
+        class="bottom-0 left-0 z-50 absolute px-4 pb-3 w-full"
         @mouseleave="onMouseLeave"
       >
         <div
-          class="w-full lg:max-w-[90dvw] lg:mx-auto bg-accent border-2 border-border p-1 grid grid-cols-3 gap-x-5 text-surface volt:text-text"
+          class="gap-x-5 grid grid-cols-3 bg-accent lg:mx-auto p-1 border-2 border-border w-full lg:max-w-[90dvw] text-surface volt:text-text"
         >
           <!-- Book Cover & Info -->
           <div class="hidden md:flex items-center gap-2">
             <div
-              class="border-2 border-border p-0.5 h-16 w-16 shrink-0 bg-surface flex items-center justify-center"
+              class="flex justify-center items-center bg-surface p-0.5 border-2 border-border w-16 h-16 shrink-0"
             >
               <img
                 v-if="book.coverImagePath && book.coverImagePath.length > 2"
@@ -59,17 +56,17 @@ const onMouseLeave = debounce(() => {
             </div>
 
             <div class="min-w-0">
-              <p class="text-sm font-semibold truncate">
+              <p class="font-semibold text-sm truncate">
                 {{ book.title }}
               </p>
-              <p class="text-xs font-medium truncate">{{ book.author }}</p>
+              <p class="font-medium text-xs truncate">{{ book.author }}</p>
             </div>
           </div>
 
           <!-- Location Info & Slider -->
           <div>
             <div v-if="location" class="md:text-center truncate">
-              <p class="text-sm text-semibold">{{ location.current?.label }}</p>
+              <p class="text-semibold text-sm">{{ location.current?.label }}</p>
               <p class="text-xs">{{ location.current?.page }}/{{ location.current?.total }}</p>
             </div>
 
@@ -78,14 +75,14 @@ const onMouseLeave = debounce(() => {
 
           <div>
             <!-- Icons -->
-            <div class="flex items-center gap-1 justify-end">
+            <div class="flex justify-end items-center gap-1">
               <Modal title="Info" icon="lucide:info" @open="UIStore.bookFooterLocked = true">
                 <Button
                   color="neutral"
                   variant="ghost"
                   size="sm"
                   icon="lucide:info"
-                  class="text-surface hover:bg-surface/20 hover:text-surface"
+                  class="hover:bg-surface/20 text-surface hover:text-surface"
                 />
 
                 <template #body>
@@ -109,7 +106,7 @@ const onMouseLeave = debounce(() => {
 
     <div
       @mouseenter="onMouseEnter"
-      class="bg-transparent absolute h-20 w-full left-0 bottom-0 z-10"
+      class="bottom-0 left-0 z-10 absolute bg-transparent w-full h-20"
       :class="{ 'pointer-events-none': open }"
     />
   </div>

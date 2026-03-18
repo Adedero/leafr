@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Book } from "src/main/database/schema";
-import assetURL from "@renderer/utils/asset-url";
 
 const { book } = defineProps<{
   book: Book;

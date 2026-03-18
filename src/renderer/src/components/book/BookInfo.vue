@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import assetURL from "@renderer/utils/asset-url";
 import type { FullBook } from "src/main/database/schema";
 
 interface Props {
