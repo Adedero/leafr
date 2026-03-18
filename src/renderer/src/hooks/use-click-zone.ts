@@ -1,5 +1,4 @@
-import { ref, watch } from "vue";
-import { onUnmounted, toValue, type MaybeRefOrGetter } from "vue";
+import type { MaybeRefOrGetter } from "vue";
 
 export type ClickZone = "left" | "right" | "center";
 export type ClickZoneTarget = Element | Window | Document | null | undefined;

@@ -1,6 +1,3 @@
-import { refDebounced } from "@vueuse/core";
-import { ref } from "vue";
-
 const text = ref("");
 
 export default function useBooksSearch() {

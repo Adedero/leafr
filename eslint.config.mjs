@@ -46,12 +46,14 @@ export default defineConfig(
     }
   },
   {
-    "@typescript-eslint/consistent-type-imports": [
-      "error",
-      {
-        prefer: "type-imports",
-        fixStyle: "separate-type-imports"
-      }
-    ]
+    rules: {
+      "@typescript-eslint/consistent-type-imports": [
+        "error",
+        {
+          prefer: "type-imports",
+          fixStyle: "separate-type-imports"
+        }
+      ]
+    }
   }
 );

@@ -1,5 +1,4 @@
-// use-loop.ts
-import { ref, onUnmounted, readonly, type Ref, onMounted } from "vue";
+import type { Ref } from "vue";
 
 export interface LoopOptions {
   interval?: number; // ms between each item, default 3000

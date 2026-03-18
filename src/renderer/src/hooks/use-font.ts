@@ -1,6 +1,4 @@
 import FONTS from "@renderer/constants/fonts";
-import { useLocalStorage } from "@vueuse/core";
-import { computed, watch } from "vue";
 
 export default function useFont() {
   const UIFont = useLocalStorage<string>("app:ui-font", FONTS[0]);

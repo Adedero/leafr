@@ -29,7 +29,6 @@ declare module 'vue' {
     Layout: typeof import('./src/components/global/Layout.vue')['default']
     Logo: typeof import('./src/components/global/Logo.vue')['default']
     Modal: typeof import('./src/components/ui/Modal.vue')['default']
-    ModalOld: typeof import('./src/components/ui/Modal-Old.vue')['default']
     NavBar: typeof import('./src/components/global/NavBar.vue')['default']
     Overlay: typeof import('./src/components/ui/Overlay.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

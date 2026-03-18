@@ -1,5 +1,4 @@
 import type { MaybeRefOrGetter } from "vue";
-import { onMounted, onUnmounted, toValue } from "vue";
 
 export type WheelDirection = "up" | "down" | "left" | "right";
 

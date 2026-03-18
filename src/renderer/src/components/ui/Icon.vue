@@ -1,54 +1,30 @@
 <script setup lang="ts">
 import type { Component } from "vue";
-// @ts-ignore
+
 import LucideHome from "~icons/lucide/home";
-// @ts-ignore
 import LucideUser from "~icons/lucide/user";
-// @ts-ignore
 import LucideLoaderCircle from "~icons/lucide/loader-circle";
-// @ts-ignore
 import LucidePlus from "~icons/lucide/plus";
-// @ts-ignore
 import LucidePalette from "~icons/lucide/palette";
-// @ts-ignore
 import LucideX from "~icons/lucide/x";
-// @ts-ignore
 import LucideExpand from "~icons/lucide/expand";
-// @ts-ignore
 import LucideMinimize from "~icons/lucide/minimize";
-// @ts-ignore
 import LucideGripVertical from "~icons/lucide/grip-vertical";
-// @ts-ignore
 import LucideLibraryBig from "~icons/lucide/library-big";
-// @ts-ignore
 import LucideBookmark from "~icons/lucide/bookmark";
-// @ts-ignore
 import LucideBarChartBig from "~icons/lucide/bar-chart-big";
-// @ts-ignore
 import LucideSettings from "~icons/lucide/settings";
-// @ts-ignore
 import LucideGlobe from "~icons/lucide/globe";
-// @ts-ignore
 import LucideRefreshCcw from "~icons/lucide/refresh-ccw";
-// @ts-ignore
 import LucideSearch from "~icons/lucide/search";
-// @ts-ignore
 import LucideBookOpen from "~icons/lucide/book-open";
-// @ts-ignore
 import LucideCircleAlert from "~icons/lucide/circle-alert";
-// @ts-ignore
 import LucideLockOpen from "~icons/lucide/lock-open";
-// @ts-ignore
 import LucideLock from "~icons/lucide/lock";
-// @ts-ignore
 import LucideInfo from "~icons/lucide/info";
-// @ts-ignore
 import LucideTableOfContents from "~icons/lucide/table-of-contents";
-// @ts-ignore
 import LucideType from "~icons/lucide/type";
-// @ts-ignore
 import LucideChevronDown from "~icons/lucide/chevron-down";
-// @ts-ignore
 import LucideHighlighter from "~icons/lucide/highlighter";
 
 export interface IconProps {

@@ -6,17 +6,17 @@
 // biome-ignore lint: disable
 export {}
 declare global {
-  const Char: typeof import("@renderer/utils/char").default
+  const Char: typeof import('@renderer/utils/char').default
   const EffectScope: typeof import('vue').EffectScope
-  const List: typeof import("@renderer/utils/list").default
-  const Numerics: typeof import("@renderer/utils/numerics").default
+  const List: typeof import('@renderer/utils/list').default
+  const Numerics: typeof import('@renderer/utils/numerics').default
   const TTLCache: typeof import("./src/utils/ttl-cache/ttl-cache").TTLCache
   const acceptHMRUpdate: typeof import('pinia').acceptHMRUpdate
-  const assetURL: typeof import("@renderer/utils/asset-url").default
+  const assetURL: typeof import('@renderer/utils/asset-url').default
   const assetUrl: typeof import("./src/utils/asset-url").default
   const asyncComputed: typeof import('@vueuse/core').asyncComputed
   const autoResetRef: typeof import('@vueuse/core').autoResetRef
-  const cache: typeof import("@renderer/utils/ttl-cache").default
+  const cache: typeof import('@renderer/utils/ttl-cache').default
   const char: typeof import("./src/utils/char/index").default
   const collapseWhitespace: typeof import("./src/utils/char/lib/collapse-whitespace").default
   const computed: typeof import('vue').computed

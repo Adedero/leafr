@@ -2,6 +2,7 @@
 import Modal from "./Modal.vue";
 import Button from "./Button.vue";
 import InputText from "./InputText.vue";
+import Char from "@renderer/utils/char";
 
 const theme = useTheme();
 const search = ref("");
@@ -22,10 +23,10 @@ const filteredSections = computed(() => {
       <div class="space-y-10">
         <div v-for="{ section, themes } in filteredSections" :key="section" class="space-y-4">
           <h2>{{ Char.toCase(section, "capitalize") }}</h2>
-          <p v-if="themes.length === 0" class="text-sm text-muted-foreground">
+          <p v-if="themes.length === 0" class="text-muted-foreground text-sm">
             No {{ section }} themes found.
           </p>
-          <div v-else class="grid grid-cols-[repeat(auto-fill,minmax(5rem,1fr))] gap-2 items-start">
+          <div v-else class="items-start gap-2 grid grid-cols-[repeat(auto-fill,minmax(5rem,1fr))]">
             <button
               v-for="t in themes"
               :key="t.name"
@@ -36,15 +37,15 @@ const filteredSections = computed(() => {
               @click="theme.set(t.name)"
             >
               <div
-                class="border-2 p-4 flex items-center justify-center gap-2"
+                class="flex justify-center items-center gap-2 p-4 border-2"
                 :style="{ backgroundColor: t.colors.background, borderColor: t.colors.border }"
               >
                 <div
-                  class="size-6 rounded-full shrink-0"
+                  class="rounded-full size-6 shrink-0"
                   :style="{ backgroundColor: t.colors.accent }"
                 />
               </div>
-              <p class="text-center text-sm font-semibold">
+              <p class="font-semibold text-sm text-center">
                 {{ t.displayName }}
               </p>
             </button>
