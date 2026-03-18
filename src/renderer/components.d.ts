@@ -36,7 +36,7 @@ declare module 'vue' {
     SearchBar: typeof import('./src/components/global/search-bar/SearchBar.vue')['default']
     Separator: typeof import('./src/components/ui/Separator.vue')['default']
     Spinner: typeof import('./src/components/ui/Spinner.vue')['default']
-    ThemeSwitch: typeof import('./src/components/ui/ThemeSwitch.vue')['default']
+    ThemeModal: typeof import('./src/components/global/ThemeModal.vue')['default']
     Toast: typeof import('./src/components/ui/Toast.vue')['default']
     Versions: typeof import('./src/components/Versions.vue')['default']
   }

@@ -33,13 +33,14 @@ export default defineConfig({
             "@renderer/utils/ttl-cache": [["default", "cache"]]
           }
         ],
+        defaultExportByFilename: false,
         dts: "auto-imports.d.ts",
-        dirs: [
-          "src/renderer/src/hooks",
-          "src/renderer/src/hooks/**",
-          "src/renderer/src/utils",
-          "src/renderer/src/utils/**"
-        ]
+        dirs: ["src/renderer/src/hooks/**", "src/renderer/src/utils/**"],
+        dirsScanOptions: {
+          filePatterns: ["*.ts"],
+          types: true
+        },
+        viteOptimizeDeps: true
       }),
       Components({
         dirs: ["src/components"],

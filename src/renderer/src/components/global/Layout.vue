@@ -33,7 +33,7 @@ const UIStore = useUIStore();
           </div>
           <Separator orientation="vertical" />
           <div class="flex justify-center items-center grow">
-            <ThemeSwitch />
+            <ThemeModal />
           </div>
         </div>
       </header>

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import Modal from "./Modal.vue";
-import Button from "./Button.vue";
-import InputText from "./InputText.vue";
 import Char from "@renderer/utils/char";
 
 const theme = useTheme();
