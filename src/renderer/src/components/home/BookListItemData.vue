@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import assetURL from "@renderer/utils/asset-url";
-import { Book } from "src/main/database/schema";
+import type { Book } from "src/main/database/schema";
 
 const { book } = defineProps<{
   book: Book;
@@ -33,32 +33,42 @@ const { isLoading, executeImmediate } = useAsyncState(open, null, { immediate: f
       </div>
 
       <div class="text-center">
-        <p class="font-semibold">{{ book.title }}</p>
-        <p class="text-muted text-sm">{{ book.author }}</p>
+        <p class="font-semibold">
+          {{ book.title }}
+        </p>
+        <p class="text-muted text-sm">
+          {{ book.author }}
+        </p>
       </div>
 
       <Separator v-if="book.description" class="my-2" />
 
-      <div v-if="book.description" v-html="book.description" class="text-sm" />
+      <div v-if="book.description" class="text-sm" v-html="book.description" />
 
       <Separator class="my-2" />
 
       <div class="gap-y-4 grid grid-cols-2 w-full text-sm">
         <div>
           <p>Title</p>
-          <p v-if="book.title" class="font-semibold">{{ book.title }}</p>
+          <p v-if="book.title" class="font-semibold">
+            {{ book.title }}
+          </p>
           <p v-else class="font-semibold">N/A</p>
         </div>
 
         <div>
           <p>Author</p>
-          <p v-if="book.author" class="font-semibold">{{ book.author }}</p>
+          <p v-if="book.author" class="font-semibold">
+            {{ book.author }}
+          </p>
           <p v-else class="font-semibold">N/A</p>
         </div>
 
         <div>
           <p>Publisher</p>
-          <p v-if="book.publisher" class="font-semibold">{{ book.publisher }}</p>
+          <p v-if="book.publisher" class="font-semibold">
+            {{ book.publisher }}
+          </p>
           <p v-else class="font-semibold">N/A</p>
         </div>
 

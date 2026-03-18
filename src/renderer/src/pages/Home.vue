@@ -101,7 +101,7 @@ const { isLoading: isSyncing, executeImmediate: syncBooks } = useAsyncState(
               <p>No books yet.</p>
               <p>Why don't you open one to get started?</p>
             </div>
-            <Button color="neutral" variant="outline" icon="lucide:plus">Open</Button>
+            <Button color="neutral" variant="outline" icon="lucide:plus"> Open </Button>
           </div>
         </div>
       </div>

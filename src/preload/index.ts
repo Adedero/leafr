@@ -1,8 +1,8 @@
 import { contextBridge, ipcRenderer } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 import { PROTOCOL_NAME } from "../main/utils/constants";
-import { BeforeBookCloseInput } from "../main/handlers/books/before-book-close";
-import { SaveBookLocationsInput } from "../main/handlers/books/save-book-locations";
+import type { BeforeBookCloseInput } from "../main/handlers/books/before-book-close";
+import type { SaveBookLocationsInput } from "../main/handlers/books/save-book-locations";
 
 // Custom APIs for renderer
 const api = {

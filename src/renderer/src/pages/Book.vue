@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import useSWRV from "swrv";
-import epub, { type Rendition, type Book, NavItem } from "epubjs";
+import epub, { type Rendition, type Book, type NavItem } from "epubjs";
 import type { Location } from "epubjs/types/rendition";
 
 const route = useRoute();
@@ -236,10 +236,10 @@ onBeforeRouteLeave(async (_to, _from, next) => {
 </script>
 
 <template>
-  <div ref="pageRef" class="h-full space-y-16 px-4 py-6 select-none">
+  <div ref="pageRef" class="space-y-16 px-4 py-6 h-full select-none">
     <div
       v-if="isFetchingBook || !isBookLoaded || isClosingBook"
-      class="absolute left-0 top-0 h-full w-full z-10 bg-background flex items-center justify-center"
+      class="top-0 left-0 z-10 absolute flex justify-center items-center bg-background w-full h-full"
     >
       <Spinner show-random-labels />
     </div>
@@ -254,7 +254,7 @@ onBeforeRouteLeave(async (_to, _from, next) => {
     <div>
       <div
         id="viewer"
-        class="md:border-2 md:border-border h-[80dvh] mx-auto w-full lg:max-w-[80%] xl:max-w-[85%]"
+        class="mx-auto md:border-2 md:border-border w-full lg:max-w-[80%] xl:max-w-[85%] h-[80dvh]"
       />
 
       <BookSidebar

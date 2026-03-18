@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { twMerge } from "tailwind-merge";
-import { IconName } from "./Icon.vue";
+import type { IconName } from "./Icon.vue";
 
 import type { UIAction, UIColor } from "@renderer/types/ui.type";
 

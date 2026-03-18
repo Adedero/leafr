@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { TBookLocation } from "@renderer/pages/Book.vue";
-import { FullBook } from "src/main/database/schema";
+import type { FullBook } from "src/main/database/schema";
 import Logo from "../global/Logo.vue";
 
 interface Props {
@@ -12,7 +12,7 @@ const { book } = defineProps<Props>();
 
 const open = defineModel<boolean>("open", { default: false });
 
-const UIStore = useUIStore();
+const UIStore = useUiStore();
 
 const onMouseEnter = debounce(() => {
   open.value = true;
@@ -59,14 +59,18 @@ const onMouseLeave = debounce(() => {
               <p class="font-semibold text-sm truncate">
                 {{ book.title }}
               </p>
-              <p class="font-medium text-xs truncate">{{ book.author }}</p>
+              <p class="font-medium text-xs truncate">
+                {{ book.author }}
+              </p>
             </div>
           </div>
 
           <!-- Location Info & Slider -->
           <div>
             <div v-if="location" class="md:text-center truncate">
-              <p class="text-semibold text-sm">{{ location.current?.label }}</p>
+              <p class="text-semibold text-sm">
+                {{ location.current?.label }}
+              </p>
               <p class="text-xs">{{ location.current?.page }}/{{ location.current?.total }}</p>
             </div>
 
@@ -105,9 +109,9 @@ const onMouseLeave = debounce(() => {
     </Transition>
 
     <div
-      @mouseenter="onMouseEnter"
       class="bottom-0 left-0 z-10 absolute bg-transparent w-full h-20"
       :class="{ 'pointer-events-none': open }"
+      @mouseenter="onMouseEnter"
     />
   </div>
 </template>

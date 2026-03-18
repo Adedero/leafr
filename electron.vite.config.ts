@@ -20,21 +20,9 @@ export default defineConfig({
       tailwindcss(),
       Icons({ autoInstall: true, compiler: "vue3" }),
       AutoImport({
-        imports: [
-          "vue",
-          "vue-router",
-          "pinia",
-          "@vueuse/core",
-          {
-            "@renderer/utils/asset-url": [["default", "assetURL"]],
-            "@renderer/utils/char": [["default", "Char"]],
-            "@renderer/utils/list": [["default", "List"]],
-            "@renderer/utils/numerics": [["default", "Numerics"]],
-            "@renderer/utils/ttl-cache": [["default", "cache"]]
-          }
-        ],
+        imports: ["vue", "vue-router", "pinia", "@vueuse/core"],
         dts: "auto-imports.d.ts",
-        dirs: ["src/hooks", "src/utils/**"]
+        dirs: ["src/renderer/src/hooks/**", "src/renderer/src/utils/**"]
       }),
       Components({
         dirs: ["src/components"],

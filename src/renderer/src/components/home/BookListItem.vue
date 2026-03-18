@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Book } from "src/main/database/schema";
+import type { Book } from "src/main/database/schema";
+import assetURL from "@renderer/utils/asset-url";
 
 const { book } = defineProps<{
   book: Book;
@@ -32,8 +33,12 @@ const allowCheck = computed(() => !!getCurrentInstance()?.vnode?.props?.onSelect
       </div>
 
       <div>
-        <h3 class="font-semibold">{{ book.title }}</h3>
-        <p class="text-muted text-sm">{{ book.author }}</p>
+        <h3 class="font-semibold">
+          {{ book.title }}
+        </h3>
+        <p class="text-muted text-sm">
+          {{ book.author }}
+        </p>
       </div>
     </div>
   </div>

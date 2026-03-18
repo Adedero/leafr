@@ -1,4 +1,4 @@
-import { ButtonProps } from "@renderer/components/ui/Button.vue";
+import type { ButtonProps } from "@renderer/components/ui/Button.vue";
 
 export type UIColor = "primary" | "secondary" | "success" | "warning" | "error" | "neutral";
 export type UIVariant = "filled" | "outline" | "soft" | "subtle" | "ghost" | "link";

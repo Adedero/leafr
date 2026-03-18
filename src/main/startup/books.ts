@@ -3,7 +3,7 @@ import db, { table } from "../database";
 import getLibPath from "../utils/get-lib-path";
 import { join } from "node:path";
 import { existsSync } from "node:fs";
-import { NewBook } from "../database/schema";
+import type { NewBook } from "../database/schema";
 import { hashFile } from "../utils/hash-file";
 import { COVER_IMAGE_PATH } from "../utils/constants";
 import { normalizePath } from "../utils/normalize-path";

@@ -9,7 +9,7 @@ import { COVER_IMAGE_PATH } from "../../utils/constants";
 import { normalizePath } from "../../utils/normalize-path";
 import { EPub } from "epub";
 import logger from "../../utils/logger";
-import { NewBook } from "../../database/schema";
+import type { NewBook } from "../../database/schema";
 
 export type SyncBooksReturn = {
   added: string[];

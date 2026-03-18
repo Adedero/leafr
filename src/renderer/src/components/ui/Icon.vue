@@ -94,5 +94,5 @@ const component = computed<Component | null>(() => {
 </script>
 
 <template>
-  <component v-if="component" :is="component" :size="size" v-bind="$attrs" />
+  <component :is="component" v-if="component" :size="size" v-bind="$attrs" />
 </template>

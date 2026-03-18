@@ -44,7 +44,9 @@ const filteredSections = computed(() => {
                   :style="{ backgroundColor: t.colors.accent }"
                 />
               </div>
-              <p class="text-center text-sm font-semibold">{{ t.displayName }}</p>
+              <p class="text-center text-sm font-semibold">
+                {{ t.displayName }}
+              </p>
             </button>
           </div>
         </div>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { NavItem } from "epubjs";
+import type { NavItem } from "epubjs";
 
 interface Props {
   toc?: NavItem[];

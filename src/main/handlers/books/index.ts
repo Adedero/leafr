@@ -3,8 +3,10 @@ import getAllBooks from "./get-all-books";
 import getFullBookData from "./get-full-book-data";
 import syncBooks from "./sync-books";
 import beforeBookOpen from "./before-book-open";
-import beforeBookClose, { BeforeBookCloseInput } from "./before-book-close";
-import saveBookLocations, { SaveBookLocationsInput } from "./save-book-locations";
+import type { BeforeBookCloseInput } from "./before-book-close";
+import beforeBookClose from "./before-book-close";
+import type { SaveBookLocationsInput } from "./save-book-locations";
+import saveBookLocations from "./save-book-locations";
 
 export default function bookHandlers() {
   ipcMain.handle("books:get-all", getAllBooks);

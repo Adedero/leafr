@@ -45,7 +45,9 @@ const scale = computed(() => size / 80);
 
     <div v-if="showRandomLabels || label || $slots.label">
       <slot name="label">
-        <p class="font-semibold text-sm text-center">{{ showRandomLabels ? current : label }}</p>
+        <p class="font-semibold text-sm text-center">
+          {{ showRandomLabels ? current : label }}
+        </p>
       </slot>
     </div>
   </div>

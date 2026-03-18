@@ -144,12 +144,16 @@ const resources: BookResource[] = [
     <div class="flex flex-wrap gap-4">
       <div v-for="resource in resources" :key="resource.title">
         <button
-          @click="open(resource.link)"
           class="block p-4 shadow-md border-2 border-border bg-surface"
+          @click="open(resource.link)"
         >
           <Icon :name="resource.icon" class="text-xl" />
-          <h3 class="font-bold">{{ resource.title }}</h3>
-          <p class="text-sm">{{ resource.description }}</p>
+          <h3 class="font-bold">
+            {{ resource.title }}
+          </h3>
+          <p class="text-sm">
+            {{ resource.description }}
+          </p>
         </button>
       </div>
     </div>

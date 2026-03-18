@@ -49,7 +49,9 @@ const links = {
           exact-active-class="text-primary"
         >
           <Icon :name="link.icon" class="text-xl" />
-          <p class="font-bold text-[0.7rem]">{{ link.label }}</p>
+          <p class="font-bold text-[0.7rem]">
+            {{ link.label }}
+          </p>
         </RouterLink>
       </li>
     </ul>
@@ -62,7 +64,9 @@ const links = {
           exact-active-class="text-primary"
         >
           <Icon :name="link.icon" class="text-xl" />
-          <p class="font-bold text-[0.7rem]">{{ link.label }}</p>
+          <p class="font-bold text-[0.7rem]">
+            {{ link.label }}
+          </p>
         </RouterLink>
       </li>
     </ul>

@@ -38,7 +38,7 @@ export default function useLoop<T>(items: readonly T[], options: LoopOptions = {
   const isDone = ref(false);
 
   // Tracks which indices have been shown (for repeat: false)
-  let seen = new Set<number>();
+  const seen = new Set<number>();
   let timer: ReturnType<typeof setTimeout> | null = null;
 
   const progress = ref(0);

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastViewport } from "reka-ui";
-import { UIColor } from "@renderer/types/ui.type";
+import type { UIColor } from "@renderer/types/ui.type";
 import Icon from "./Icon.vue";
 
 const { toasts } = useToast();
@@ -32,9 +32,9 @@ const meterBgStyle = (color: UIColor) => {
   <ToastRoot
     v-for="toast in toasts"
     :key="toast.id"
+    v-slot="{ duration, remaining }"
     v-model:open="toast.open"
     :duration="toast.duration"
-    v-slot="{ duration, remaining }"
     class="toast-root bg-surface border-2 border-border p-1 grid gap-x-4"
   >
     <ToastTitle

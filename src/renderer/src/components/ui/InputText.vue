@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import Icon, { IconName } from "./Icon.vue";
-import { UISize } from "@renderer/types/ui.type";
+import type { IconName } from "./Icon.vue";
+import Icon from "./Icon.vue";
+import type { UISize } from "@renderer/types/ui.type";
 import { twMerge } from "tailwind-merge";
 
 export interface InputTextUI {

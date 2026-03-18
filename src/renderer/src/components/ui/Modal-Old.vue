@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { UIAction } from "@renderer/types/ui.type";
-import { IconName } from "./Icon.vue";
+import type { UIAction } from "@renderer/types/ui.type";
+import type { IconName } from "./Icon.vue";
 import { OVERLAY_WRAPPER_ID } from "@renderer/constants/ui";
 
 interface ModalUI {
@@ -276,7 +276,9 @@ const modalStyle = computed(() => {
                   :close="closeModal"
                   :is-fullscreen="isFullscreen"
                 >
-                  <p v-if="body" class="text-sm text-text leading-relaxed">{{ body }}</p>
+                  <p v-if="body" class="text-sm text-text leading-relaxed">
+                    {{ body }}
+                  </p>
                 </slot>
               </div>
 

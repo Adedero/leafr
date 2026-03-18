@@ -1,7 +1,7 @@
-import { UIAction, UIColor } from "@renderer/types/ui.type";
+import type { UIAction, UIColor } from "@renderer/types/ui.type";
 import { nextTick, onUnmounted, ref } from "vue";
 import { ulid } from "ulid";
-import { IconName } from "@renderer/components/ui/Icon.vue";
+import type { IconName } from "@renderer/components/ui/Icon.vue";
 
 export type XAxis = "left" | "right";
 export type YAxis = "top" | "bottom";

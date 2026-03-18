@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UIAction } from "@renderer/types/ui.type";
+import type { UIAction } from "@renderer/types/ui.type";
 
 interface Props {
   title?: string;

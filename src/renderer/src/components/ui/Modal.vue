@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { UIAction } from "@renderer/types/ui.type";
+import type { UIAction } from "@renderer/types/ui.type";
 import Icon, { type IconName } from "./Icon.vue";
 import Overlay from "./Overlay.vue";
 import Button from "./Button.vue";
@@ -172,7 +172,7 @@ const modalStyle = computed(() => {
           :aria-labelledby="title ? 'modal-title' : undefined"
           :aria-describedby="description ? 'modal-desc' : undefined"
         >
-          <slot name="content" :close="closeModal" :toggleFullscreen="toggleFullscreen">
+          <slot name="content" :close="closeModal" :toggle-fullscreen="toggleFullscreen">
             <!-- HEADER -->
             <div
               v-if="title || description || closeIcon || slots.header"
@@ -241,8 +241,10 @@ const modalStyle = computed(() => {
               v-if="body || slots.body"
               :class="twMerge('flex-1 overflow-y-auto px-5 py-4', ui?.body)"
             >
-              <slot name="body" :close="closeModal" :toggleFullscreen="toggleFullscreen">
-                <p v-if="body" class="text-base text-text leading-relaxed">{{ body }}</p>
+              <slot name="body" :close="closeModal" :toggle-fullscreen="toggleFullscreen">
+                <p v-if="body" class="text-base text-text leading-relaxed">
+                  {{ body }}
+                </p>
               </slot>
             </div>
 
@@ -253,7 +255,7 @@ const modalStyle = computed(() => {
                 twMerge('p-5 shrink-0', slots.body ? 'border-t-2 border-border' : '', ui?.footer)
               "
             >
-              <slot name="footer" :toggleFullscreen="toggleFullscreen" :close="closeModal">
+              <slot name="footer" :toggle-fullscreen="toggleFullscreen" :close="closeModal">
                 <div class="flex items-center justify-end gap-4">
                   <Button v-for="(action, index) in actions" :key="index" v-bind="action" />
                 </div>
