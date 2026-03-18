@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastViewport } from "reka-ui";
-import useToast from "@renderer/hooks/use-toast";
 import { UIColor } from "@renderer/types/ui.type";
 import Icon from "./Icon.vue";
 

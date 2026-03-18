@@ -1,17 +1,7 @@
 <script setup lang="ts">
-import useBook from "@renderer/hooks/use-book";
-import { onKeyStroke, useAsyncState } from "@vueuse/core";
 import useSWRV from "swrv";
-import { onBeforeRouteLeave, useRoute } from "vue-router";
 import epub, { type Rendition, type Book, NavItem } from "epubjs";
-import { ref, useTemplateRef, watch } from "vue";
-import assetURL from "@renderer/utils/asset-url";
-import { onUnmounted } from "vue";
-import useWheel from "@renderer/hooks/use-wheel";
-import useTheme from "@renderer/hooks/use-theme";
 import type { Location } from "epubjs/types/rendition";
-import useClickZone from "@renderer/hooks/use-click-zone";
-import Char from "@renderer/utils/char";
 
 const route = useRoute();
 const { getBook, onBeforeClose, saveBookLocations } = useBook();

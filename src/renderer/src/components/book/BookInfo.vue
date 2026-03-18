@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import assetURL from "@renderer/utils/asset-url";
-import { useDateFormat } from "@vueuse/core";
 import type { FullBook } from "src/main/database/schema";
 
 interface Props {

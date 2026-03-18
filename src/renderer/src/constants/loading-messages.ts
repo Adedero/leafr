@@ -1,5 +1,3 @@
-import List from "@renderer/utils/list";
-
 export const LOADING_MESSAGES = [
   "Dusting off the library shelves...",
   "Turning the next page...",

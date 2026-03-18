@@ -1,8 +1,6 @@
 <script setup lang="ts">
-import { ref, computed } from "vue";
 import { twMerge } from "tailwind-merge";
-import Button from "./Button.vue";
-import Icon, { IconName } from "./Icon.vue";
+import { IconName } from "./Icon.vue";
 
 import type { UIAction, UIColor } from "@renderer/types/ui.type";
 

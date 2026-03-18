@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { NavItem } from "epubjs";
-import { ref } from "vue";
 
 interface Props {
   toc?: NavItem[];

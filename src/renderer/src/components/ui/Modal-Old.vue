@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { UIAction } from "@renderer/types/ui.type";
-import { computed, ref, onMounted, onUnmounted, watch } from "vue";
 import { IconName } from "./Icon.vue";
 import { OVERLAY_WRAPPER_ID } from "@renderer/constants/ui";
 

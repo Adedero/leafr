@@ -1,11 +1,5 @@
 <script setup lang="ts">
-import useBooksSearch from "@renderer/hooks/use-books-search";
 import useSWRV from "swrv";
-import { computed } from "vue";
-import { useAsyncState } from "@vueuse/core";
-import useToast from "@renderer/hooks/use-toast";
-import { toError } from "@renderer/utils/to-error";
-import useBook from "@renderer/hooks/use-book";
 
 const toast = useToast();
 const { open } = useBook();

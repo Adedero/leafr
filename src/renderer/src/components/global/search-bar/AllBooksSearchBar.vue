@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import useBooksSearch from "@renderer/hooks/use-books-search";
 
 const { text } = useBooksSearch();
 </script>

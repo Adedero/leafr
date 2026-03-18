@@ -6,6 +6,7 @@
     "src/renderer/src/**/*.vue",
     "src/preload/*.d.ts",
     "src/renderer/components.d.ts",
+    "src/renderer/auto-imports.d.ts",
     "src/main/database/schema.ts",
     "src/main/handlers/**/*.ts"
   ],

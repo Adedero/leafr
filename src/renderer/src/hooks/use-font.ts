@@ -1,5 +1,4 @@
 import FONTS from "@renderer/constants/fonts";
-import cache from "@renderer/utils/ttl-cache";
 import { useLocalStorage } from "@vueuse/core";
 import { computed, watch } from "vue";
 

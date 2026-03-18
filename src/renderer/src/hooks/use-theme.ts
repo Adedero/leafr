@@ -1,6 +1,5 @@
 import { watch } from "vue";
 import THEMES, { Theme } from "@renderer/constants/themes";
-import List from "@renderer/utils/list";
 import { useLocalStorage } from "@vueuse/core";
 
 type ThemeName = Theme["name"];

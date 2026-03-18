@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from "vue";
 import Numerics from "@renderer/utils/numerics";
 
 interface Props {

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { OVERLAY_WRAPPER_ID } from "@renderer/constants/ui";
 import { twMerge } from "tailwind-merge";
-import { computed, useAttrs } from "vue";
 
 interface OverlayProps {
   transparent?: boolean;

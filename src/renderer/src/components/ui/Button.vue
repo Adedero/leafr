@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { UIColor, UISize, UIVariant } from "@renderer/types/ui.type";
 import { twMerge } from "tailwind-merge";
-import { computed, useAttrs, useSlots } from "vue";
-import Icon, { IconProps } from "./Icon.vue";
+import { IconProps } from "./Icon.vue";
 
 type ButtonUIIcon = IconProps["name"];
 

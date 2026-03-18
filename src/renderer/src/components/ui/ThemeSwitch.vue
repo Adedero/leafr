@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import Modal from "./Modal.vue";
 import Button from "./Button.vue";
-import useTheme from "@renderer/hooks/use-theme";
-import Char from "@renderer/utils/char";
 import InputText from "./InputText.vue";
-import { computed, ref } from "vue";
 
 const theme = useTheme();
 const search = ref("");

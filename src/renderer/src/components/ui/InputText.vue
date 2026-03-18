@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, useAttrs, useSlots } from "vue";
 import Icon, { IconName } from "./Icon.vue";
 import { UISize } from "@renderer/types/ui.type";
 import { twMerge } from "tailwind-merge";

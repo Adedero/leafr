@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type Component } from "vue";
+import type { Component } from "vue";
 // @ts-ignore
 import LucideHome from "~icons/lucide/home";
 // @ts-ignore

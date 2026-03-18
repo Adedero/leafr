@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { UIAction } from "@renderer/types/ui.type";
-import { computed, watch, useTemplateRef, useSlots, useAttrs } from "vue";
 import Icon, { type IconName } from "./Icon.vue";
 import Overlay from "./Overlay.vue";
 import Button from "./Button.vue";
-import { onClickOutside, onKeyStroke, useDraggable, useWindowSize } from "@vueuse/core";
 import { twMerge } from "tailwind-merge";
 
 interface ModalUI {

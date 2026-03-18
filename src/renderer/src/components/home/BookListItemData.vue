@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import assetURL from "@renderer/utils/asset-url";
 import { Book } from "src/main/database/schema";
-import Separator from "../ui/Separator.vue";
-import Button from "../ui/Button.vue";
-import Logo from "../global/Logo.vue";
-import { useAsyncState, useDateFormat } from "@vueuse/core";
-import useBook from "@renderer/hooks/use-book";
-import Spinner from "../ui/Spinner.vue";
 
 const { book } = defineProps<{
   book: Book;

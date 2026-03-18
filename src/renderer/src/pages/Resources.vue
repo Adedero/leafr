@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import useExternalLink from "@renderer/hooks/use-external-link";
 
 const { open } = useExternalLink();
 

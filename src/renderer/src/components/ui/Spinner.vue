@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { LOADING_MESSAGES } from "@renderer/constants/loading-messages";
-import useLoop from "@renderer/hooks/use-loop";
-import { computed, watch } from "vue";
 
 const {
   label = undefined,
