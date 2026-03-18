@@ -8,6 +8,7 @@ import linkHandlers from "./handlers/links";
 import { PROTOCOL_NAME } from "./utils/constants";
 import bookHandlers from "./handlers/books";
 import { pathToFileURL } from "node:url";
+import labelHandlers from "./handlers/labels";
 
 function createWindow(): void {
   // Create the browser window.
@@ -57,6 +58,7 @@ protocol.registerSchemesAsPrivileged([
 fontHandlers();
 linkHandlers();
 bookHandlers();
+labelHandlers();
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

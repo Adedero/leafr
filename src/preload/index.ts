@@ -24,6 +24,9 @@ const api = {
     saveBookLocation: (input: SaveBookLocationsInput) =>
       ipcRenderer.invoke("books:save-book-locations", input)
   },
+  labels: {
+    getAllLabels: () => ipcRenderer.invoke("labels:get-all")
+  },
   on: <T extends keyof Emits>(channel: T, fn: (payload: Emits[T]) => void) => {
     const wrapper = (_event: IpcRendererEvent, payload: Emits[T]) => fn(payload);
     ipcRenderer.on(channel, wrapper);

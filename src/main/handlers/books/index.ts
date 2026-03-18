@@ -10,7 +10,7 @@ import saveBookLocations from "./save-book-locations";
 
 export default function bookHandlers() {
   ipcMain.handle("books:get-all", getAllBooks);
-  ipcMain.handle("books:sync", syncBooks);
+  ipcMain.handle("books:sync", () => syncBooks());
   ipcMain.handle("books:get-full-book", (_, bookId: string) => getFullBookData(bookId));
   ipcMain.handle("books:before-book-open", (_, bookId: string) => beforeBookOpen(bookId));
   ipcMain.handle("books:before-book-close", (_, input: BeforeBookCloseInput) =>
