@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Char from "@renderer/utils/char";
+import { Char } from "@renderer/utils/char";
 
 const theme = useTheme();
 const search = ref("");

@@ -47,6 +47,8 @@ export default defineConfig(
   },
   {
     rules: {
+      "no-undef": "off",
+      "@typescript-eslint/explicit-function-return-type": "off",
       "@typescript-eslint/consistent-type-imports": [
         "error",
         {

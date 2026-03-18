@@ -1,9 +1,9 @@
 import type { BeforeBookCloseInput } from "src/main/handlers/books/before-book-close";
 import { useRouter } from "vue-router";
-import useToast from "./use-toast";
+import { useToast } from "./use-toast";
 import type { SaveBookLocationsInput } from "src/main/handlers/books/save-book-locations";
 
-export default function useBook() {
+export function useBook() {
   const router = useRouter();
   const toast = useToast();
 

@@ -1,9 +1,7 @@
-import collapseWhitespace from "./lib/collapse-whitespace";
-import toCase from "./lib/to-case";
+import { collapseWhitespace } from "./lib/collapse-whitespace";
+import { toCase } from "./lib/to-case";
 
-const Char = {
+export const Char = {
   collapseWhitespace,
   toCase
 };
-
-export default Char;

@@ -61,7 +61,7 @@ export type Loop<T> = () => T | undefined;
  * next(); // "a"
  * ```
  */
-export default function loop<T>(list: readonly T[], options: LoopOptions = {}): Loop<T> {
+export function loop<T>(list: readonly T[], options: LoopOptions = {}): Loop<T> {
   const { infinite = true, startIndex = 0, step = 1 } = options;
 
   if (!Number.isInteger(step) || step === 0) {

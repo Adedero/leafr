@@ -1,3 +1,3 @@
-export default function assetURL(path: string) {
+export function assetUrl(path: string) {
   return `${window.api.protocolName}://${path}`;
 }

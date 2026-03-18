@@ -67,7 +67,7 @@ async function initBook() {
     if (!data.value || book.value) {
       return;
     }
-    book.value = epub(assetURL(data.value.fileURL));
+    book.value = epub(assetUrl(data.value.fileURL));
     let locs: string[] = [];
     if (data.value.locations?.locations) {
       locs = book.value.locations.load(data.value.locations.locations);

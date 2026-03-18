@@ -17,39 +17,27 @@ export default defineConfig({
       }
     },
     plugins: [
-      tailwindcss(),
-      Icons({ autoInstall: true, compiler: "vue3" }),
       AutoImport({
-        imports: [
-          "vue",
-          "vue-router",
-          "pinia",
-          "@vueuse/core",
-          {
-            "@renderer/utils/asset-url": [["default", "assetURL"]],
-            "@renderer/utils/char": [["default", "Char"]],
-            "@renderer/utils/list": [["default", "List"]],
-            "@renderer/utils/numerics": [["default", "Numerics"]],
-            "@renderer/utils/ttl-cache": [["default", "cache"]]
-          }
-        ],
-        defaultExportByFilename: false,
+        imports: ["vue", "vue-router", "pinia", "@vueuse/core"],
         dts: "auto-imports.d.ts",
-        dirs: ["src/renderer/src/hooks/**", "src/renderer/src/utils/**"],
-        dirsScanOptions: {
-          filePatterns: ["*.ts"],
-          types: true
-        },
-        viteOptimizeDeps: true
+        dirs: [
+          resolve("src/renderer/src/hooks"),
+          resolve("src/renderer/src/hooks/**"),
+          resolve("src/renderer/src/utils"),
+          resolve("src/renderer/src/utils/**")
+        ],
+        eslintrc: { enabled: true }
       }),
       Components({
-        dirs: ["src/components"],
+        dirs: ["./src/components"],
         deep: true,
         dts: "components.d.ts",
         extensions: ["vue"],
         resolvers: [IconsResolver({ enabledCollections: ["lucide"] })]
       }),
-      vue()
+      vue(),
+      tailwindcss(),
+      Icons({ autoInstall: true, compiler: "vue3" })
     ]
   }
 });

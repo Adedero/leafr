@@ -21,7 +21,9 @@ export function toError(value: unknown): Error {
   // object with message property
   if (isObjectWithMessage(value)) {
     const err = new Error(String(value.message));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     err.cause = (value as any).cause;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     err.stack = (value as any).stack ?? err.stack;
     return err;
   }
@@ -56,6 +58,7 @@ function isObjectWithMessage(value: unknown): value is { message: string } {
     typeof value === "object" &&
     value !== null &&
     "message" in value &&
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     typeof (value as any).message === "string"
   );
 }

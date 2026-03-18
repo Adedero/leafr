@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { assetUrl } from "@renderer/utils/asset-url";
 import type { Book } from "src/main/database/schema";
-import assetURL from "@renderer/utils/asset-url";
 
 const { book } = defineProps<{
   book: Book;
@@ -24,7 +24,7 @@ const allowCheck = computed(() => !!getCurrentInstance()?.vnode?.props?.onSelect
         <div class="h-60 overflow-hidden">
           <img
             v-if="book.coverImagePath && book.coverImagePath.length > 2"
-            :src="assetURL(book.coverImagePath)"
+            :src="assetUrl(book.coverImagePath)"
           />
           <div v-else class="flex justify-center items-center bg-surface w-full h-full text-muted">
             <Logo color="currentcolor" />

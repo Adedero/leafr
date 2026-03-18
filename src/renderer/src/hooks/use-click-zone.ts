@@ -10,7 +10,7 @@ export interface UseClickZoneOptions {
   onZone?: (zone: ClickZone, event: PointerEvent) => void;
 }
 
-export default function useClickZone(
+export function useClickZone(
   el: MaybeRefOrGetter<ClickZoneTarget>,
   options: UseClickZoneOptions = {}
 ) {

@@ -10,7 +10,7 @@ interface CacheOptions {
 }
 
 export class TTLCache {
-  private memoryCache = new Map<string, StoredValue<any>>();
+  private memoryCache = new Map<string, StoredValue<unknown>>();
   private useLocalStorage: boolean;
   private defaultTTL: number;
   private cleanupIntervalId?: number;
@@ -55,7 +55,7 @@ export class TTLCache {
     }
   }
 
-  private isExpired(stored: StoredValue<any>): boolean {
+  private isExpired(stored: StoredValue<unknown>): boolean {
     return stored.expiresAt < Date.now();
   }
 

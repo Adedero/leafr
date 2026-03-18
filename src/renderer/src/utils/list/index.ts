@@ -1,11 +1,10 @@
-import cycle from "./lib/cycle";
-import loop from "./lib/loop";
-import randomItem from "./lib/random-item";
+import { cycle } from "./lib/cycle";
+import { loop } from "./lib/loop";
+import { randomItem } from "./lib/random-item";
 
-const List = {
+export const List = {
   cycle,
   loop,
   randomItem
 };
 
-export default List;

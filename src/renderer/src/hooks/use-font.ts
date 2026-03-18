@@ -1,6 +1,6 @@
 import FONTS from "@renderer/constants/fonts";
 
-export default function useFont() {
+export function useFont() {
   const UIFont = useLocalStorage<string>("app:ui-font", FONTS[0]);
   const readerFont = useLocalStorage<string>("app:reader-font", FONTS[0]);
   const current = computed(() => ({

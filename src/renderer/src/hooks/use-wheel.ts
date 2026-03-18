@@ -18,7 +18,7 @@ interface WheelOptions {
 
 type TargetEl = MaybeRefOrGetter<Window | Document | HTMLElement | null>;
 
-export default function useWheel(el: TargetEl | TargetEl[], options: WheelOptions) {
+export function useWheel(el: TargetEl | TargetEl[], options: WheelOptions) {
   const threshold = options.threshold ?? 80;
   const cooldown = options.cooldown ?? 350;
   const passive = options.passive ?? false;

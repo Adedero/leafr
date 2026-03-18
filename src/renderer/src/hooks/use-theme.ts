@@ -3,7 +3,7 @@ import THEMES from "@renderer/constants/themes";
 
 type ThemeName = Theme["name"];
 
-export default function useTheme() {
+export function useTheme() {
   const theme = useLocalStorage<ThemeName>("app:theme", THEMES[0].name);
 
   const apply = (name: ThemeName) => {

@@ -6,19 +6,19 @@
 // biome-ignore lint: disable
 export {}
 declare global {
-  const Char: typeof import('@renderer/utils/char').default
+  const Char: typeof import('./src/utils/char/index').Char
   const EffectScope: typeof import('vue').EffectScope
-  const List: typeof import('@renderer/utils/list').default
-  const Numerics: typeof import('@renderer/utils/numerics').default
-  const TTLCache: typeof import("./src/utils/ttl-cache/ttl-cache").TTLCache
+  const List: typeof import('./src/utils/list/index').List
+  const Numerics: typeof import('./src/utils/numerics/index').Numerics
+  const TTLCache: typeof import('./src/utils/ttl-cache/ttl-cache').TTLCache
   const acceptHMRUpdate: typeof import('pinia').acceptHMRUpdate
-  const assetURL: typeof import('@renderer/utils/asset-url').default
-  const assetUrl: typeof import("./src/utils/asset-url").default
+  const assetURL: typeof import('./src/utils/asset-url').assetURL
+  const assetUrl: typeof import('./src/utils/asset-url').assetUrl
   const asyncComputed: typeof import('@vueuse/core').asyncComputed
   const autoResetRef: typeof import('@vueuse/core').autoResetRef
-  const cache: typeof import('@renderer/utils/ttl-cache').default
+  const cache: typeof import('./src/utils/ttl-cache/index').cache
   const char: typeof import("./src/utils/char/index").default
-  const collapseWhitespace: typeof import("./src/utils/char/lib/collapse-whitespace").default
+  const collapseWhitespace: typeof import('./src/utils/char/lib/collapse-whitespace').collapseWhitespace
   const computed: typeof import('vue').computed
   const computedAsync: typeof import('@vueuse/core').computedAsync
   const computedEager: typeof import('@vueuse/core').computedEager
@@ -38,8 +38,8 @@ declare global {
   const createTemplatePromise: typeof import('@vueuse/core').createTemplatePromise
   const createUnrefFn: typeof import('@vueuse/core').createUnrefFn
   const customRef: typeof import('vue').customRef
-  const cycle: typeof import("./src/utils/list/lib/cycle").default
-  const debounce: typeof import("./src/utils/debounce").default
+  const cycle: typeof import('./src/utils/list/lib/cycle').cycle
+  const debounce: typeof import('./src/utils/debounce').debounce
   const debouncedRef: typeof import('@vueuse/core').debouncedRef
   const debouncedWatch: typeof import('@vueuse/core').debouncedWatch
   const defineAsyncComponent: typeof import('vue').defineAsyncComponent
@@ -63,7 +63,7 @@ declare global {
   const isRef: typeof import('vue').isRef
   const isShallow: typeof import('vue').isShallow
   const list: typeof import("./src/utils/list/index").default
-  const loop: typeof import("./src/utils/list/lib/loop").default
+  const loop: typeof import('./src/utils/list/lib/loop').loop
   const makeDestructurable: typeof import('@vueuse/core').makeDestructurable
   const mapActions: typeof import('pinia').mapActions
   const mapGetters: typeof import('pinia').mapGetters
@@ -97,7 +97,7 @@ declare global {
   const pausableWatch: typeof import('@vueuse/core').pausableWatch
   const provide: typeof import('vue').provide
   const provideLocal: typeof import('@vueuse/core').provideLocal
-  const randomItem: typeof import("./src/utils/list/lib/random-item").default
+  const randomItem: typeof import('./src/utils/list/lib/random-item').randomItem
   const reactify: typeof import('@vueuse/core').reactify
   const reactifyObject: typeof import('@vueuse/core').reactifyObject
   const reactive: typeof import('vue').reactive
@@ -114,13 +114,13 @@ declare global {
   const refWithControl: typeof import('@vueuse/core').refWithControl
   const resolveComponent: typeof import('vue').resolveComponent
   const resolveRef: typeof import('@vueuse/core').resolveRef
-  const round: typeof import("./src/utils/numerics/lib/round").default
+  const round: typeof import('./src/utils/numerics/lib/round').round
   const setActivePinia: typeof import('pinia').setActivePinia
   const setMapStoreSuffix: typeof import('pinia').setMapStoreSuffix
   const shallowReactive: typeof import('vue').shallowReactive
   const shallowReadonly: typeof import('vue').shallowReadonly
   const shallowRef: typeof import('vue').shallowRef
-  const sleep: typeof import("./src/utils/sleep").default
+  const sleep: typeof import('./src/utils/sleep').sleep
   const storeToRefs: typeof import('pinia').storeToRefs
   const syncRef: typeof import('@vueuse/core').syncRef
   const syncRefs: typeof import('@vueuse/core').syncRefs
@@ -128,9 +128,9 @@ declare global {
   const throttle: typeof import("./src/utils/throttle").throttle
   const throttledRef: typeof import('@vueuse/core').throttledRef
   const throttledWatch: typeof import('@vueuse/core').throttledWatch
-  const toCase: typeof import("./src/utils/char/lib/to-case").default
-  const toError: typeof import("./src/utils/to-error").toError
-  const toErrorMessage: typeof import("./src/utils/to-error").toErrorMessage
+  const toCase: typeof import('./src/utils/char/lib/to-case').toCase
+  const toError: typeof import('./src/utils/to-error').toError
+  const toErrorMessage: typeof import('./src/utils/to-error').toErrorMessage
   const toRaw: typeof import('vue').toRaw
   const toReactive: typeof import('@vueuse/core').toReactive
   const toRef: typeof import('vue').toRef
@@ -166,13 +166,13 @@ declare global {
   const useBase64: typeof import('@vueuse/core').useBase64
   const useBattery: typeof import('@vueuse/core').useBattery
   const useBluetooth: typeof import('@vueuse/core').useBluetooth
-  const useBook: typeof import("./src/hooks/use-book").default
-  const useBooksSearch: typeof import("./src/hooks/use-books-search").default
+  const useBook: typeof import('./src/hooks/use-book').useBook
+  const useBooksSearch: typeof import('./src/hooks/use-books-search').useBooksSearch
   const useBreakpoints: typeof import('@vueuse/core').useBreakpoints
   const useBroadcastChannel: typeof import('@vueuse/core').useBroadcastChannel
   const useBrowserLocation: typeof import('@vueuse/core').useBrowserLocation
   const useCached: typeof import('@vueuse/core').useCached
-  const useClickZone: typeof import("./src/hooks/use-click-zone").default
+  const useClickZone: typeof import('./src/hooks/use-click-zone').useClickZone
   const useClipboard: typeof import('@vueuse/core').useClipboard
   const useClipboardItems: typeof import('@vueuse/core').useClipboardItems
   const useCloned: typeof import('@vueuse/core').useCloned
@@ -207,7 +207,7 @@ declare global {
   const useEventBus: typeof import('@vueuse/core').useEventBus
   const useEventListener: typeof import('@vueuse/core').useEventListener
   const useEventSource: typeof import('@vueuse/core').useEventSource
-  const useExternalLink: typeof import("./src/hooks/use-external-link").default
+  const useExternalLink: typeof import('./src/hooks/use-external-link').useExternalLink
   const useEyeDropper: typeof import('@vueuse/core').useEyeDropper
   const useFavicon: typeof import('@vueuse/core').useFavicon
   const useFetch: typeof import('@vueuse/core').useFetch
@@ -215,7 +215,7 @@ declare global {
   const useFileSystemAccess: typeof import('@vueuse/core').useFileSystemAccess
   const useFocus: typeof import('@vueuse/core').useFocus
   const useFocusWithin: typeof import('@vueuse/core').useFocusWithin
-  const useFont: typeof import("./src/hooks/use-font").default
+  const useFont: typeof import('./src/hooks/use-font').useFont
   const useFps: typeof import('@vueuse/core').useFps
   const useFullscreen: typeof import('@vueuse/core').useFullscreen
   const useGamepad: typeof import('@vueuse/core').useGamepad
@@ -231,7 +231,7 @@ declare global {
   const useLastChanged: typeof import('@vueuse/core').useLastChanged
   const useLink: typeof import('vue-router').useLink
   const useLocalStorage: typeof import('@vueuse/core').useLocalStorage
-  const useLoop: typeof import("./src/hooks/use-loop").default
+  const useLoop: typeof import('./src/hooks/use-loop').useLoop
   const useMagicKeys: typeof import('@vueuse/core').useMagicKeys
   const useManualRefHistory: typeof import('@vueuse/core').useManualRefHistory
   const useMediaControls: typeof import('@vueuse/core').useMediaControls
@@ -293,7 +293,7 @@ declare global {
   const useTextDirection: typeof import('@vueuse/core').useTextDirection
   const useTextSelection: typeof import('@vueuse/core').useTextSelection
   const useTextareaAutosize: typeof import('@vueuse/core').useTextareaAutosize
-  const useTheme: typeof import("./src/hooks/use-theme").default
+  const useTheme: typeof import('./src/hooks/use-theme').useTheme
   const useThrottle: typeof import('@vueuse/core').useThrottle
   const useThrottleFn: typeof import('@vueuse/core').useThrottleFn
   const useThrottledRefHistory: typeof import('@vueuse/core').useThrottledRefHistory
@@ -306,10 +306,10 @@ declare global {
   const useTitle: typeof import('@vueuse/core').useTitle
   const useToNumber: typeof import('@vueuse/core').useToNumber
   const useToString: typeof import('@vueuse/core').useToString
-  const useToast: typeof import("./src/hooks/use-toast").default
+  const useToast: typeof import('./src/hooks/use-toast').useToast
   const useToggle: typeof import('@vueuse/core').useToggle
   const useTransition: typeof import('@vueuse/core').useTransition
-  const useUiStore: typeof import("./src/hooks/use-ui-store").default
+  const useUiStore: typeof import('./src/hooks/use-ui-store').useUiStore
   const useUrlSearchParams: typeof import('@vueuse/core').useUrlSearchParams
   const useUserMedia: typeof import('@vueuse/core').useUserMedia
   const useVModel: typeof import('@vueuse/core').useVModel
@@ -321,7 +321,7 @@ declare global {
   const useWebSocket: typeof import('@vueuse/core').useWebSocket
   const useWebWorker: typeof import('@vueuse/core').useWebWorker
   const useWebWorkerFn: typeof import('@vueuse/core').useWebWorkerFn
-  const useWheel: typeof import("./src/hooks/use-wheel").default
+  const useWheel: typeof import('./src/hooks/use-wheel').useWheel
   const useWindowFocus: typeof import('@vueuse/core').useWindowFocus
   const useWindowScroll: typeof import('@vueuse/core').useWindowScroll
   const useWindowSize: typeof import('@vueuse/core').useWindowSize
@@ -347,4 +347,28 @@ declare global {
   // @ts-ignore
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { ClickZone, ClickZoneTarget, UseClickZoneOptions } from './src/hooks/use-click-zone'
+  import('./src/hooks/use-click-zone')
+  // @ts-ignore
+  export type { LoopReturn } from './src/hooks/use-loop'
+  import('./src/hooks/use-loop')
+  // @ts-ignore
+  export type { XAxis, YAxis, ToastPosition, ToastOptions, Toast, UseToastInstanceOptions } from './src/hooks/use-toast'
+  import('./src/hooks/use-toast')
+  // @ts-ignore
+  export type { WheelDirection, WheelGesture } from './src/hooks/use-wheel'
+  import('./src/hooks/use-wheel')
+  // @ts-ignore
+  export type { StringCase } from './src/utils/char/lib/to-case'
+  import('./src/utils/char/lib/to-case')
+  // @ts-ignore
+  export type { CycleOptions, Cycle } from './src/utils/list/lib/cycle'
+  import('./src/utils/list/lib/cycle')
+  // @ts-ignore
+  export type { LoopOptions, Loop } from './src/utils/list/lib/loop'
+  import('./src/utils/list/lib/loop')
+  // @ts-ignore
+  export type { TTLCache } from './src/utils/ttl-cache/ttl-cache'
+  import('./src/utils/ttl-cache/ttl-cache')
 }

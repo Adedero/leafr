@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastViewport } from "reka-ui";
+import { ToastRoot, ToastTitle, ToastDescription, ToastViewport } from "reka-ui";
 import type { UIColor } from "@renderer/types/ui.type";
 import Icon from "./Icon.vue";
 
 const { toasts } = useToast();
 
-const toastHeaderClass = (color: UIColor) => {
+const toastHeaderClass = (color: UIColor): string => {
   switch (color) {
     case "neutral":
       return "bg-transparent text-text";
@@ -14,7 +14,7 @@ const toastHeaderClass = (color: UIColor) => {
   }
 };
 
-const meterBgStyle = (color: UIColor) => {
+const meterBgStyle = (color: UIColor): Record<string, string> => {
   switch (color) {
     case "neutral":
       return {
@@ -35,7 +35,7 @@ const meterBgStyle = (color: UIColor) => {
     v-slot="{ duration, remaining }"
     v-model:open="toast.open"
     :duration="toast.duration"
-    class="toast-root bg-surface border-2 border-border p-1 grid gap-x-4"
+    class="gap-x-4 grid bg-surface p-1 border-2 border-border toast-root"
   >
     <ToastTitle
       v-if="toast.title"
@@ -49,7 +49,7 @@ const meterBgStyle = (color: UIColor) => {
       <span> {{ toast.title }}</span>
     </ToastTitle>
 
-    <ToastDescription v-if="toast.description" class="text-sm p-2">
+    <ToastDescription v-if="toast.description" class="p-2 text-sm">
       {{ toast.description }}
     </ToastDescription>
 
@@ -71,7 +71,7 @@ const meterBgStyle = (color: UIColor) => {
     </ToastAction> -->
   </ToastRoot>
 
-  <ToastViewport class="z-100 fixed bottom-0 right-0 flex flex-col p-6 gap-3 w-100 max-w-[100vw]" />
+  <ToastViewport class="right-0 bottom-0 z-100 fixed flex flex-col gap-3 p-6 w-100 max-w-[100vw]" />
 </template>
 
 <style>

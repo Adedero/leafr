@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { assetUrl } from "@renderer/utils/asset-url";
 import type { TBookLocation } from "@renderer/pages/Book.vue";
 import type { FullBook } from "src/main/database/schema";
 import Logo from "../global/Logo.vue";
@@ -49,7 +50,7 @@ const onMouseLeave = debounce(() => {
             >
               <img
                 v-if="book.coverImagePath && book.coverImagePath.length > 2"
-                :src="assetURL(book.coverImagePath)"
+                :src="assetUrl(book.coverImagePath)"
                 class="w-full h-full object-cover"
               />
               <Logo v-else :width="40" color="var(--color-text)" />

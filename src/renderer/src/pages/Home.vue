@@ -60,7 +60,7 @@ const { isLoading: isSyncing, executeImmediate: syncBooks } = useAsyncState(
     </div>
 
     <div class="space-y-2">
-      <header class="z-10 top-0 sticky flex justify-between items-center gap-2 bg-background py-2">
+      <header class="top-0 z-10 sticky flex justify-between items-center gap-2 bg-background py-2">
         <h2 class="font-bold text-xl">
           All <span v-if="books">({{ books.length }})</span>
         </h2>

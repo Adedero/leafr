@@ -4,7 +4,7 @@
  * * @param items - An array of items of type T
  * @returns A single item of type T or undefined
  */
-export default function randomItem<T>(items: readonly T[]): T | undefined {
+export function randomItem<T>(items: readonly T[]): T | undefined {
   if (items.length === 0) {
     return undefined;
   }

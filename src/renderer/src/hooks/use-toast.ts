@@ -40,7 +40,7 @@ const toasts = ref<Toast[]>([]);
 
 const ID = () => ulid();
 
-export default function useToast(config: UseToastInstanceOptions = {}) {
+export function useToast(config: UseToastInstanceOptions = {}) {
   const useToastConfig: UseToastInstanceOptions = {
     clearOnUnmounted: true,
     ...config

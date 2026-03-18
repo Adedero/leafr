@@ -24,7 +24,7 @@ export type StringCase = "upper" | "lower" | "capitalize";
  * toCase("hello world", "capitalize")
  * // "Hello world"
  */
-export default function toCase(str: string, caseType: StringCase = "lower"): string {
+export function toCase(str: string, caseType: StringCase = "lower"): string {
   if (!str) return "";
 
   switch (caseType) {

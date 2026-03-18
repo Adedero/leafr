@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import useUIStore from "@renderer/hooks/use-ui-store";
-
-const UIStore = useUIStore();
+const UIStore = useUiStore();
 </script>
 
 <template>

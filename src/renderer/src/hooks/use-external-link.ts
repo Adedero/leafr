@@ -1,4 +1,4 @@
-export default function useExternalLink() {
+export function useExternalLink() {
   const open = (url: string) => {
     window.api.link.openExternal(url);
   };

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useDateFormat } from "@vueuse/core";
+import { assetUrl } from "@renderer/utils/asset-url";
 import type { Book } from "src/main/database/schema";
 
 const { book } = defineProps<{
@@ -22,7 +24,7 @@ const { isLoading, executeImmediate } = useAsyncState(open, null, { immediate: f
         <div class="h-80 overflow-hidden cursor-pointer" @click="executeImmediate(book.id)">
           <img
             v-if="book.coverImagePath"
-            :src="assetURL(book.coverImagePath)"
+            :src="assetUrl(book.coverImagePath)"
             class="h-full object-cover"
           />
           <div v-else class="flex justify-center items-center bg-surface w-full h-full text-muted">

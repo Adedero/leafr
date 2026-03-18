@@ -21,7 +21,7 @@ export interface LoopReturn<T> {
   next: () => void; // manually advance
 }
 
-export default function useLoop<T>(items: readonly T[], options: LoopOptions = {}): LoopReturn<T> {
+export function useLoop<T>(items: readonly T[], options: LoopOptions = {}): LoopReturn<T> {
   const {
     interval = 3000,
     mode = "sequential",
