@@ -72,7 +72,9 @@ const onMouseLeave = debounce(() => {
               <p class="text-semibold text-sm">
                 {{ location.current?.label }}
               </p>
-              <p class="text-xs">{{ location.current?.page }}/{{ location.current?.total }}</p>
+              <p class="text-xs">
+                {{ location.current?.page }}/{{ location.current?.total }}
+              </p>
             </div>
 
             <!-- <p class="text-xs">slider and progress here (pages or percentages)</p> -->

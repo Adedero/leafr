@@ -54,7 +54,9 @@ const { isLoading, executeImmediate } = useAsyncState(open, null, { immediate: f
           <p v-if="book.title" class="font-semibold">
             {{ book.title }}
           </p>
-          <p v-else class="font-semibold">N/A</p>
+          <p v-else class="font-semibold">
+            N/A
+          </p>
         </div>
 
         <div>
@@ -62,7 +64,9 @@ const { isLoading, executeImmediate } = useAsyncState(open, null, { immediate: f
           <p v-if="book.author" class="font-semibold">
             {{ book.author }}
           </p>
-          <p v-else class="font-semibold">N/A</p>
+          <p v-else class="font-semibold">
+            N/A
+          </p>
         </div>
 
         <div>
@@ -70,7 +74,9 @@ const { isLoading, executeImmediate } = useAsyncState(open, null, { immediate: f
           <p v-if="book.publisher" class="font-semibold">
             {{ book.publisher }}
           </p>
-          <p v-else class="font-semibold">N/A</p>
+          <p v-else class="font-semibold">
+            N/A
+          </p>
         </div>
 
         <div>
@@ -78,7 +84,9 @@ const { isLoading, executeImmediate } = useAsyncState(open, null, { immediate: f
           <p v-if="book.publishedDate" class="font-semibold">
             {{ useDateFormat(book.publishedDate, "DD MMM, YYYY") }}
           </p>
-          <p v-else class="font-semibold">N/A</p>
+          <p v-else class="font-semibold">
+            N/A
+          </p>
         </div>
       </div>
 

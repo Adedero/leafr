@@ -53,7 +53,9 @@ const { isLoading: isSyncing, executeImmediate: syncBooks } = useAsyncState(
 <template>
   <div class="space-y-16 px-4 py-6">
     <div v-if="!debounced && recents.length > 0" class="space-y-4">
-      <h2 class="font-bold text-xl">Recents</h2>
+      <h2 class="font-bold text-xl">
+        Recents
+      </h2>
       <div class="gap-5 grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))]">
         <BookListItem v-for="book in recents" :key="book.id" :book="book" @select="open(book.id)" />
       </div>
@@ -101,7 +103,9 @@ const { isLoading: isSyncing, executeImmediate: syncBooks } = useAsyncState(
               <p>No books yet.</p>
               <p>Why don't you open one to get started?</p>
             </div>
-            <Button color="neutral" variant="outline" icon="lucide:plus"> Open </Button>
+            <Button color="neutral" variant="outline" icon="lucide:plus">
+              Open
+            </Button>
           </div>
         </div>
       </div>

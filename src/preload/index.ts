@@ -22,15 +22,15 @@ const api = {
     beforeBookClose: (input: BeforeBookCloseInput) =>
       ipcRenderer.invoke("books:before-book-close", input),
     saveBookLocation: (input: SaveBookLocationsInput) =>
-      ipcRenderer.invoke("books:save-book-locations", input),
-    on: <T extends keyof Emits>(channel: T, fn: (payload: Emits[T]) => void) => {
-      const wrapper = (_event: IpcRendererEvent, payload: Emits[T]) => fn(payload);
-      ipcRenderer.on(channel, wrapper);
-      return wrapper; // return so it can be removed
-    },
-    off: <T extends keyof Emits>(channel: T, fn: (...args: unknown[]) => void) => {
-      ipcRenderer.removeListener(channel, fn);
-    }
+      ipcRenderer.invoke("books:save-book-locations", input)
+  },
+  on: <T extends keyof Emits>(channel: T, fn: (payload: Emits[T]) => void) => {
+    const wrapper = (_event: IpcRendererEvent, payload: Emits[T]) => fn(payload);
+    ipcRenderer.on(channel, wrapper);
+    return wrapper; // return so it can be removed
+  },
+  off: <T extends keyof Emits>(channel: T, fn: (...args: unknown[]) => void) => {
+    ipcRenderer.removeListener(channel, fn);
   }
 };
 

@@ -27,7 +27,9 @@ const UIStore = useUiStore();
 
         <div class="flex w-56 shrink-0">
           <div class="flex justify-center items-center p-4">
-            <Button color="neutral" variant="outline" icon="lucide:plus"> Open </Button>
+            <Button color="neutral" variant="outline" icon="lucide:plus">
+              Open
+            </Button>
           </div>
           <Separator orientation="vertical" />
           <div class="flex justify-center items-center grow">

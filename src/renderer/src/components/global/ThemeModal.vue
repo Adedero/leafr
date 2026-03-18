@@ -53,7 +53,9 @@ const filteredSections = computed(() => {
     <template #footer="{ close }">
       <div class="flex justify-between items-center gap-2">
         <InputText v-model="search" placeholder="Search themes..." icon="lucide:search" size="sm" />
-        <Button color="neutral" variant="outline" @click="close"> Close </Button>
+        <Button color="neutral" variant="outline" @click="close">
+          Close
+        </Button>
       </div>
     </template>
   </Modal>

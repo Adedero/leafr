@@ -12,5 +12,5 @@ export type Emits = {
   "file:change": null;
   "file:unlink": null;
   "lib-dir:add": null;
-  "lib-dir:remove": null;
+  "lib-dir:unlink": null;
 };
