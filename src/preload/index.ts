@@ -18,8 +18,10 @@ const api = {
     sync: () => ipcRenderer.invoke("books:sync"),
     getFullBook: (bookId: string) => ipcRenderer.invoke("books:get-full-book", bookId),
     beforeBookOpen: (bookId: string) => ipcRenderer.invoke("books:before-book-open", bookId),
-    beforeBookClose: (input: BeforeBookCloseInput) => ipcRenderer.invoke("books:before-book-close", input),
-    saveBookLocation: (input: SaveBookLocationsInput) => ipcRenderer.invoke("books:save-book-locations", input),
+    beforeBookClose: (input: BeforeBookCloseInput) =>
+      ipcRenderer.invoke("books:before-book-close", input),
+    saveBookLocation: (input: SaveBookLocationsInput) =>
+      ipcRenderer.invoke("books:save-book-locations", input)
   }
 };
 

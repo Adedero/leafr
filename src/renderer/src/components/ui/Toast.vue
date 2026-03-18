@@ -53,7 +53,7 @@ const meterBgStyle = (color: UIColor) => {
     <ToastDescription v-if="toast.description" class="text-sm p-2">
       {{ toast.description }}
     </ToastDescription>
-    
+
     <div v-if="duration" class="border-2 border-border">
       <div
         class="h-1"

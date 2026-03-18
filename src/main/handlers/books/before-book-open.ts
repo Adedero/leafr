@@ -22,7 +22,7 @@ export default async function beforeBookOpen(bookId: string) {
         bookId,
         startedAt: now,
         endedAt: null,
-        durationSeconds: 0,
+        durationSeconds: 0
       });
     }
 

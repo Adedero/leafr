@@ -30,13 +30,11 @@ export default function useBook() {
     const res = await window.api.books.saveBookLocation(input);
     return res;
   };
-  
-  
 
   return {
     open,
     onBeforeClose,
     getBook,
-    saveBookLocations,
+    saveBookLocations
   };
 }

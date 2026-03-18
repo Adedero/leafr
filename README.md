@@ -21,7 +21,6 @@ Leafr is a minimal desktop EPUB reader built for people who just want to read. N
 
 ## Screenshots
 
-
 ![Home screen (dark)](./.github/assets/home-screen-dark.png)
 
 ![Reader view](./.github/assets/reader-light.png)

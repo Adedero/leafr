@@ -11,6 +11,10 @@ export default function bookHandlers() {
   ipcMain.handle("books:sync", syncBooks);
   ipcMain.handle("books:get-full-book", (_, bookId: string) => getFullBookData(bookId));
   ipcMain.handle("books:before-book-open", (_, bookId: string) => beforeBookOpen(bookId));
-  ipcMain.handle("books:before-book-close", (_, input: BeforeBookCloseInput) => beforeBookClose(input));
-  ipcMain.handle("books:save-book-locations", (_, input: SaveBookLocationsInput) => saveBookLocations(input));
+  ipcMain.handle("books:before-book-close", (_, input: BeforeBookCloseInput) =>
+    beforeBookClose(input)
+  );
+  ipcMain.handle("books:save-book-locations", (_, input: SaveBookLocationsInput) =>
+    saveBookLocations(input)
+  );
 }

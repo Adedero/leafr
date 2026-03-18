@@ -879,8 +879,8 @@ export default [
     colors: {
       background: "rgb(250 245 235)",
       text: "rgb(60 45 30)",
-      accent: "rgb(210 125 65)",      // warm terracotta/sunset sand
-      secondary: "rgb(245 225 190)",  // pale creamy sand
+      accent: "rgb(210 125 65)", // warm terracotta/sunset sand
+      secondary: "rgb(245 225 190)", // pale creamy sand
       surface: "rgb(255 240 220)",
       muted: "rgb(180 150 120)",
       border: "rgb(200 170 140)"
@@ -909,8 +909,8 @@ export default [
     colors: {
       background: "rgb(240 250 248)",
       text: "rgb(20 50 55)",
-      accent: "rgb(40 160 140)",      // soft teal
-      secondary: "rgb(180 230 220)",  // very pale mint-teal
+      accent: "rgb(40 160 140)", // soft teal
+      secondary: "rgb(180 230 220)", // very pale mint-teal
       surface: "rgb(225 245 240)",
       muted: "rgb(120 170 160)",
       border: "rgb(90 140 130)"
@@ -939,8 +939,8 @@ export default [
     colors: {
       background: "rgb(248 242 235)",
       text: "rgb(65 40 35)",
-      accent: "rgb(190 110 90)",      // warm terracotta clay
-      secondary: "rgb(230 190 170)",  // soft dusty rose-beige
+      accent: "rgb(190 110 90)", // warm terracotta clay
+      secondary: "rgb(230 190 170)", // soft dusty rose-beige
       surface: "rgb(240 225 210)",
       muted: "rgb(170 130 115)",
       border: "rgb(180 140 125)"
@@ -969,8 +969,8 @@ export default [
     colors: {
       background: "rgb(245 245 245)",
       text: "rgb(30 30 35)",
-      accent: "rgb(90 90 110)",       // deep charcoal gray
-      secondary: "rgb(160 160 170)",  // lighter cool gray
+      accent: "rgb(90 90 110)", // deep charcoal gray
+      secondary: "rgb(160 160 170)", // lighter cool gray
       surface: "rgb(235 235 240)",
       muted: "rgb(140 140 150)",
       border: "rgb(200 200 210)"
@@ -999,8 +999,8 @@ export default [
     colors: {
       background: "rgb(255 248 220)",
       text: "rgb(70 45 20)",
-      accent: "rgb(230 160 40)",      // rich honey gold
-      secondary: "rgb(255 230 160)",  // pale soft gold
+      accent: "rgb(230 160 40)", // rich honey gold
+      secondary: "rgb(255 230 160)", // pale soft gold
       surface: "rgb(255 240 200)",
       muted: "rgb(190 150 90)",
       border: "rgb(220 180 120)"
@@ -1029,8 +1029,8 @@ export default [
     colors: {
       background: "rgb(245 248 252)",
       text: "rgb(35 45 60)",
-      accent: "rgb(100 140 200)",     // soft steel blue
-      secondary: "rgb(190 210 230)",  // pale blue-gray mist
+      accent: "rgb(100 140 200)", // soft steel blue
+      secondary: "rgb(190 210 230)", // pale blue-gray mist
       surface: "rgb(235 240 248)",
       muted: "rgb(140 160 190)",
       border: "rgb(180 200 220)"
@@ -1172,5 +1172,5 @@ export default [
       muted: "rgb(118 85 42)",
       border: "rgb(65 45 22)"
     }
-  },
+  }
 ];

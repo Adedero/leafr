@@ -64,8 +64,8 @@ export default function useWheel(el: TargetEl | TargetEl[], options: WheelOption
     const els = Array.isArray(el) ? el : [el];
     els.forEach((e) => toValue(e)?.removeEventListener("wheel", onWheel));
   });
-  
+
   return {
-    onWheel,
-  }
+    onWheel
+  };
 }

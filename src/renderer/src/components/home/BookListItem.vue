@@ -24,7 +24,10 @@ const allowCheck = computed(() => !!getCurrentInstance()?.vnode?.props?.onSelect
     <div class="space-y-2">
       <div class="p-1 border-2 border-border">
         <div class="h-60 overflow-hidden">
-          <img v-if="book.coverImagePath && book.coverImagePath.length > 2" :src="assetURL(book.coverImagePath)" />
+          <img
+            v-if="book.coverImagePath && book.coverImagePath.length > 2"
+            :src="assetURL(book.coverImagePath)"
+          />
           <div v-else class="flex justify-center items-center bg-surface w-full h-full text-muted">
             <Logo color="currentcolor" />
           </div>

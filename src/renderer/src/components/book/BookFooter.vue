@@ -50,7 +50,9 @@ const onMouseLeave = debounce(() => {
         >
           <!-- Book Cover & Info -->
           <div class="hidden md:flex items-center gap-2">
-            <div class="border-2 border-border p-0.5 h-16 w-16 shrink-0 bg-surface flex items-center justify-center">
+            <div
+              class="border-2 border-border p-0.5 h-16 w-16 shrink-0 bg-surface flex items-center justify-center"
+            >
               <img
                 v-if="book.coverImagePath && book.coverImagePath.length > 2"
                 :src="assetURL(book.coverImagePath)"
