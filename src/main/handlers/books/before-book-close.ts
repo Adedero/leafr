@@ -10,6 +10,7 @@ export interface BeforeBookCloseInput {
 export default async function beforeBookClose(input: BeforeBookCloseInput) {
   const { bookId, cfi, percentage } = input;
   try {
+    // Get the current unfinished reading session for this book
     const [currentSession] = await db
       .select()
       .from(table.readingSessions)
@@ -26,6 +27,7 @@ export default async function beforeBookClose(input: BeforeBookCloseInput) {
       (new Date(endedAt).getTime() - new Date(currentSession.startedAt).getTime()) / 1000
     );
 
+    // Update the reading session and reading progress
     await db.transaction(async (tx) => {
       await tx
         .update(table.readingSessions)

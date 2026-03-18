@@ -8,6 +8,5 @@ export default async function getAllBooks() {
       readingProgress: true
     }
   });
-  // const books =  await db.select().from(table.books).all();
   return books;
 }

@@ -1,5 +1,6 @@
 import { eq, desc } from "drizzle-orm";
 import db, { table } from "../../database";
+import logger from "../../utils/logger";
 
 export default async function beforeBookOpen(bookId: string) {
   const now = new Date().toISOString();
@@ -28,7 +29,7 @@ export default async function beforeBookOpen(bookId: string) {
 
     return true;
   } catch (e) {
-    console.error("beforeBookOpen error:", e);
+    logger.error(`Error opening book with ID ${bookId}`, e);
     return false;
   }
 }

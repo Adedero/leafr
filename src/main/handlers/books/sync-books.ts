@@ -1,15 +1,17 @@
 import getLibPath from "../../utils/get-lib-path";
 import db, { table } from "../../database";
 import { existsSync } from "node:fs";
-import { mkdir, readdir, writeFile, unlink } from "node:fs/promises";
-import { join } from "node:path";
+import { mkdir, writeFile } from "node:fs/promises";
 import { eq } from "drizzle-orm";
 import { hashFile } from "../../utils/hash-file";
-import { COVER_IMAGE_PATH } from "../../utils/constants";
 import { normalizePath } from "../../utils/normalize-path";
 import { EPub } from "epub";
 import logger from "../../utils/logger";
 import type { NewBook } from "../../database/schema";
+import { collectEpubFilesAndLabels } from "../../utils/epub-utils/collect-epub-files-and-labels";
+import { extractCover } from "../../utils/epub-utils/extract-cover";
+import { removeBook } from "../../utils/epub-utils/remove-book";
+import { syncDirLabels } from "../../utils/epub-utils/sync-dir-labels";
 
 export type SyncBooksReturn = {
   added: string[];
@@ -18,118 +20,97 @@ export type SyncBooksReturn = {
   scanned: number;
 };
 
-export default async function syncBooks(): Promise<SyncBooksReturn> {
+export default async function syncBooks() {
   const dir = await getLibPath();
 
   if (!existsSync(dir)) {
     await mkdir(dir, { recursive: true });
   }
 
-  const diskFiles = (await readdir(dir))
-    .filter((file) => file.endsWith(".epub"))
-    .map((file) => join(dir, file));
-
-  const dbBooks = await db
-    .select({
-      id: table.books.id,
-      fileHash: table.books.fileHash,
-      filePath: table.books.filePath,
-      coverImagePath: table.books.coverImagePath
-    })
-    .from(table.books);
-
-  const mime = await import("mime");
+  const [diskFiles, dbBooks] = await Promise.all([
+    collectEpubFilesAndLabels(dir),
+    db
+      .select({
+        id: table.books.id,
+        fileHash: table.books.fileHash,
+        filePath: table.books.filePath,
+        coverImagePath: table.books.coverImagePath
+      })
+      .from(table.books)
+  ]);
 
   const added: string[] = [];
   const removed: string[] = [];
   const renamed: string[] = [];
 
   const hashMap = new Map(dbBooks.map((b) => [b.fileHash, b]));
-  const pathSet = new Set(diskFiles);
+  const pathSet = new Set(diskFiles.map((f) => f.filePath));
 
-  async function processFile(file: string) {
+  for (const { filePath, labels } of diskFiles) {
     try {
-      const fileHash = hashFile(file);
-
+      const fileHash = hashFile(filePath);
       const existing = hashMap.get(fileHash);
 
-      // renamed book
-      if (existing && existing.filePath !== file) {
-        await db.update(table.books).set({ filePath: file }).where(eq(table.books.id, existing.id));
-
-        renamed.push(file);
-        return;
-      }
-
-      // already known book
       if (existing) {
-        return;
+        if (existing.filePath !== filePath) {
+          // file has been renamed or moved. Update path and labels
+          await db
+            .update(table.books)
+            .set({ filePath: filePath })
+            .where(eq(table.books.id, existing.id));
+          renamed.push(filePath);
+        }
+        await syncDirLabels(existing.id, labels);
+        continue;
       }
 
-      const epub = new EPub(file);
+      const epub = new EPub(filePath);
       await epub.parse();
 
-      const metadata = epub.metadata;
-
-      let coverImagePath = "";
+      const { metadata } = epub;
+      const cover = await extractCover(epub, fileHash);
 
       try {
-        const cover = await epub.getImage((metadata.cover as string) || "cover");
-
-        coverImagePath = join(
-          COVER_IMAGE_PATH,
-          `${fileHash}.${mime.default.getExtension(cover.mimeType) || "jpg"}`
-        );
-
-        await writeFile(coverImagePath, cover.data);
-      } catch (e) {
-        logger.error(`Failed to extract cover for ${file}`, e);
+        if (!cover) {
+          throw new Error("No cover found");
+        }
+        await writeFile(cover.path, cover.data);
+      } catch (error) {
+        logger.error(`Failed to extract cover for ${filePath}`, error);
       }
 
-      const data: NewBook = {
-        filePath: file,
-        fileURL: normalizePath(file),
+      const newBook: NewBook = {
+        filePath: filePath,
+        fileURL: normalizePath(filePath),
         fileHash,
         title: metadata.title,
         author: metadata.creator,
         description: metadata.description,
-        coverImagePath: normalizePath(coverImagePath),
+        coverImagePath: cover?.path ? normalizePath(cover.path) : null,
         language: metadata.language,
         publisher: metadata.publisher,
         publishedDate: metadata.date,
         addedAt: new Date().toISOString()
       };
 
-      await db.insert(table.books).values(data);
-
-      added.push(file);
+      const [inserted] = await db.insert(table.books).values(newBook).returning();
+      await syncDirLabels(inserted.id, labels);
+      added.push(filePath);
     } catch (e) {
-      logger.error(`Failed to sync book ${file}`, e);
+      logger.error(`Failed to sync book ${filePath}`, e);
     }
-  }
 
-  // process disk files
-  for (const file of diskFiles) {
-    await processFile(file);
-  }
-
-  // detect removed books
-  for (const book of dbBooks) {
-    if (!pathSet.has(book.filePath)) {
-      try {
-        await db.delete(table.books).where(eq(table.books.id, book.id));
-
-        if (book.coverImagePath && existsSync(book.coverImagePath)) {
-          await unlink(book.coverImagePath);
+    for (const book of dbBooks) {
+      if (!pathSet.has(book.filePath)) {
+        try {
+          await removeBook(book);
+          removed.push(book.filePath);
+        } catch (e) {
+          logger.error(`Failed to remove missing book ${book.filePath}`, e);
         }
-
-        removed.push(book.filePath);
-      } catch (e) {
-        logger.error(`Failed to remove missing book ${book.filePath}`, e);
       }
     }
   }
-
   return {
     added,
     removed,

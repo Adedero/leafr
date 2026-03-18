@@ -1,4 +1,4 @@
-import { int, primaryKey, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { int, integer, primaryKey, real, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { defineRelations } from "drizzle-orm";
 import { ulid } from "ulid";
 
@@ -24,7 +24,6 @@ export type FullBook = Book & {
   highlights: Highlight[];
   labels: Label[];
   readingProgress: ReadingProgress | null;
-  // readingSessions: ReadingSession[];
   favoriteRecord: Favorite | null;
   locations: BookLocation | null;
 };
@@ -78,6 +77,7 @@ export const readingProgress = sqliteTable("reading_progress", {
   updatedAt
 });
 
+// ─── Bookmarks ─────────────────────────────────────────────────────────
 export type Bookmark = typeof bookmarks.$inferSelect;
 export type NewBookmark = typeof bookmarks.$inferInsert;
 export const bookmarks = sqliteTable("bookmarks", {
@@ -93,6 +93,7 @@ export const bookmarks = sqliteTable("bookmarks", {
   updatedAt
 });
 
+// ─── Favorites ─────────────────────────────────────────────────────────
 export type Favorite = typeof favorites.$inferSelect;
 export type NewFavorite = typeof favorites.$inferInsert;
 export const favorites = sqliteTable("favorites", {
@@ -105,15 +106,18 @@ export const favorites = sqliteTable("favorites", {
   updatedAt
 });
 
+// ─── Labels ─────────────────────────────────────────────────────────
 export type Label = typeof labels.$inferSelect;
 export type NewLabel = typeof labels.$inferInsert;
 export const labels = sqliteTable("labels", {
   id,
   name: text("name").notNull().unique(),
+  fromDirectory: integer("from_directory", { mode: "boolean" }).notNull(),
   createdAt,
   updatedAt
 });
 
+// ─── Books to Labels ─────────────────────────────────────────────────────────
 export type BooksToLabels = typeof booksToLabels.$inferSelect;
 export type NewBooksToLabels = typeof booksToLabels.$inferInsert;
 export const booksToLabels = sqliteTable(
@@ -132,6 +136,7 @@ export const booksToLabels = sqliteTable(
   (t) => [primaryKey({ columns: [t.bookId, t.labelId] })]
 );
 
+// ─── Reading Sessions ─────────────────────────────────────────────────────────
 export type ReadingSession = typeof readingSessions.$inferSelect;
 export type NewReadingSession = typeof readingSessions.$inferInsert;
 export const readingSessions = sqliteTable("reading_sessions", {
@@ -146,6 +151,7 @@ export const readingSessions = sqliteTable("reading_sessions", {
   updatedAt
 });
 
+// ─── Highlights ─────────────────────────────────────────────────────────
 export type Highlight = typeof highlights.$inferSelect;
 export type NewHighlight = typeof highlights.$inferInsert;
 export const highlights = sqliteTable("highlights", {
@@ -161,6 +167,7 @@ export const highlights = sqliteTable("highlights", {
   updatedAt
 });
 
+// ─── Settings ─────────────────────────────────────────────────────────
 export type Setting = typeof settings.$inferSelect;
 export type NewSetting = typeof settings.$inferInsert;
 export const settings = sqliteTable("settings", {

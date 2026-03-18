@@ -9,7 +9,6 @@ export default async function getFullBookData(bookId: string): Promise<FullBook 
       highlights: true,
       labels: true,
       readingProgress: true,
-      // readingSessions: true,
       favoriteRecord: true,
       locations: true
     }
