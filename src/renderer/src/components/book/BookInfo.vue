@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import Separator from "@renderer/components/ui/Separator.vue";
-import Logo from "@renderer/components/global/Logo.vue";
 import assetURL from "@renderer/utils/asset-url";
 import { useDateFormat } from "@vueuse/core";
 import type { FullBook } from "src/main/database/schema";

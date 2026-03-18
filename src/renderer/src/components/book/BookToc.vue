@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { NavItem } from "epubjs";
-import Button from "@renderer/components/ui/Button.vue";
 import { CollapsibleContent, CollapsibleRoot, CollapsibleTrigger } from "reka-ui";
 
 interface Props {

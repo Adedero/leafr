@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import Button from "@renderer/components/ui/Button.vue";
-import Spinner from "@renderer/components/ui/Spinner.vue";
 import useBooksSearch from "@renderer/hooks/use-books-search";
 import useSWRV from "swrv";
 import { computed } from "vue";
-import ErrorAlert from "@renderer/components/global/ErrorAlert.vue";
-import BookListItem from "@renderer/components/home/BookListItem.vue";
 import { useAsyncState } from "@vueuse/core";
 import useToast from "@renderer/hooks/use-toast";
 import { toError } from "@renderer/utils/to-error";

@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import Button from "@renderer/components/ui/Button.vue";
-import Modal from "@renderer/components/ui/Modal.vue";
-import BookToc from "@renderer/components/book/BookToc.vue";
 import { NavItem } from "epubjs";
 import { ref } from "vue";
 

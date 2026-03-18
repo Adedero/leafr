@@ -1,11 +1,5 @@
 <script setup lang="ts">
 import useUIStore from "@renderer/stores/use-ui-store";
-import Logo from "@renderer/components/global/Logo.vue";
-import Separator from "@renderer/components/ui/Separator.vue";
-import Button from "@renderer/components/ui/Button.vue";
-import ThemeSwitch from "@renderer/components/ui/ThemeSwitch.vue";
-import SearchBar from "@renderer/components/global/search-bar/SearchBar.vue";
-import NavBar from "@renderer/components/global/NavBar.vue";
 
 const UIStore = useUIStore();
 </script>

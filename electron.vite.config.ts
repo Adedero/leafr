@@ -19,9 +19,9 @@ export default defineConfig({
       tailwindcss(),
       Icons({ autoInstall: true, compiler: "vue3" }),
       Components({
-        dirs: ["src/renderer/src/components"],
+        dirs: ["src/components"],
         deep: true,
-        dts: "src/renderer/components.d.ts",
+        dts: "components.d.ts",
         extensions: ["vue"],
         resolvers: [IconsResolver({ enabledCollections: ["lucide"] })]
       }),

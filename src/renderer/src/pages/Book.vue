@@ -10,10 +10,6 @@ import { onUnmounted } from "vue";
 import useWheel from "@renderer/hooks/use-wheel";
 import useTheme from "@renderer/hooks/use-theme";
 import type { Location } from "epubjs/types/rendition";
-import Spinner from "@renderer/components/ui/Spinner.vue";
-import ErrorAlert from "@renderer/components/global/ErrorAlert.vue";
-import BookFooter from "@renderer/components/book/BookFooter.vue";
-import BookSidebar from "@renderer/components/book/BookSidebar.vue";
 import useClickZone from "@renderer/hooks/use-click-zone";
 import Char from "@renderer/utils/char";
 

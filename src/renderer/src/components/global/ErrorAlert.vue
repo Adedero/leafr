@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import Alert from "@renderer/components/ui/Alert.vue";
 import { UIAction } from "@renderer/types/ui.type";
 import { toErrorMessage } from "@renderer/utils/to-error";
 import { computed, getCurrentInstance } from "vue";

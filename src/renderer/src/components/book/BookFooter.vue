@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import Button from "@renderer/components/ui/Button.vue";
-import Modal from "@renderer/components/ui/Modal.vue";
-import BookInfo from "@renderer/components/book/BookInfo.vue";
 import type { TBookLocation } from "@renderer/pages/Book.vue";
 import useUIStore from "@renderer/stores/use-ui-store";
 import assetURL from "@renderer/utils/asset-url";
