@@ -61,10 +61,14 @@ export default async function syncBooks(rootDir?: string) {
         continue;
       }
 
-      const result = await syncSingleFile({ filePath, fileHash, labels });
-
-      if (result.type === "added") added.push(result.filePath);
-      if (result.type === "renamed") renamed.push(result.filePath);
+      try {
+        const result = await syncSingleFile({ filePath, fileHash, labels });
+        if (result.type === "added") added.push(result.filePath);
+        if (result.type === "renamed") renamed.push(result.filePath);
+      } catch (error) {
+        logger.error(`Failed to sync book ${filePath}`, error);
+        throw error;
+      }
     } catch (e) {
       logger.error(`Failed to sync book ${filePath}`, e);
     }

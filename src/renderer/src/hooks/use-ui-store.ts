@@ -1,6 +1,10 @@
 export const useUiStore = defineStore("ui", () => {
   const navbarWidth = useLocalStorage<string>("navbar:width", "5.5rem");
-  const bookFooterLocked = useLocalStorage<boolean>("book-footer:locked", false);
+  const bookFooterLocked = useLocalStorage<boolean>(
+    "book-footer:locked",
+    false
+  );
+  const bookSliderOpen = useLocalStorage<boolean>("book-slider:open", false);
   const toggleBookFooterLocked = () => {
     bookFooterLocked.value = !bookFooterLocked.value;
   };
@@ -8,6 +12,7 @@ export const useUiStore = defineStore("ui", () => {
   return {
     navbarWidth,
     bookFooterLocked,
+    bookSliderOpen,
     toggleBookFooterLocked
   };
 });

@@ -7,16 +7,27 @@ import type { BeforeBookCloseInput } from "./before-book-close";
 import beforeBookClose from "./before-book-close";
 import type { SaveBookLocationsInput } from "./save-book-locations";
 import saveBookLocations from "./save-book-locations";
+import type { UpdateReadingProgressInput } from "./update-reading-progress";
+import updateReadingProgress from "./update-reading-progress";
 
 export default function bookHandlers() {
   ipcMain.handle("books:get-all", getAllBooks);
   ipcMain.handle("books:sync", () => syncBooks());
-  ipcMain.handle("books:get-full-book", (_, bookId: string) => getFullBookData(bookId));
-  ipcMain.handle("books:before-book-open", (_, bookId: string) => beforeBookOpen(bookId));
+  ipcMain.handle("books:get-full-book", (_, bookId: string) =>
+    getFullBookData(bookId)
+  );
+  ipcMain.handle("books:before-book-open", (_, bookId: string) =>
+    beforeBookOpen(bookId)
+  );
   ipcMain.handle("books:before-book-close", (_, input: BeforeBookCloseInput) =>
     beforeBookClose(input)
   );
-  ipcMain.handle("books:save-book-locations", (_, input: SaveBookLocationsInput) =>
-    saveBookLocations(input)
+  ipcMain.handle(
+    "books:save-book-locations",
+    (_, input: SaveBookLocationsInput) => saveBookLocations(input)
+  );
+  ipcMain.handle(
+    "books:update-reading-progress",
+    (_, input: UpdateReadingProgressInput) => updateReadingProgress(input)
   );
 }

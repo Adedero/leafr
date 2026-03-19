@@ -1,0 +1,1 @@
+ALTER TABLE `labels` ADD `from_directory` integer NOT NULL;

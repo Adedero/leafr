@@ -16,6 +16,7 @@ declare global {
   const assetUrl: typeof import('./src/utils/asset-url').assetUrl
   const asyncComputed: typeof import('@vueuse/core').asyncComputed
   const autoResetRef: typeof import('@vueuse/core').autoResetRef
+  const bookUtils: typeof import('./src/utils/book-utils').bookUtils
   const cache: typeof import('./src/utils/ttl-cache/index').cache
   const char: typeof import("./src/utils/char/index").default
   const collapseWhitespace: typeof import('./src/utils/char/lib/collapse-whitespace').collapseWhitespace
@@ -42,6 +43,7 @@ declare global {
   const debounce: typeof import('./src/utils/debounce').debounce
   const debouncedRef: typeof import('@vueuse/core').debouncedRef
   const debouncedWatch: typeof import('@vueuse/core').debouncedWatch
+  const decimalPoints: typeof import('./src/utils/numerics/lib/decimal-points').decimalPoints
   const defineAsyncComponent: typeof import('vue').defineAsyncComponent
   const defineComponent: typeof import('vue').defineComponent
   const defineStore: typeof import('pinia').defineStore
@@ -56,6 +58,7 @@ declare global {
   const ignorableWatch: typeof import('@vueuse/core').ignorableWatch
   const inject: typeof import('vue').inject
   const injectLocal: typeof import('@vueuse/core').injectLocal
+  const isDecimal: typeof import('./src/utils/numerics/lib/is-decimal').isDecimal
   const isDefined: typeof import('@vueuse/core').isDefined
   const isProxy: typeof import('vue').isProxy
   const isReactive: typeof import('vue').isReactive
@@ -94,6 +97,7 @@ declare global {
   const onUnmounted: typeof import('vue').onUnmounted
   const onUpdated: typeof import('vue').onUpdated
   const onWatcherCleanup: typeof import('vue').onWatcherCleanup
+  const open: typeof import('./src/hooks/use-book/open').open
   const pausableWatch: typeof import('@vueuse/core').pausableWatch
   const provide: typeof import('vue').provide
   const provideLocal: typeof import('@vueuse/core').provideLocal
@@ -148,6 +152,7 @@ declare global {
   const until: typeof import('@vueuse/core').until
   const useActiveElement: typeof import('@vueuse/core').useActiveElement
   const useAnimate: typeof import('@vueuse/core').useAnimate
+  const useApi: typeof import('./src/hooks/use-api').useApi
   const useArrayDifference: typeof import('@vueuse/core').useArrayDifference
   const useArrayEvery: typeof import('@vueuse/core').useArrayEvery
   const useArrayFilter: typeof import('@vueuse/core').useArrayFilter
@@ -166,7 +171,10 @@ declare global {
   const useBase64: typeof import('@vueuse/core').useBase64
   const useBattery: typeof import('@vueuse/core').useBattery
   const useBluetooth: typeof import('@vueuse/core').useBluetooth
-  const useBook: typeof import('./src/hooks/use-book').useBook
+  const useBook: typeof import('./src/hooks/use-book/index').useBook
+  const useBookFetcher: typeof import('./src/hooks/use-book/use-book-fetcher').default
+  const useBookSettings: typeof import('./src/hooks/use-book-settings').useBookSettings
+  const useBookUtils: typeof import('./src/hooks/use-book-utils').useBookUtils
   const useBooksSearch: typeof import('./src/hooks/use-books-search').useBooksSearch
   const useBreakpoints: typeof import('@vueuse/core').useBreakpoints
   const useBroadcastChannel: typeof import('@vueuse/core').useBroadcastChannel
@@ -199,6 +207,7 @@ declare global {
   const useDocumentVisibility: typeof import('@vueuse/core').useDocumentVisibility
   const useDraggable: typeof import('@vueuse/core').useDraggable
   const useDropZone: typeof import('@vueuse/core').useDropZone
+  const useEPub: typeof import('./src/hooks/use-book/index').useEPub
   const useElementBounding: typeof import('@vueuse/core').useElementBounding
   const useElementByPoint: typeof import('@vueuse/core').useElementByPoint
   const useElementHover: typeof import('@vueuse/core').useElementHover
@@ -211,6 +220,7 @@ declare global {
   const useEyeDropper: typeof import('@vueuse/core').useEyeDropper
   const useFavicon: typeof import('@vueuse/core').useFavicon
   const useFetch: typeof import('@vueuse/core').useFetch
+  const useFetcher: typeof import('./src/hooks/use-book/use-book-fetcher').default
   const useFileDialog: typeof import('@vueuse/core').useFileDialog
   const useFileSystemAccess: typeof import('@vueuse/core').useFileSystemAccess
   const useFocus: typeof import('@vueuse/core').useFocus
@@ -230,6 +240,7 @@ declare global {
   const useKeyModifier: typeof import('@vueuse/core').useKeyModifier
   const useLastChanged: typeof import('@vueuse/core').useLastChanged
   const useLink: typeof import('vue-router').useLink
+  const useLoad: typeof import('./src/hooks/use-book/use-book-fetcher').useLoad
   const useLocalStorage: typeof import('@vueuse/core').useLocalStorage
   const useLoop: typeof import('./src/hooks/use-loop').useLoop
   const useMagicKeys: typeof import('@vueuse/core').useMagicKeys
@@ -349,6 +360,12 @@ declare global {
   export type { Component, Slot, Slots, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, ShallowRef, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
   // @ts-ignore
+  export type { TBookSettings } from './src/hooks/use-book-settings'
+  import('./src/hooks/use-book-settings')
+  // @ts-ignore
+  export type { UseBookUtils, OpenAndNavigateOptions } from './src/hooks/use-book-utils'
+  import('./src/hooks/use-book-utils')
+  // @ts-ignore
   export type { ClickZone, ClickZoneTarget, UseClickZoneOptions } from './src/hooks/use-click-zone'
   import('./src/hooks/use-click-zone')
   // @ts-ignore
@@ -360,6 +377,9 @@ declare global {
   // @ts-ignore
   export type { WheelDirection, WheelGesture } from './src/hooks/use-wheel'
   import('./src/hooks/use-wheel')
+  // @ts-ignore
+  export type { TBookLocation, TBookLoadOptions, OnRenderedParams, UseBookOptions } from './src/hooks/use-book/index'
+  import('./src/hooks/use-book/index')
   // @ts-ignore
   export type { StringCase } from './src/utils/char/lib/to-case'
   import('./src/utils/char/lib/to-case')

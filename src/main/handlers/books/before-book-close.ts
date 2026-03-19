@@ -1,11 +1,8 @@
 import { and, desc, eq, isNull } from "drizzle-orm";
 import db, { table } from "../../database";
+import type { UpdateReadingProgressInput } from "./update-reading-progress";
 
-export interface BeforeBookCloseInput {
-  bookId: string;
-  cfi: string;
-  percentage: number;
-}
+export interface BeforeBookCloseInput extends UpdateReadingProgressInput {}
 
 export default async function beforeBookClose(input: BeforeBookCloseInput) {
   const { bookId, cfi, percentage } = input;
@@ -14,7 +11,12 @@ export default async function beforeBookClose(input: BeforeBookCloseInput) {
     const [currentSession] = await db
       .select()
       .from(table.readingSessions)
-      .where(and(eq(table.readingSessions.bookId, bookId), isNull(table.readingSessions.endedAt)))
+      .where(
+        and(
+          eq(table.readingSessions.bookId, bookId),
+          isNull(table.readingSessions.endedAt)
+        )
+      )
       .orderBy(desc(table.readingSessions.startedAt))
       .limit(1);
 
@@ -24,7 +26,9 @@ export default async function beforeBookClose(input: BeforeBookCloseInput) {
 
     const endedAt = new Date().toISOString();
     const durationSeconds = Math.floor(
-      (new Date(endedAt).getTime() - new Date(currentSession.startedAt).getTime()) / 1000
+      (new Date(endedAt).getTime() -
+        new Date(currentSession.startedAt).getTime()) /
+        1000
     );
 
     // Update the reading session and reading progress

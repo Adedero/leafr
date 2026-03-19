@@ -9,9 +9,14 @@ export const router = createRouter({
       component: () => import("@renderer/pages/Home.vue")
     },
     {
+      path: "/library",
+      name: "library",
+      component: () => import("@renderer/pages/Library.vue")
+    },
+    {
       path: "/books/:bookId",
       name: "book",
-      component: () => import("@renderer/pages/Book.vue")
+      component: () => import("@renderer/pages/BookTest.vue")
     },
     {
       path: "/resources",

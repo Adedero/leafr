@@ -6,6 +6,7 @@ import type { GetAllBooksReturn } from "src/main/handlers/books/get-all-books";
 import type { SaveBookLocationsInput } from "src/main/handlers/books/save-book-locations";
 import type { Emits } from "../main/utils/emit";
 import type { GetAllLabelsResponse } from "src/main/handlers/labels/get-all-labels";
+import type { UpdateReadingProgressInput } from "src/main/handlers/books/update-reading-progress";
 
 declare global {
   interface Window {
@@ -25,12 +26,21 @@ declare global {
         beforeBookOpen: (bookId: string) => Promise<boolean>;
         beforeBookClose: (input: BeforeBookCloseInput) => Promise<boolean>;
         saveBookLocation: (input: SaveBookLocationsInput) => Promise<boolean>;
+        updateReadingProgress: (
+          input: UpdateReadingProgressInput
+        ) => Promise<boolean>;
       };
       labels: {
         getAllLabels: () => Promise<GetAllLabelsResponse>;
       };
-      on: <T extends keyof Emits>(channel: T, fn: (payload: Emits[T]) => void) => void;
-      off: <T extends keyof Emits>(channel: T, fn: (...args: unknown[]) => void) => void;
+      on: <T extends keyof Emits>(
+        channel: T,
+        fn: (payload: Emits[T]) => void
+      ) => void;
+      off: <T extends keyof Emits>(
+        channel: T,
+        fn: (...args: unknown[]) => void
+      ) => void;
     };
   }
 }

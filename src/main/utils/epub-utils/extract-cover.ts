@@ -8,14 +8,22 @@ export async function extractCover(
   fileHash: string
 ): Promise<{ path: string; data: Buffer } | null> {
   const mime = await import("mime");
+
+  const coverId =
+    (epub.metadata.cover as string) ||
+    Object.keys(epub.manifest).find(
+      (id) =>
+        id.toLowerCase().includes("cover") ||
+        epub.manifest[id].href?.toLowerCase().includes("cover")
+    );
+
+  if (!coverId) return null;
+
   try {
-    const cover = await epub.getImage((epub.metadata.cover as string) || "cover");
+    const cover = await epub.getImage(coverId);
     const ext = mime.default.getExtension(cover.mimeType) || "jpg";
     const coverImagePath = join(COVER_IMAGE_PATH, `${fileHash}.${ext}`);
-    return {
-      path: coverImagePath,
-      data: cover.data
-    };
+    return { path: coverImagePath, data: cover.data };
   } catch {
     return null;
   }

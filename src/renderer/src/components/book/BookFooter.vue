@@ -3,6 +3,7 @@ import { assetUrl } from "@renderer/utils/asset-url";
 import type { TBookLocation } from "@renderer/pages/Book.vue";
 import type { FullBook } from "src/main/database/schema";
 import Logo from "../global/Logo.vue";
+import { Numerics } from "@renderer/utils/numerics";
 
 interface Props {
   book?: FullBook | null;
@@ -12,20 +13,58 @@ interface Props {
 const { book } = defineProps<Props>();
 
 const open = defineModel<boolean>("open", { default: false });
+const sliderOpen = defineModel<boolean>("slider-open", { default: false });
+
+function toggleSlider() {
+  if (sliderOpen.value) {
+    sliderOpen.value = false;
+    return;
+  }
+  UIStore.bookFooterLocked = true;
+  sliderOpen.value = true;
+}
 
 const UIStore = useUiStore();
 
-const onMouseEnter = debounce(() => {
-  open.value = true;
-}, 300);
+const hoverTimer = ref<ReturnType<typeof setTimeout> | null>(null);
+const isHovering = ref(false);
 
-const onMouseLeave = debounce(() => {
-  open.value = UIStore.bookFooterLocked || false;
-}, 300);
+function clearHoverTimer() {
+  if (hoverTimer.value !== null) {
+    clearTimeout(hoverTimer.value);
+    hoverTimer.value = null;
+  }
+}
+
+function onMouseEnter() {
+  if (UIStore.bookFooterLocked) return;
+
+  isHovering.value = true;
+  clearHoverTimer();
+
+  hoverTimer.value = setTimeout(() => {
+    if (isHovering.value) {
+      open.value = true;
+    }
+  }, 300);
+}
+
+function onMouseLeave() {
+  if (UIStore.bookFooterLocked) return;
+
+  isHovering.value = false;
+  clearHoverTimer();
+
+  hoverTimer.value = setTimeout(() => {
+    if (!isHovering.value) {
+      open.value = false;
+    }
+  }, 500);
+}
 </script>
 
 <template>
-  <div>
+  <div @mouseleave="onMouseLeave">
     <Transition
       enter-from-class="opacity-0"
       enter-active-class="transition duration-200 ease-out"
@@ -38,7 +77,6 @@ const onMouseLeave = debounce(() => {
         v-if="book && (open || UIStore.bookFooterLocked)"
         ref="footerRef"
         class="bottom-0 left-0 z-50 absolute px-4 pb-3 w-full"
-        @mouseleave="onMouseLeave"
       >
         <div
           class="gap-x-5 grid grid-cols-3 bg-accent lg:mx-auto p-1 border-2 border-border w-full lg:max-w-[90dvw] text-surface volt:text-text"
@@ -63,27 +101,40 @@ const onMouseLeave = debounce(() => {
               <p class="font-medium text-xs truncate">
                 {{ book.author }}
               </p>
+              <p v-if="location" class="text-xs">
+                {{ Numerics.round(location?.end.percentage * 100, 0) }}%
+              </p>
             </div>
           </div>
 
           <!-- Location Info & Slider -->
-          <div>
-            <div v-if="location" class="md:text-center truncate">
-              <p class="text-semibold text-sm">
+          <div v-if="location" class="flex justify-center items-center">
+            <div class="md:text-center truncate">
+              <p class="font-semibold text-sm">
                 {{ location.current?.label }}
               </p>
               <p class="text-xs">
                 {{ location.current?.page }}/{{ location.current?.total }}
               </p>
             </div>
-
-            <!-- <p class="text-xs">slider and progress here (pages or percentages)</p> -->
           </div>
 
           <div>
             <!-- Icons -->
             <div class="flex justify-end items-center gap-1">
-              <Modal title="Info" icon="lucide:info" @open="UIStore.bookFooterLocked = true">
+              <Button
+                icon="lucide:file-sliders"
+                size="sm"
+                class="hover:bg-surface/20 text-surface hover:text-surface"
+                :class="{ 'bg-surface/20': sliderOpen }"
+                @click="toggleSlider"
+              />
+
+              <Modal
+                title="Info"
+                icon="lucide:info"
+                @open="UIStore.bookFooterLocked = true"
+              >
                 <Button
                   color="neutral"
                   variant="ghost"
@@ -101,8 +152,10 @@ const onMouseLeave = debounce(() => {
                 color="neutral"
                 variant="ghost"
                 size="sm"
-                :icon="UIStore.bookFooterLocked ? 'lucide:lock' : 'lucide:lock-open'"
-                class="text-surface"
+                :icon="
+                  UIStore.bookFooterLocked ? 'lucide:lock' : 'lucide:lock-open'
+                "
+                class="hover:bg-surface/20 text-surface hover:text-surface"
                 @click="UIStore.toggleBookFooterLocked"
               />
             </div>
@@ -115,6 +168,24 @@ const onMouseLeave = debounce(() => {
       class="bottom-0 left-0 z-10 absolute bg-transparent w-full h-20"
       :class="{ 'pointer-events-none': open }"
       @mouseenter="onMouseEnter"
-    />
+    >
+      <div
+        v-show="!open && !UIStore.bookFooterLocked"
+        class="flex justify-between items-center px-6 h-full"
+      >
+        <div v-if="location">
+          <p class="text-sm">
+            {{ location.current?.label }}
+          </p>
+          <p class="text-xs">
+            {{ location.current?.page }}/{{ location.current?.total }}
+          </p>
+        </div>
+
+        <p v-if="location" class="text-sm">
+          {{ Numerics.round(location?.end.percentage * 100, 0) }}%
+        </p>
+      </div>
+    </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 import db, { table } from "../../database";
 import { syncDirLabels } from "./sync-dir-labels";
-import EPub from "epub";
+import * as EPub from "epub";
 import { extractCover } from "./extract-cover";
 import { writeFile } from "node:fs/promises";
 import logger from "../logger";
@@ -21,7 +21,7 @@ export async function syncSingleFile({
   fileHash: string;
   labels: string[];
 }): Promise<SyncFileResult> {
-  const epub = new EPub(filePath);
+  const epub = new EPub.EPub(filePath);
   await epub.parse();
 
   const { metadata } = epub;
