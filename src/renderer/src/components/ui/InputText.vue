@@ -4,6 +4,11 @@ import Icon from "./Icon.vue";
 import type { UISize } from "@renderer/types/ui.type";
 import { twMerge } from "tailwind-merge";
 
+const emit = defineEmits<{
+  focus: [e: FocusEvent];
+  blur: [e: FocusEvent];
+}>();
+
 export interface InputTextUI {
   root: string;
   input: string;
@@ -37,6 +42,11 @@ const {
 
 const slots = useSlots();
 const attrs = useAttrs();
+const inputRef = useTemplateRef("inputRef");
+
+defineExpose({
+  inputRef
+});
 
 const modelValue = defineModel<string>();
 
@@ -46,7 +56,8 @@ const modelValue = defineModel<string>();
 
 const defaultUI: InputTextUI = {
   root: "relative flex items-center w-fit",
-  input: "w-full outline-none bg-transparent placeholder:text-muted disabled:cursor-not-allowed",
+  input:
+    "w-full outline-none bg-transparent placeholder:text-muted disabled:cursor-not-allowed",
   icon: "absolute left-3 flex items-center pointer-events-none",
   trailingIcon: "absolute right-3 flex items-center pointer-events-none"
 };
@@ -119,7 +130,10 @@ const inputPadding = computed(() => {
 <template>
   <div :class="twMerge(variantStyles, computedUI.root)">
     <!-- Leading slot or icon -->
-    <span v-if="icon || $slots.leading" :class="twMerge(sizeStyles.icon, computedUI.icon)">
+    <span
+      v-if="icon || $slots.leading"
+      :class="twMerge(sizeStyles.icon, computedUI.icon)"
+    >
       <slot name="leading">
         <Icon :name="icon!" />
       </slot>
@@ -127,16 +141,22 @@ const inputPadding = computed(() => {
 
     <!-- Input -->
     <input
+      ref="inputRef"
       v-bind="attrs"
       v-model="modelValue"
       :placeholder="placeholder"
       :disabled="disabled || loading"
       :readonly="readonly"
       :class="twMerge(sizeStyles.input, inputPadding, computedUI.input)"
+      @focus="emit('focus', $event)"
+      @blur="emit('blur', $event)"
     />
 
     <!-- Loading spinner -->
-    <span v-if="loading" :class="twMerge(computedUI.trailingIcon, sizeStyles.icon, 'animate-spin')">
+    <span
+      v-if="loading"
+      :class="twMerge(computedUI.trailingIcon, sizeStyles.icon, 'animate-spin')"
+    >
       <Icon name="lucide:loader-circle" />
     </span>
 

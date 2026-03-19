@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import useSWRV from "swrv";
-import epub, { type Rendition, type Book, type NavItem } from "epubjs";
-import type { Location } from "epubjs/types/rendition";
-import type Section from "epubjs/types/section";
 
 const route = useRoute();
-const { getBook, beforeBookClose, saveBookLocations } = useBookUtils();
-const { theme } = useTheme();
+const { getBook } = useBookUtils();
+const { settings } = useBookSettings();
+const uiStore = useUiStore();
+const { isClicked } = useBooksSearch();
 
 const bookId = route.params.bookId.toString();
 
@@ -24,42 +23,100 @@ const {
   }
 );
 
-watch(data, initBook, { deep: false });
+const {
+  book,
+  onSelectTocItem,
+  location,
+  navigate,
+  isLoading,
+  isClosingBook,
+  displayFromPercentage,
+  doChapterSearch,
+  doSearch,
+  render,
+  addHighlights,
+  removeHighlights
+} = useBook(data, {
+  onRendered: ({ iFrames }) => {
+    iFrames.forEach((iFrame) => {
+      if (iFrame.contentWindow) {
+        iFrame.contentWindow.onwheel = (e: Event) => {
+          if (settings.value.flow === "scroll") {
+            return;
+          }
+          onWheel(e);
+        };
+      }
+    });
+  }
+});
 
-export type TBookLocation = Location & {
-  current?: {
-    navItem?: NavItem;
-    label?: string;
-    page: number;
-    total: number;
-  };
-};
-
-const book = ref<Book | null>(null);
-const rendition = ref<Rendition | null>(null);
-const location = ref<TBookLocation | null>(null);
-const pages = ref<number>(0);
-const iFrames = ref<NodeListOf<HTMLIFrameElement> | null>(null);
 const pageRef = useTemplateRef("pageRef");
 const footerRef = useTemplateRef("footerRef");
 const sidebarRef = useTemplateRef("sidebarRef");
 const footerOpen = ref(false);
+const sliderValue = computed<[number]>({
+  get() {
+    return [Numerics.round((location.value?.end.percentage ?? 0) * 100, 0)];
+  },
+  set(value) {
+    displayFromPercentage(value[0] / 100);
+  }
+});
 
-interface BookSettings {
-  fontSize: number;
-  fontFamily: string;
-  lineHeight: number;
-  wordSpacing: number;
-  paragraphSpacing: number;
-  flow: "scroll" | "paginated" | "auto";
+const searchInputRef = useTemplateRef("searchInputRef");
+const searchModalOpen = ref(false);
+const searchType = ref("chapter");
+const searchText = ref("");
+const searchTextDebounced = refDebounced(searchText, 300);
+const searchResults = ref<Array<{ cfi: string; excerpt: string }>>([]);
+const searchResultCfis = computed(() =>
+  searchResults.value.map((result) => result.cfi)
+);
+const isSearching = ref(false);
+watch(
+  [searchTextDebounced, searchType],
+  async ([newSearchValue, newSearchType]) => {
+    if (isSearching.value) {
+      return;
+    }
+    if (newSearchValue) {
+      removeHighlights(searchResultCfis.value);
+      isSearching.value = true;
+      searchResults.value = [];
+      if (newSearchType === "chapter") {
+        searchResults.value = await doChapterSearch(newSearchValue).finally(
+          () => {
+            isSearching.value = false;
+          }
+        );
+        if (searchResults.value.length) addHighlights(searchResultCfis.value);
+      } else {
+        searchResults.value = await doSearch(newSearchValue).finally(() => {
+          isSearching.value = false;
+        });
+        if (searchResults.value.length) addHighlights(searchResultCfis.value);
+      }
+    }
+  }
+);
+function onSearchModalOpen() {
+  setTimeout(() => {
+    searchInputRef.value?.inputRef?.focus();
+    isClicked.value = false;
+  }, 100);
 }
-const settings = ref<BookSettings>({
-  fontSize: 24,
-  fontFamily: "Geist Mono",
-  lineHeight: 1.8,
-  wordSpacing: 0,
-  paragraphSpacing: 10,
-  flow: "auto" // "single", "auto" or "scroll"
+function onSearchModalClose() {
+  setTimeout(() => {
+    removeHighlights(searchResultCfis.value);
+    searchText.value = "";
+    searchResults.value = [];
+  }, 3000);
+}
+watch(isClicked, (val) => {
+  if (val) {
+    searchModalOpen.value = val;
+  }
 });
 
 // Handle left and right click on page; does not affect rendition
@@ -76,197 +133,12 @@ const { onWheel } = useWheel(pageRef, {
 // Handle arrow key navigation; affects rendition
 onKeyStroke("ArrowRight", () => navigate(1));
 onKeyStroke("ArrowLeft", () => navigate(-1));
-
-const isBookLoaded = ref(false);
-async function initBook() {
-  isBookLoaded.value = false;
-
-  try {
-    if (!data.value || book.value) {
-      return;
-    }
-    book.value = epub(assetUrl(data.value.fileURL));
-    let locs: string[] = [];
-    if (data.value.locations?.locations) {
-      locs = book.value.locations.load(data.value.locations.locations);
-      pages.value = locs.length;
-    } else {
-      await book.value.ready;
-      locs = await book.value.locations.generate(1024);
-      pages.value = locs.length;
-      saveBookLocations({ bookId, locations: book.value.locations.save() });
-    }
-
-    rendition.value = book.value.renderTo("viewer", {
-      height: "100%",
-      width: "100%",
-      manager: "continuous",
-      flow: "auto",
-      allowScriptedContent: true
-    });
-    //rendition.value.annotations.highlight
-    rendition.value.on("keyup", (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") {
-        navigate(1);
-      } else if (e.key === "ArrowLeft") {
-        navigate(-1);
-      }
-    });
-
-    rendition.value.on("rendered", () => {
-      iFrames.value = document.querySelectorAll("#viewer iframe");
-      iFrames.value.forEach((iFrame) => {
-        iFrame.contentWindow?.addEventListener("wheel", onWheel, {
-          passive: false
-        });
-      });
-    });
-
-    rendition.value.on("relocated", (loc: Location) => {
-      if (!book.value) return;
-      const targetHref = loc.start.href;
-      const current = findTocItem(book.value.navigation.toc, targetHref);
-
-      let page: number = 0;
-      let total: number = 0;
-
-      const { page: startPage, total: startTotal } = loc.start.displayed;
-      const { page: endPage } = loc.end.displayed;
-
-      if (startPage === endPage) {
-        page = startPage;
-        total = startTotal;
-      } else {
-        page = Math.ceil((endPage == 1 ? startPage : endPage) / 2);
-        total = startTotal / 2;
-      }
-
-      location.value = {
-        ...loc,
-        current: {
-          navItem: current?.item,
-          label: current?.label.trim(),
-          page,
-          total
-        }
-      };
-    });
-
-    await rendition.value.display(data.value.readingProgress?.cfi || undefined);
-    applySettings();
-  } finally {
-    isBookLoaded.value = true;
-  }
-}
-
-function findTocItem(
-  toc: NavItem[],
-  href: string,
-  parentLabel?: string // Accumulate the label path
-): { item: NavItem; label: string } | undefined {
-  for (const item of toc) {
-    // Better matching logic: Use canonical or at least strip query params
-    const itemHref = item.href.split("#")[0];
-    const targetHref = href.split("#")[0];
-    const trimmed = Char.collapseWhitespace(item.label);
-
-    const currentLabel = parentLabel ? `${parentLabel} >> ${trimmed}` : trimmed;
-
-    if (itemHref.includes(targetHref) || targetHref.includes(itemHref)) {
-      return { item, label: currentLabel };
-    }
-
-    if (item.subitems?.length) {
-      const found = findTocItem(item.subitems, href, currentLabel);
-      if (found) return found;
-    }
-  }
-  return undefined;
-}
-
-function applySettings() {
-  if (!rendition.value) return;
-
-  const style = getComputedStyle(document.documentElement);
-  const text = style.getPropertyValue("--color-text").trim();
-  const bg = style.getPropertyValue("--color-background").trim();
-  const accent = style.getPropertyValue("--color-accent").trim();
-
-  rendition.value.themes.fontSize(`${settings.value.fontSize}px`);
-  if (settings.value.fontFamily !== "default") {
-    rendition.value.themes.font(settings.value.fontFamily);
-  }
-  rendition.value.themes.default({
-    "h1, h2, h3, h4, h5, h6, p, span, div, li, td, th, blockquote, pre, code": {
-      color: `${text} !important`,
-      "word-spacing": `${settings.value.wordSpacing}px !important`
-    },
-    p: {
-      "margin-bottom": `${settings.value.paragraphSpacing}px !important`
-    },
-    "a, a:visited, a:hover": {
-      color: `${accent} !important`
-    },
-    body: {
-      background: `${bg} !important`,
-      "line-height": `${settings.value.lineHeight} !important`
-    }
-  });
-}
-
-function onSelectTocItem(item: NavItem) {
-  if (!rendition.value || !book.value) return;
-  const href = item.href;
-  // @ts-ignore spine actually exists
-  const spineItem: Section = book.value.spine.items.find((s: Section) =>
-    s.href.endsWith(href.split("#")[0])
-  );
-  rendition.value.display(spineItem?.href ?? href);
-}
-
-watch([settings, theme], applySettings);
-
-async function navigate(dir: 1 | -1 | string) {
-  if (!book.value || !rendition.value) {
-    return;
-  }
-  if (dir === 1 || dir === "right") {
-    rendition.value.next();
-  } else if (dir === -1 || dir === "left") {
-    rendition.value.prev();
-  }
-}
-
-onUnmounted(() => {
-  book.value?.destroy();
-  if (iFrames.value) {
-    iFrames.value.forEach((iFrame) => {
-      iFrame.contentWindow?.removeEventListener("wheel", onWheel);
-    });
-  }
-});
-
-// Before closing a book
-const { isLoading: isClosingBook, executeImmediate: closeBook } = useAsyncState(
-  beforeBookClose,
-  null,
-  { immediate: false }
-);
-
-onBeforeRouteLeave(async (_to, _from, next) => {
-  await closeBook({
-    bookId,
-    cfi: location.value?.end.cfi ?? "",
-    percentage: location.value?.end.percentage ?? 0
-  });
-  next();
-});
 </script>
 
 <template>
   <div ref="pageRef" class="space-y-16 px-4 py-6 h-full select-none">
     <div
-      v-if="isFetchingBook || !isBookLoaded || isClosingBook"
+      v-if="isFetchingBook || isLoading || isClosingBook"
       class="top-0 left-0 z-10 absolute flex justify-center items-center bg-background w-full h-full"
     >
       <Spinner show-random-labels />
@@ -288,6 +160,11 @@ onBeforeRouteLeave(async (_to, _from, next) => {
 
         <Separator
           orientation="vertical"
+          :class="{
+            hidden: settings.flow === 'scroll' || settings.flow === 'single',
+            flex: settings.flow === 'double',
+            'hidden xl:flex': settings.flow === 'auto'
+          }"
           class="top-0 left-1/2 absolute h-[80dvh] -translate-x-1/2"
         />
       </div>
@@ -297,12 +174,67 @@ onBeforeRouteLeave(async (_to, _from, next) => {
         :toc="book?.navigation?.toc"
         @select:toc-item="onSelectTocItem"
       />
+      <div
+        v-if="uiStore.bookSliderOpen"
+        class="bottom-24 left-1/2 absolute w-[80%] -translate-x-1/2"
+      >
+        <Slider v-model="sliderValue" :min="0" :max="100" :step="1">
+          <template #tooltip="{ value }">
+            <p class="font-medium text-xs">{{ value }}%</p>
+          </template>
+        </Slider>
+      </div>
+
       <BookFooter
         ref="footerRef"
         v-model:open="footerOpen"
+        v-model:slider-open="uiStore.bookSliderOpen"
         :book="data"
         :location
       />
+
+      <Modal
+        v-model:open="searchModalOpen"
+        title="Search"
+        :ui="{ body: 'pt-0' }"
+        @open="onSearchModalOpen"
+        @close="onSearchModalClose"
+      >
+        <template #body>
+          <div class="relative">
+            <div class="top-0 sticky flex bg-surface py-2">
+              <InputText
+                ref="searchInputRef"
+                v-model="searchText"
+                :placeholder="`Search ${searchType}...`"
+                class="w-full h-10"
+              />
+              <div class="grid grid-cols-2 bg-muted/30 p-1 h-10 shrink-0">
+                <button
+                  v-for="type in ['chapter', 'book']"
+                  :key="type"
+                  :class="[
+                    'px-2 py-1',
+                    searchType === type ? 'bg-surface text-primary' : ''
+                  ]"
+                  @click="searchType = type"
+                >
+                  {{ type }}
+                </button>
+              </div>
+            </div>
+
+            <div class="mt-5">
+              <BookSearchResults
+                :data="searchResults"
+                :search="searchTextDebounced"
+                :loading="isSearching"
+                @select="render"
+              />
+            </div>
+          </div>
+        </template>
+      </Modal>
     </div>
   </div>
 </template>

@@ -1,7 +1,13 @@
 <script setup lang="ts">
-const { text } = useBooksSearch();
+const { text, isClicked } = useBooksSearch();
 </script>
 
 <template>
-  <InputText v-model="text" placeholder="Search book..." icon="lucide:search" />
+  <InputText
+    ref="inputRef"
+    v-model="text"
+    placeholder="Search book..."
+    icon="lucide:search"
+    @click="isClicked = true"
+  />
 </template>

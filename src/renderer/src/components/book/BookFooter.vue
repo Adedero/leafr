@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { assetUrl } from "@renderer/utils/asset-url";
-import type { TBookLocation } from "@renderer/pages/Book.vue";
 import type { FullBook } from "src/main/database/schema";
 import Logo from "../global/Logo.vue";
 import { Numerics } from "@renderer/utils/numerics";
+import type { TBookLocation } from "@renderer/hooks/use-book";
 
 interface Props {
   book?: FullBook | null;

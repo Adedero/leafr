@@ -310,6 +310,68 @@ export const useBook = (
     rendition.value.display(spineItem?.href ?? href);
   }
 
+  const doSearch = async (
+    q: string
+  ): Promise<{ cfi: string; excerpt: string }[]> => {
+    if (!rendition.value) return [];
+
+    const book = rendition.value.book;
+    const results: { cfi: string; excerpt: string }[] = [];
+
+    for (const item of book.spine.spineItems) {
+      try {
+        await item.load(book.load.bind(book));
+        const res = await item.find(q);
+        results.push(...res);
+      } finally {
+        item.unload();
+      }
+    }
+
+    return results;
+  };
+
+  //Searching the current chapter
+  const doChapterSearch = async (
+    q: string
+  ): Promise<{ cfi: string; excerpt: string }[]> => {
+    if (!book.value || !rendition.value || !location.value) {
+      return [];
+    }
+
+    const item = book.value.spine.get(location.value.start.cfi);
+    if (!item) return [];
+
+    try {
+      await item.load(book.value.load.bind(book.value));
+      const results = item.find(q);
+      return results as unknown as { cfi: string; excerpt: string }[];
+    } finally {
+      item.unload();
+    }
+  };
+
+  function render(href: string) {
+    if (!rendition.value) return;
+    rendition.value.display(href);
+  }
+
+  function addHighlights(cfi: string | string[]) {
+    if (!rendition.value) return;
+    const cfis = Array.isArray(cfi) ? cfi : [cfi];
+    cfis.forEach((cfi) => {
+      rendition.value?.annotations.add("highlight", cfi);
+    });
+  }
+
+  function removeHighlights(cfi: string | string[]) {
+    if (!rendition.value) return;
+    const cfis = Array.isArray(cfi) ? cfi : [cfi];
+    cfis.forEach((cfi) => {
+      rendition.value?.annotations.remove(cfi, "highlight");
+    });
+  }
+
   onBeforeRouteLeave(async (_to, _from, next) => {
     await closeBook({
       bookId: input.value?.id ?? "",
@@ -357,6 +419,12 @@ export const useBook = (
     onSelectTocItem,
 
     navigate,
-    displayFromPercentage
+    displayFromPercentage,
+
+    doSearch,
+    doChapterSearch,
+    render,
+    addHighlights,
+    removeHighlights
   };
 };

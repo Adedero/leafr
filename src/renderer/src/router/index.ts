@@ -16,7 +16,7 @@ export const router = createRouter({
     {
       path: "/books/:bookId",
       name: "book",
-      component: () => import("@renderer/pages/BookTest.vue")
+      component: () => import("@renderer/pages/Book.vue")
     },
     {
       path: "/resources",

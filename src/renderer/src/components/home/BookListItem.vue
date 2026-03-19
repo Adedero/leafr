@@ -44,8 +44,11 @@ const allowCheck = computed(
           <h3 class="font-semibold">
             {{ book.title }}
           </h3>
-          <p v-if="book.readingProgress" class="font-medium text-primary text-sm">
-            {{ Numerics.round(book.readingProgress.percentage * 100, 2) }}%
+          <p
+            v-if="book.readingProgress"
+            class="font-medium text-primary text-sm"
+          >
+            {{ Numerics.round(book.readingProgress.percentage * 100, 1) }}%
           </p>
         </div>
         <p class="text-muted text-sm">

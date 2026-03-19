@@ -73,6 +73,7 @@ const fullscreen = defineModel<boolean>("fullscreen", { default: false });
 watch(open, (val) => {
   document.body.style.overflow = val ? "hidden" : "";
   if (val) emit("open");
+  else emit("close");
 });
 
 // ─── Slots / attrs / refs ────────────────────────────────────────────────────
@@ -117,11 +118,11 @@ function toggleFullscreen(action?: "expand" | "minimize" | boolean) {
 const { width: windowWidth, height: windowHeight } = useWindowSize();
 
 const modalCenter = computed(() => ({
-  x: (windowWidth.value - (modalRef.value?.clientWidth ?? 0)) / 2,
-  y: (windowHeight.value - (modalRef.value?.clientHeight ?? 0)) / 2
+  x: (windowWidth.value - (modalRef.value?.$el.clientWidth ?? 0)) / 2,
+  y: (windowHeight.value - (modalRef.value?.$el.clientHeight ?? 0)) / 2
 }));
 
-const { style: dragElPosition } = useDraggable(modalRef, {
+const { style: dragElPosition } = useDraggable(() => modalRef.value?.$el, {
   initialValue: modalCenter,
   handle: () => dragHandleRef.value?.$el
 });
@@ -153,7 +154,7 @@ const contentClasses = computed(() =>
     "top-1/2 left-1/2 fixed -translate-x-1/2 -translate-y-1/2",
     "flex flex-col bg-surface text-text shadow-2xl outline outline-2 outline-border z-[120]",
     "transition-all duration-300 ease-out",
-    
+
     fullscreen.value ? "w-screen h-screen" : "w-full max-w-lg max-h-[90vh]",
     // Reka UI positions DialogContent with fixed+translate by default;
     // override when draggable so useDraggable controls position instead.
