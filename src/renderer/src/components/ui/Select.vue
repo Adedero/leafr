@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { UISize } from "@renderer/types/ui.type";
 import {
   SelectContent,
   SelectGroup,
@@ -9,13 +10,14 @@ import {
   SelectLabel,
   SelectPortal,
   SelectRoot,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
+  // SelectScrollDownButton,
+  // SelectScrollUpButton,
   SelectSeparator,
   SelectTrigger,
   SelectValue,
   SelectViewport
 } from "reka-ui";
+import { twMerge } from "tailwind-merge";
 
 type AcceptedValue =
   | string
@@ -36,6 +38,8 @@ interface Props {
   loading?: boolean;
   search?: boolean;
   searchPlaceholder?: string;
+  size?: UISize;
+  variant?: "filled" | "outline" | "subtle";
 }
 
 const {
@@ -47,7 +51,9 @@ const {
   placeholder = undefined,
   loading = false,
   search = false,
-  searchPlaceholder = undefined
+  searchPlaceholder = undefined,
+  size = "md",
+  variant = "outline"
 } = defineProps<Props>();
 
 const modelValue =
@@ -70,6 +76,49 @@ function getLabel(item: AcceptedValue): string {
   }
   return String(item);
 }
+
+function isGroupItemArray(items: SelectItems): items is GroupItem[] {
+  return (
+    items.length > 0 &&
+    typeof items[0] === "object" &&
+    items[0] !== null &&
+    "items" in items[0]
+  );
+}
+
+function isNestedArray(items: SelectItems): items is AcceptedValue[][] {
+  return items.length > 0 && Array.isArray(items[0]);
+}
+
+function isFlatArray(items: SelectItems): items is AcceptedValue[] {
+  return (
+    items.length > 0 &&
+    !Array.isArray(items[0]) &&
+    !(typeof items[0] === "object" && items[0] !== null && "items" in items[0])
+  );
+}
+
+const sizeStyles = computed(() => {
+  switch (size) {
+    case "sm":
+      return { input: "text-sm py-1.5 px-3", icon: "w-4 h-4" };
+    case "lg":
+      return { input: "text-lg py-3 px-4", icon: "w-6 h-6" };
+    default:
+      return { input: "text-base py-2 px-3", icon: "w-5 h-5" };
+  }
+});
+
+const variantStyles = computed(() => {
+  switch (variant) {
+    case "filled":
+      return "bg-muted/20 focus:ring-accent focus:ring-offset-surface";
+    case "subtle":
+      return "bg-transparent border-b border-muted/30 focus:ring-accent focus:ring-offset-surface";
+    default:
+      return "border-2 border-border bg-surface hover:bg-muted/10 focus:ring-accent focus:ring-offset-surface";
+  }
+});
 </script>
 
 <template>
@@ -82,7 +131,15 @@ function getLabel(item: AcceptedValue): string {
   >
     <!-- Trigger -->
     <SelectTrigger
-      class="inline-flex justify-between items-center gap-2 bg-surface hover:bg-muted/10 disabled:opacity-60 px-4 py-2.5 border-2 border-border focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-surface min-w-[180px] max-w-full text-text transition-colors duration-150 disabled:cursor-not-allowed"
+      :class="
+        twMerge(
+          'inline-flex justify-between items-center gap-2 min-w-[180px] max-w-full',
+          'disabled:opacity-60 focus:outline-none focus:ring-2 focus:ring-offset-2',
+          'text-text transition-colors duration-150 disabled:cursor-not-allowed',
+          sizeStyles.input,
+          variantStyles
+        )
+      "
       v-bind="$attrs"
     >
       <div :class="{ 'flex items-center gap-2': loading }">
@@ -104,25 +161,13 @@ function getLabel(item: AcceptedValue): string {
         :side-offset="6"
         :align-offset="0"
       >
-        <!-- <SelectScrollUpButton
-          class="flex justify-center items-center bg-surface/80 hover:bg-muted/20 h-8 text-muted transition-colors"
-        >
-          <Icon name="lucide:chevron-up" size="16" />
-        </SelectScrollUpButton> -->
-
         <SelectViewport class="relative p-1 max-h-96">
           <div v-if="search" class="top-0 z-10 sticky bg-surface p-2 w-full">
             <InputText size="sm" :placeholder="searchPlaceholder" />
           </div>
-          <!-- Case 1: Flat array of primitives or objects -->
-          <template
-            v-if="
-              Array.isArray(items) &&
-              items.length &&
-              !Array.isArray(items[0]) &&
-              !('label' in items[0])
-            "
-          >
+
+          <!-- Case 1: Flat array -->
+          <template v-if="isFlatArray(items)">
             <SelectItem
               v-for="item in items"
               :key="getValue(item)"
@@ -138,16 +183,9 @@ function getLabel(item: AcceptedValue): string {
             </SelectItem>
           </template>
 
-          <!-- Case 2: Array of arrays (simple groups with separators) -->
-          <template
-            v-else-if="
-              Array.isArray(items) && items.length && Array.isArray(items[0])
-            "
-          >
-            <template
-              v-for="(group, idx) in items as AcceptedValue[][]"
-              :key="idx"
-            >
+          <!-- Case 2: Array of arrays -->
+          <template v-else-if="isNestedArray(items)">
+            <template v-for="(group, idx) in items" :key="idx">
               <SelectGroup v-if="group.length">
                 <SelectItem
                   v-for="item in group"
@@ -170,23 +208,15 @@ function getLabel(item: AcceptedValue): string {
             </template>
           </template>
 
-          <!-- Case 3: Array of { label, items } -->
-          <template
-            v-else-if="
-              Array.isArray(items) &&
-              items.length &&
-              typeof items[0] === 'object' &&
-              'label' in items[0]
-            "
-          >
-            <template v-for="(group, idx) in items as GroupItem[]" :key="idx">
+          <!-- Case 3: GroupItem array -->
+          <template v-else-if="isGroupItemArray(items)">
+            <template v-for="(group, idx) in items" :key="idx">
               <SelectGroup>
                 <SelectLabel
                   class="px-3 py-2 font-semibold text-muted text-xs uppercase tracking-wide"
                 >
                   {{ group.label }}
                 </SelectLabel>
-
                 <SelectItem
                   v-for="item in group.items"
                   :key="getValue(item)"
@@ -201,7 +231,6 @@ function getLabel(item: AcceptedValue): string {
                   </SelectItemIndicator>
                 </SelectItem>
               </SelectGroup>
-
               <SelectSeparator
                 v-if="idx < items.length - 1"
                 class="mx-2 my-1 bg-border h-px"
@@ -209,17 +238,11 @@ function getLabel(item: AcceptedValue): string {
             </template>
           </template>
 
-          <!-- Fallback: nothing matches or empty -->
+          <!-- Fallback -->
           <div v-else class="px-4 py-6 text-muted text-sm text-center">
             No options available
           </div>
         </SelectViewport>
-
-        <!-- <SelectScrollDownButton
-          class="flex justify-center items-center bg-surface/80 hover:bg-muted/20 h-8 text-muted transition-colors"
-        >
-          <Icon name="lucide:chevron-down" size="16" />
-        </SelectScrollDownButton> -->
       </SelectContent>
     </SelectPortal>
   </SelectRoot>

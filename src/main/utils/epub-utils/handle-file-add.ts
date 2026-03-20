@@ -1,5 +1,4 @@
-import { eq } from "drizzle-orm";
-import db, { table } from "../../database";
+import db from "../../database";
 import { hashFile } from "../hash-file";
 import { syncDirLabels } from "./sync-dir-labels";
 import { extractLabels } from "./extract-labels";
@@ -10,7 +9,10 @@ interface HandleFileAddInput {
   filePath: string;
   rootDir: string;
 }
-export default async function handleFileAdd({ filePath, rootDir }: HandleFileAddInput) {
+export default async function handleFileAdd({
+  filePath,
+  rootDir
+}: HandleFileAddInput) {
   if (!filePath || !filePath.endsWith(".epub")) {
     return;
   }
@@ -26,7 +28,12 @@ export default async function handleFileAdd({ filePath, rootDir }: HandleFileAdd
     if (bookByPath.fileHash !== fileHash) {
       // File content changed. Re-extract metadata and cover.
       try {
-        await syncSingleFile({ filePath, fileHash, labels: dirLabels, existingBookId: bookByPath.id });
+        await syncSingleFile({
+          filePath,
+          fileHash,
+          labels: dirLabels,
+          existingBookId: bookByPath.id
+        });
       } catch (error) {
         logger.error(`Error re-syncing modified file ${filePath}:`, error);
       }
@@ -45,7 +52,12 @@ export default async function handleFileAdd({ filePath, rootDir }: HandleFileAdd
   if (existingByHash && existingByHash.filePath !== filePath) {
     // File was moved or renamed. Update path and re-extract metadata/cover.
     try {
-      await syncSingleFile({ filePath, fileHash, labels: dirLabels, existingBookId: existingByHash.id });
+      await syncSingleFile({
+        filePath,
+        fileHash,
+        labels: dirLabels,
+        existingBookId: existingByHash.id
+      });
     } catch (error) {
       logger.error(`Error re-syncing moved file ${filePath}:`, error);
     }

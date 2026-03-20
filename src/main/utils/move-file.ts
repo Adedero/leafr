@@ -26,8 +26,13 @@ export async function moveFile(
 
   try {
     await rename(src, dest);
-  } catch (error: any) {
-    if (error.code === "EXDEV") {
+  } catch (error: unknown) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      error.code === "EXDEV"
+    ) {
       // cross-device — if dest exists and overwrite, remove first
       if (destExists && overwrite) await unlink(dest);
       await copyFile(src, dest);

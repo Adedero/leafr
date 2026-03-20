@@ -11,9 +11,16 @@ import { pathToFileURL } from "node:url";
 import labelHandlers from "./handlers/labels";
 import fileHandlers from "./handlers/files";
 
+let mainWindow: BrowserWindow | null = null;
+let pendingFile: string | null = null;
+const getArgvFile = () => {
+  const args = process.argv.slice(app.isPackaged ? 1 : 2);
+  return args.find((arg) => arg.endsWith(".epub")) ?? null;
+};
+
 function createWindow(): void {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
     show: false,
@@ -26,7 +33,7 @@ function createWindow(): void {
   });
 
   mainWindow.on("ready-to-show", () => {
-    mainWindow.show();
+    mainWindow?.show();
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -95,11 +102,49 @@ app.whenReady().then(async () => {
 
   createWindow();
 
+  if (pendingFile) {
+    openFileInRenderer(pendingFile);
+    pendingFile = null;
+  }
+
+  // handle Windows/Linux argv
+  const argvFile = getArgvFile();
+  if (argvFile) {
+    openFileInRenderer(argvFile);
+  }
+
+  const gotLock = app.requestSingleInstanceLock();
+  if (!gotLock) {
+    app.quit();
+  } else {
+    app.on("second-instance", (_event, argv) => {
+      const file = argv
+        .slice(app.isPackaged ? 1 : 2)
+        .find((a) => a.endsWith(".epub"));
+      if (file) openFileInRenderer(file);
+
+      // focus the existing window
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore();
+        mainWindow.focus();
+      }
+    });
+  }
+
   app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
+});
+
+app.on("open-file", (event, path) => {
+  event.preventDefault();
+  if (mainWindow) {
+    openFileInRenderer(path);
+  } else {
+    pendingFile = path;
+  }
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -111,5 +156,14 @@ app.on("window-all-closed", () => {
   }
 });
 
+app.on("before-quit", () => {
+  // Close any open books, save state, etc.
+  mainWindow?.webContents.send("app-quit");
+});
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+function openFileInRenderer(path: string) {
+  mainWindow?.webContents.send("open-file", path);
+}

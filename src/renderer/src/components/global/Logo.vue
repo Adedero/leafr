@@ -5,7 +5,11 @@ interface Props {
   color?: string;
 }
 
-const { width = 90, height = 54, color = "var(--color-accent)" } = defineProps<Props>();
+const {
+  width = 90,
+  height = 54,
+  color = "var(--color-accent)"
+} = defineProps<Props>();
 
 const DEFAULT_WIDTH = 90;
 const DEFAULT_HEIGHT = 54;

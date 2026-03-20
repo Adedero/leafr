@@ -13,5 +13,10 @@ export function useApi() {
     return result;
   };
 
-  return { openExternalLink, openFileDialog, getFilePath };
+  const saveOpenedFiles = async (filePaths: string[]) => {
+    const result = await window.api.books.saveOpenedFiles(filePaths);
+    return result;
+  };
+
+  return { openExternalLink, openFileDialog, getFilePath, saveOpenedFiles };
 }

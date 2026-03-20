@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import type { NavItem } from "epubjs";
-import { CollapsibleContent, CollapsibleRoot, CollapsibleTrigger } from "reka-ui";
+import {
+  CollapsibleContent,
+  CollapsibleRoot,
+  CollapsibleTrigger
+} from "reka-ui";
 
 interface Props {
   toc: NavItem[];
@@ -16,7 +20,10 @@ const emit = defineEmits<{
   <div>
     <ul class="divide-y divide-border/20">
       <li v-for="item in toc" :key="item.id" class="select-none">
-        <CollapsibleRoot v-if="item.subitems?.length" class="flex flex-wrap hover:bg-primary/10">
+        <CollapsibleRoot
+          v-if="item.subitems?.length"
+          class="flex flex-wrap hover:bg-primary/10"
+        >
           <button
             class="py-3 px-2 cursor-context-menu grow text-left"
             @click="emit('select', item)"

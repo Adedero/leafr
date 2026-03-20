@@ -128,6 +128,7 @@ export const useBook = (
         });
       }
 
+      //@ts-expect-error allowPopups prop exists but is nit defined in type
       rendition.value = book.value.renderTo(el, {
         height: "100%",
         width: "100%",
@@ -318,6 +319,7 @@ export const useBook = (
     const book = rendition.value.book;
     const results: { cfi: string; excerpt: string }[] = [];
 
+    // @ts-expect-error spineItems props exists but is not defined in type
     for (const item of book.spine.spineItems) {
       try {
         await item.load(book.load.bind(book));
@@ -372,12 +374,16 @@ export const useBook = (
     });
   }
 
-  onBeforeRouteLeave(async (_to, _from, next) => {
-    await closeBook({
+  function getReadingProgress() {
+    return {
       bookId: input.value?.id ?? "",
       cfi: location.value?.end.cfi ?? "",
       percentage: location.value?.end.percentage ?? 0
-    });
+    };
+  }
+
+  onBeforeRouteLeave(async (_to, _from, next) => {
+    await closeBook(getReadingProgress());
     next();
   });
 

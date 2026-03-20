@@ -52,7 +52,10 @@ export function useClickZone(
     if (dx > tapSlop || dy > tapSlop) return;
     if (!rect.value) return;
 
-    const ratio = Math.min(1, Math.max(0, (event.clientX - rect.value.left) / rect.value.width));
+    const ratio = Math.min(
+      1,
+      Math.max(0, (event.clientX - rect.value.left) / rect.value.width)
+    );
 
     if (ratio < threshold) zone.value = "left";
     else if (ratio > 1 - threshold) zone.value = "right";

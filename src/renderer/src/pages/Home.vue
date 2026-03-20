@@ -4,17 +4,82 @@ import useSWRV from "swrv";
 const toast = useToast();
 const { getAllBooks, openAndNavigate, syncBooks } = useBookUtils();
 const { debounced } = useBooksSearch();
+const uiStore = useUiStore();
 
 const { data, error, isLoading, mutate } = useSWRV("books:all", getAllBooks);
 
-const books = computed(() => {
-  return data.value?.filter((book) => {
-    const value = debounced.value.toLowerCase();
-    return (
-      book.title.toLowerCase().includes(value) ||
-      (book.author && book.author.toLowerCase().includes(value))
-    );
+const selectItems = [
+  { label: "Name (asc)", value: "name:asc" },
+  { label: "Name (desc)", value: "name:desc" },
+  { label: "Author (asc)", value: "author:asc" },
+  { label: "Author (desc)", value: "author:desc" },
+  { label: "Date added (asc)", value: "dateAdded:asc" },
+  { label: "Date added (desc)", value: "dateAdded:desc" },
+  { label: "Last opened (asc)", value: "lastOpened:asc" },
+  { label: "Last opened (desc)", value: "lastOpened:desc" },
+  { label: "Reading progress (asc)", value: "readingProgress:asc" },
+  { label: "Reading progress (desc)", value: "readingProgress:desc" }
+];
+
+function sortByValues(arr: (typeof data)["value"], value: string) {
+  if (!arr) return undefined;
+
+  const [field, order] = value.split(":") as [string, "asc" | "desc"];
+  const dir = order === "asc" ? 1 : -1;
+
+  return [...arr].sort((a, b) => {
+    let valA: string | number | null | undefined;
+    let valB: string | number | null | undefined;
+
+    switch (field) {
+      case "name":
+        valA = a.title;
+        valB = b.title;
+        break;
+      case "author":
+        valA = a.author;
+        valB = b.author;
+        break;
+      case "dateAdded":
+        valA = a.addedAt;
+        valB = b.addedAt;
+        break;
+      case "lastOpened":
+        valA = a.lastOpenedAt;
+        valB = b.lastOpenedAt;
+        break;
+      case "readingProgress":
+        valA = a.readingProgress?.percentage ?? -1;
+        valB = b.readingProgress?.percentage ?? -1;
+        break;
+      default:
+        return 0;
+    }
+
+    // nulls always go to the end regardless of sort direction
+    if (valA == null && valB == null) return 0;
+    if (valA == null) return 1;
+    if (valB == null) return -1;
+
+    if (typeof valA === "number" && typeof valB === "number") {
+      return (valA - valB) * dir;
+    }
+
+    return String(valA).localeCompare(String(valB)) * dir;
   });
+}
+
+const books = computed(() => {
+  return sortByValues(
+    data.value?.filter((book) => {
+      const value = debounced.value.toLowerCase();
+      return (
+        book.title.toLowerCase().includes(value) ||
+        (book.author && book.author.toLowerCase().includes(value))
+      );
+    }),
+    uiStore.homePageBooksSort
+  );
 });
 
 const recents = computed(() => {
@@ -72,6 +137,12 @@ async function handleSync() {
           All <span v-if="books">({{ books.length }})</span>
         </h2>
         <div class="flex items-center gap-2">
+          <Select
+            v-model="uiStore.homePageBooksSort"
+            :items="selectItems"
+            size="sm"
+          />
+
           <Button
             color="neutral"
             variant="outline"

@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { ToastRoot, ToastTitle, ToastDescription, ToastViewport } from "reka-ui";
+import {
+  ToastRoot,
+  ToastTitle,
+  ToastDescription,
+  ToastViewport
+} from "reka-ui";
 import type { UIColor } from "@renderer/types/ui.type";
 import Icon from "./Icon.vue";
 
@@ -56,7 +61,10 @@ const meterBgStyle = (color: UIColor): Record<string, string> => {
     <div v-if="duration" class="border-2 border-border">
       <div
         class="h-1"
-        :style="{ width: `${(remaining / duration) * 100}%`, ...meterBgStyle(toast.color) }"
+        :style="{
+          width: `${(remaining / duration) * 100}%`,
+          ...meterBgStyle(toast.color)
+        }"
       />
     </div>
 
@@ -71,7 +79,9 @@ const meterBgStyle = (color: UIColor): Record<string, string> => {
     </ToastAction> -->
   </ToastRoot>
 
-  <ToastViewport class="right-0 bottom-0 z-100 fixed flex flex-col gap-3 p-6 w-100 max-w-[100vw]" />
+  <ToastViewport
+    class="right-0 bottom-0 z-100 fixed flex flex-col gap-3 p-6 w-100 max-w-[100vw]"
+  />
 </template>
 
 <style>

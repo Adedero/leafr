@@ -21,7 +21,10 @@ export interface LoopReturn<T> {
   next: () => void; // manually advance
 }
 
-export function useLoop<T>(items: readonly T[], options: LoopOptions = {}): LoopReturn<T> {
+export function useLoop<T>(
+  items: readonly T[],
+  options: LoopOptions = {}
+): LoopReturn<T> {
   const {
     interval = 3000,
     mode = "sequential",
@@ -57,7 +60,9 @@ export function useLoop<T>(items: readonly T[], options: LoopOptions = {}): Loop
     }
 
     // Random mode
-    const available = items.map((_, i) => i).filter((i) => repeat || !seen.has(i));
+    const available = items
+      .map((_, i) => i)
+      .filter((i) => repeat || !seen.has(i));
 
     if (available.length === 0) {
       if (infinite && repeat) {
@@ -69,7 +74,10 @@ export function useLoop<T>(items: readonly T[], options: LoopOptions = {}): Loop
     }
 
     // Don't show the same item twice in a row if possible
-    const pool = available.length > 1 ? available.filter((i) => i !== index.value) : available;
+    const pool =
+      available.length > 1
+        ? available.filter((i) => i !== index.value)
+        : available;
 
     return pool[Math.floor(Math.random() * pool.length)];
   }
@@ -108,7 +116,8 @@ export function useLoop<T>(items: readonly T[], options: LoopOptions = {}): Loop
 
     // Always pick immediately when start() is called
     if (index.value === -1) {
-      const firstIndex = mode === "random" ? Math.floor(Math.random() * items.length) : 0;
+      const firstIndex =
+        mode === "random" ? Math.floor(Math.random() * items.length) : 0;
       pick(firstIndex);
     }
 

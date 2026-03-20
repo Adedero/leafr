@@ -29,6 +29,7 @@ declare global {
         updateReadingProgress: (
           input: UpdateReadingProgressInput
         ) => Promise<boolean>;
+        saveOpenedFiles: (filePaths: string[]) => Promise<string[]>;
       };
       labels: {
         getAllLabels: () => Promise<GetAllLabelsResponse>;

@@ -216,7 +216,7 @@ declare global {
   const useEventBus: typeof import('@vueuse/core').useEventBus
   const useEventListener: typeof import('@vueuse/core').useEventListener
   const useEventSource: typeof import('@vueuse/core').useEventSource
-  const useExternalLink: typeof import('./src/hooks/use-apit').useExternalLink
+  const useExternalLink: typeof import("./src/hooks/use-apit").useExternalLink
   const useEyeDropper: typeof import('@vueuse/core').useEyeDropper
   const useFavicon: typeof import('@vueuse/core').useFavicon
   const useFetch: typeof import('@vueuse/core').useFetch
@@ -238,6 +238,7 @@ declare global {
   const useInterval: typeof import('@vueuse/core').useInterval
   const useIntervalFn: typeof import('@vueuse/core').useIntervalFn
   const useKeyModifier: typeof import('@vueuse/core').useKeyModifier
+  const useLabelUtils: typeof import('./src/hooks/use-label-utils').useLabelUtils
   const useLastChanged: typeof import('@vueuse/core').useLastChanged
   const useLink: typeof import('vue-router').useLink
   const useLoad: typeof import("./src/hooks/use-book/use-book-fetcher").useLoad

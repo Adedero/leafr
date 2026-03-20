@@ -127,7 +127,11 @@ export function useToast(config: UseToastInstanceOptions = {}) {
     });
   };
 
-  const error = (title?: string, description?: string, opts: Omit<ToastOptions, "color"> = {}) => {
+  const error = (
+    title?: string,
+    description?: string,
+    opts: Omit<ToastOptions, "color"> = {}
+  ) => {
     return useToast(config).open({
       title,
       description,

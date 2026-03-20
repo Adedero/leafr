@@ -2,9 +2,7 @@
   "version": "7",
   "dialect": "sqlite",
   "id": "fe9d831a-5559-4a0a-b145-ce4d990c4ba6",
-  "prevIds": [
-    "1b6e19a3-6e7a-4b12-bae1-95c2d2ecd92b"
-  ],
+  "prevIds": ["1b6e19a3-6e7a-4b12-bae1-95c2d2ecd92b"],
   "ddl": [
     {
       "name": "book_locations",
@@ -707,13 +705,9 @@
       "table": "settings"
     },
     {
-      "columns": [
-        "book_id"
-      ],
+      "columns": ["book_id"],
       "tableTo": "books",
-      "columnsTo": [
-        "id"
-      ],
+      "columnsTo": ["id"],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "nameExplicit": false,
@@ -722,13 +716,9 @@
       "table": "book_locations"
     },
     {
-      "columns": [
-        "book_id"
-      ],
+      "columns": ["book_id"],
       "tableTo": "books",
-      "columnsTo": [
-        "id"
-      ],
+      "columnsTo": ["id"],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "nameExplicit": false,
@@ -737,13 +727,9 @@
       "table": "bookmarks"
     },
     {
-      "columns": [
-        "book_id"
-      ],
+      "columns": ["book_id"],
       "tableTo": "books",
-      "columnsTo": [
-        "id"
-      ],
+      "columnsTo": ["id"],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "nameExplicit": false,
@@ -752,13 +738,9 @@
       "table": "book_to_labels"
     },
     {
-      "columns": [
-        "label_id"
-      ],
+      "columns": ["label_id"],
       "tableTo": "labels",
-      "columnsTo": [
-        "id"
-      ],
+      "columnsTo": ["id"],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "nameExplicit": false,
@@ -767,13 +749,9 @@
       "table": "book_to_labels"
     },
     {
-      "columns": [
-        "book_id"
-      ],
+      "columns": ["book_id"],
       "tableTo": "books",
-      "columnsTo": [
-        "id"
-      ],
+      "columnsTo": ["id"],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "nameExplicit": false,
@@ -782,13 +760,9 @@
       "table": "favorites"
     },
     {
-      "columns": [
-        "book_id"
-      ],
+      "columns": ["book_id"],
       "tableTo": "books",
-      "columnsTo": [
-        "id"
-      ],
+      "columnsTo": ["id"],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "nameExplicit": false,
@@ -797,13 +771,9 @@
       "table": "highlights"
     },
     {
-      "columns": [
-        "book_id"
-      ],
+      "columns": ["book_id"],
       "tableTo": "books",
-      "columnsTo": [
-        "id"
-      ],
+      "columnsTo": ["id"],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "nameExplicit": false,
@@ -812,13 +782,9 @@
       "table": "reading_progress"
     },
     {
-      "columns": [
-        "book_id"
-      ],
+      "columns": ["book_id"],
       "tableTo": "books",
-      "columnsTo": [
-        "id"
-      ],
+      "columnsTo": ["id"],
       "onUpdate": "NO ACTION",
       "onDelete": "CASCADE",
       "nameExplicit": false,
@@ -827,154 +793,119 @@
       "table": "reading_sessions"
     },
     {
-      "columns": [
-        "book_id",
-        "label_id"
-      ],
+      "columns": ["book_id", "label_id"],
       "nameExplicit": false,
       "name": "book_to_labels_pk",
       "entityType": "pks",
       "table": "book_to_labels"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "book_locations_pk",
       "table": "book_locations",
       "entityType": "pks"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "bookmarks_pk",
       "table": "bookmarks",
       "entityType": "pks"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "books_pk",
       "table": "books",
       "entityType": "pks"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "favorites_pk",
       "table": "favorites",
       "entityType": "pks"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "highlights_pk",
       "table": "highlights",
       "entityType": "pks"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "labels_pk",
       "table": "labels",
       "entityType": "pks"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "reading_progress_pk",
       "table": "reading_progress",
       "entityType": "pks"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "reading_sessions_pk",
       "table": "reading_sessions",
       "entityType": "pks"
     },
     {
-      "columns": [
-        "id"
-      ],
+      "columns": ["id"],
       "nameExplicit": false,
       "name": "settings_pk",
       "table": "settings",
       "entityType": "pks"
     },
     {
-      "columns": [
-        "book_id"
-      ],
+      "columns": ["book_id"],
       "nameExplicit": false,
       "name": "book_locations_book_id_unique",
       "entityType": "uniques",
       "table": "book_locations"
     },
     {
-      "columns": [
-        "file_path"
-      ],
+      "columns": ["file_path"],
       "nameExplicit": false,
       "name": "books_file_path_unique",
       "entityType": "uniques",
       "table": "books"
     },
     {
-      "columns": [
-        "file_url"
-      ],
+      "columns": ["file_url"],
       "nameExplicit": false,
       "name": "books_file_url_unique",
       "entityType": "uniques",
       "table": "books"
     },
     {
-      "columns": [
-        "file_hash"
-      ],
+      "columns": ["file_hash"],
       "nameExplicit": false,
       "name": "books_file_hash_unique",
       "entityType": "uniques",
       "table": "books"
     },
     {
-      "columns": [
-        "book_id"
-      ],
+      "columns": ["book_id"],
       "nameExplicit": false,
       "name": "favorites_book_id_unique",
       "entityType": "uniques",
       "table": "favorites"
     },
     {
-      "columns": [
-        "name"
-      ],
+      "columns": ["name"],
       "nameExplicit": false,
       "name": "labels_name_unique",
       "entityType": "uniques",
       "table": "labels"
     },
     {
-      "columns": [
-        "book_id"
-      ],
+      "columns": ["book_id"],
       "nameExplicit": false,
       "name": "reading_progress_book_id_unique",
       "entityType": "uniques",

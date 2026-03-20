@@ -21,7 +21,7 @@ export function enumerateError(error: Error, seen = new WeakSet<Error>()) {
     message: string;
     name: string;
     stack?: string;
-    [x: string]: any;
+    [x: string]: unknown;
   } = {
     message: error.message,
     name: error.name,
@@ -29,14 +29,18 @@ export function enumerateError(error: Error, seen = new WeakSet<Error>()) {
   };
 
   if (error.cause) {
-    result.cause = error.cause instanceof Error ? enumerateError(error.cause, seen) : error.cause;
+    result.cause =
+      error.cause instanceof Error
+        ? enumerateError(error.cause, seen)
+        : error.cause;
   }
 
   // Capture any additional properties
   Object.keys(error).forEach((key) => {
     if (!["message", "name", "stack", "cause"].includes(key)) {
-      const value = (error as any)[key];
-      result[key] = value instanceof Error ? enumerateError(value, seen) : value;
+      const value = error[key];
+      result[key] =
+        value instanceof Error ? enumerateError(value, seen) : value;
     }
   });
 

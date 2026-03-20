@@ -13,6 +13,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     Alert: typeof import('./src/components/ui/Alert.vue')['default']
     AllBooksSearchBar: typeof import('./src/components/global/search-bar/AllBooksSearchBar.vue')['default']
+    AllLabelsSearchBar: typeof import('./src/components/global/search-bar/AllLabelsSearchBar.vue')['default']
     BookBookmarks: typeof import('./src/components/book/BookBookmarks.vue')['default']
     BookFontFamilySetter: typeof import('./src/components/book/BookFontFamilySetter.vue')['default']
     BookFontSizeSetter: typeof import('./src/components/book/BookFontSizeSetter.vue')['default']

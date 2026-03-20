@@ -67,7 +67,10 @@ export interface Cycle<T> {
  * }
  * ```
  */
-export function cycle<T>(list: readonly T[], options: CycleOptions = {}): Cycle<T> {
+export function cycle<T>(
+  list: readonly T[],
+  options: CycleOptions = {}
+): Cycle<T> {
   const { infinite = true, startIndex = 0, step = 1 } = options;
 
   if (!Number.isInteger(step) || step === 0) {

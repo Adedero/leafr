@@ -46,7 +46,6 @@ export async function watchLibDir() {
     ignoreInitial: true
   });
 
-
   watcher.on("add", (path) => {
     console.log("new file: ", path);
     handleFileAdd({ filePath: path, rootDir: dir }).then(() => {

@@ -11,7 +11,10 @@ const {
   showRandomLabels?: boolean;
 }>();
 
-const { current, start, stop } = useLoop(LOADING_MESSAGES, { mode: "random", immediate: false });
+const { current, start, stop } = useLoop(LOADING_MESSAGES, {
+  mode: "random",
+  immediate: false
+});
 watch(
   () => showRandomLabels,
   (val) => (val ? start() : stop()),

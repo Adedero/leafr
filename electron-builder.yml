@@ -1,5 +1,9 @@
 appId: com.electron.app
-productName: leafr
+productName: Leafr
+fileAssociations:
+  - ext: epub
+    name: Leafr
+    role: Viewer
 directories:
   buildResources: build
 files:

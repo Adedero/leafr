@@ -9,10 +9,16 @@ export const useUiStore = defineStore("ui", () => {
     bookFooterLocked.value = !bookFooterLocked.value;
   };
 
+  const homePageBooksSort = useLocalStorage<string>(
+    "home-page:books-sort",
+    "name:asc"
+  );
+
   return {
     navbarWidth,
     bookFooterLocked,
     bookSliderOpen,
-    toggleBookFooterLocked
+    toggleBookFooterLocked,
+    homePageBooksSort
   };
 });

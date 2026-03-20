@@ -8,5 +8,5 @@ export interface LoggerError {
   message: string;
   name: string;
   stack?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }

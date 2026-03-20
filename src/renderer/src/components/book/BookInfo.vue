@@ -19,7 +19,10 @@ const { book } = defineProps<Props>();
           :src="assetUrl(book.coverImagePath)"
           class="h-full object-cover"
         />
-        <div v-else class="flex justify-center items-center bg-surface w-full h-full text-muted">
+        <div
+          v-else
+          class="flex justify-center items-center bg-surface w-full h-full text-muted"
+        >
           <Logo color="currentcolor" />
         </div>
       </div>
@@ -46,9 +49,7 @@ const { book } = defineProps<Props>();
         <p v-if="book.title" class="font-semibold">
           {{ book.title }}
         </p>
-        <p v-else class="font-semibold">
-          N/A
-        </p>
+        <p v-else class="font-semibold">N/A</p>
       </div>
 
       <div>
@@ -56,9 +57,7 @@ const { book } = defineProps<Props>();
         <p v-if="book.author" class="font-semibold">
           {{ book.author }}
         </p>
-        <p v-else class="font-semibold">
-          N/A
-        </p>
+        <p v-else class="font-semibold">N/A</p>
       </div>
 
       <div>
@@ -66,9 +65,7 @@ const { book } = defineProps<Props>();
         <p v-if="book.publisher" class="font-semibold">
           {{ book.publisher }}
         </p>
-        <p v-else class="font-semibold">
-          N/A
-        </p>
+        <p v-else class="font-semibold">N/A</p>
       </div>
 
       <div>
@@ -76,9 +73,7 @@ const { book } = defineProps<Props>();
         <p v-if="book.publishedDate" class="font-semibold">
           {{ useDateFormat(book.publishedDate, "DD MMM, YYYY") }}
         </p>
-        <p v-else class="font-semibold">
-          N/A
-        </p>
+        <p v-else class="font-semibold">N/A</p>
       </div>
     </div>
   </div>

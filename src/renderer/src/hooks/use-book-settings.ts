@@ -26,7 +26,12 @@ const MIN_WORD_SPACING = 0;
 const MAX_WORD_SPACING = 20;
 const MIN_PARAGRAPH_SPACING = 0;
 const MAX_PARAGRAPH_SPACING = 50;
-const PAGE_LAYOUTS: Array<TBookSettings["flow"]> = ["scroll", "single", "double", "auto"];
+const PAGE_LAYOUTS: Array<TBookSettings["flow"]> = [
+  "scroll",
+  "single",
+  "double",
+  "auto"
+];
 
 const constraints = {
   fontSize: { min: MIN_FONT_SIZE, max: MAX_FONT_SIZE },

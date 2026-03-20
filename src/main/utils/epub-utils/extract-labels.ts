@@ -18,4 +18,3 @@ export function normalizeLabel(name: string): string {
     .trim()
     .replace(/\b\w/g, (c) => c.toUpperCase());
 }
-

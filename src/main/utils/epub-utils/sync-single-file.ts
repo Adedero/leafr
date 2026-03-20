@@ -56,7 +56,10 @@ export async function syncSingleFile({
   let bookId = existingBookId;
 
   if (existingBookId) {
-    await db.update(table.books).set(bookData).where(eq(table.books.id, existingBookId));
+    await db
+      .update(table.books)
+      .set(bookData)
+      .where(eq(table.books.id, existingBookId));
   } else {
     const [inserted] = await db
       .insert(table.books)

@@ -55,31 +55,40 @@ export class Logger {
       consoleFormat = winston.format.combine(
         baseFormat,
         winston.format.colorize({ all: true }),
-        winston.format.printf(({ timestamp, level, message, error, ...meta }) => {
-          // Base log message
-          let logMsg = `${timestamp} [${level}]: ${message}`;
+        winston.format.printf(
+          ({ timestamp, level, message, error, ...meta }) => {
+            // Base log message
+            let logMsg = `${timestamp} [${level}]: ${message}`;
 
-          // Handle Error Display in Text Mode
-          if (error) {
-            if (typeof error === "object" && "stack" in error && error.stack) {
-              logMsg += `\n${error.stack}`;
-            } else {
-              logMsg += `\nError Object: ${JSON.stringify(error, null, 2)}`;
+            // Handle Error Display in Text Mode
+            if (error) {
+              if (
+                typeof error === "object" &&
+                "stack" in error &&
+                error.stack
+              ) {
+                logMsg += `\n${error.stack}`;
+              } else {
+                logMsg += `\nError Object: ${JSON.stringify(error, null, 2)}`;
+              }
             }
-          }
 
-          // Handle remaining metadata (if any)
-          if (Object.keys(meta).length > 0) {
-            logMsg += `\n${JSON.stringify(meta, null, 2)}`;
-          }
+            // Handle remaining metadata (if any)
+            if (Object.keys(meta).length > 0) {
+              logMsg += `\n${JSON.stringify(meta, null, 2)}`;
+            }
 
-          return logMsg;
-        })
+            return logMsg;
+          }
+        )
       );
     }
 
     // 2. Define File Transport Format (Always JSON for parsability)
-    const fileFormat = winston.format.combine(baseFormat, winston.format.json());
+    const fileFormat = winston.format.combine(
+      baseFormat,
+      winston.format.json()
+    );
 
     this.logger = winston.createLogger({
       levels: this.customLevels,
@@ -125,15 +134,15 @@ export class Logger {
     return Logger.instance;
   }
 
-  public info(message: string, meta?: Record<string, any>): void {
+  public info(message: string, meta?: Record<string, unknown>): void {
     this.logger.info(message, meta);
   }
 
-  public warn(message: string, meta?: Record<string, any>): void {
+  public warn(message: string, meta?: Record<string, unknown>): void {
     this.logger.warn(message, meta);
   }
 
-  public debug(message: string, meta?: Record<string, any>): void {
+  public debug(message: string, meta?: Record<string, unknown>): void {
     this.logger.debug(message, meta);
   }
 
@@ -143,7 +152,11 @@ export class Logger {
    * @param error - The actual error object (Error instance or custom object)
    * @param meta - Additional metadata
    */
-  public error(message: string, error?: unknown, meta?: Record<string, any>): void {
+  public error(
+    message: string,
+    error?: unknown,
+    meta?: Record<string, unknown>
+  ): void {
     // Preserve the error exactly as is within the metadata
     const logMeta = { ...meta };
 
@@ -157,7 +170,7 @@ export class Logger {
   public fatal(
     message: string,
     error?: unknown,
-    meta?: Record<string, any>,
+    meta?: Record<string, unknown>,
     exit: boolean = true
   ): void {
     const logMeta = { ...meta };

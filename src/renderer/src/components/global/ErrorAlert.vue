@@ -7,7 +7,11 @@ interface Props {
   description?: string;
 }
 
-const { title = undefined, error = undefined, description = undefined } = defineProps<Props>();
+const {
+  title = undefined,
+  error = undefined,
+  description = undefined
+} = defineProps<Props>();
 
 const emit = defineEmits<{
   retry: [];

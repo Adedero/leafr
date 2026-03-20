@@ -137,7 +137,12 @@ async function handleAction(action: UIAction) {
             </slot>
           </div>
 
-          <Icon v-if="close" name="lucide:x" :class="computedUI.close" @click="closeAlert" />
+          <Icon
+            v-if="close"
+            name="lucide:x"
+            :class="computedUI.close"
+            @click="closeAlert"
+          />
         </div>
       </div>
 

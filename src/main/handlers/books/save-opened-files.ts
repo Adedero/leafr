@@ -18,7 +18,9 @@ import logger from "../../utils/logger";
  * Then it's synced to the database.
  * Returns the IDs of the books.
  */
-export default async function saveOpenedFiles(paths: string[]): Promise<string[]> {
+export default async function saveOpenedFiles(
+  paths: string[]
+): Promise<string[]> {
   const libDir = await getLibPath();
   const bookIds: string[] = [];
 
@@ -36,7 +38,10 @@ export default async function saveOpenedFiles(paths: string[]): Promise<string[]
   return bookIds;
 }
 
-async function saveSingleFile(filePath: string, libDir: string): Promise<string | undefined> {
+async function saveSingleFile(
+  filePath: string,
+  libDir: string
+): Promise<string | undefined> {
   if (!filePath.endsWith(".epub")) return undefined;
 
   const hash = hashFile(filePath);
@@ -53,7 +58,10 @@ async function saveSingleFile(filePath: string, libDir: string): Promise<string 
     if (await pathExists(targetPath)) {
       const existingHash = hashFile(targetPath);
       if (existingHash !== hash) {
-        targetPath = join(normalizedLibDir, `${basename(fileName, ".epub")}-${hash.slice(0, 6)}.epub`);
+        targetPath = join(
+          normalizedLibDir,
+          `${basename(fileName, ".epub")}-${hash.slice(0, 6)}.epub`
+        );
       }
     }
 

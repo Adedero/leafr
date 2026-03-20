@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const uiStore = useUiStore();
-const { openFileDialog, getFilePath, checkFilesToAdd } = useApi();
+const { openFileDialog, getFilePath, saveOpenedFiles } = useApi();
+const { openAndNavigate } = useBookUtils();
 
 const pageRef = useTemplateRef("pageRef");
 
@@ -12,11 +13,11 @@ const { isOverDropZone } = useDropZone(pageRef, {
 });
 
 async function handleFiles(files: string[]) {
-  const { filesToAdd } = await checkFilesToAdd(files);
-  if (filesToAdd.length) {
-    // do something
+  const fileIds = await saveOpenedFiles(files);
+  const fileToOpen = fileIds[0];
+  if (fileToOpen) {
+    openAndNavigate(fileToOpen);
   }
-  // TODO: Add files to library
 }
 
 async function onDrop(files: File[] | null) {
@@ -90,11 +91,20 @@ async function open() {
         </div>
       </header>
 
-      <div
-        ref="pageRef"
-        class="relative row-span-11 overflow-y-auto transition-colors"
-        :class="{ 'border-4 border-secondary bg-primary/5': isOverDropZone }"
-      >
+      <div ref="pageRef" class="relative row-span-11 overflow-y-auto">
+        <Transition
+          enter-active-class="transition-all duration-300 ease-out"
+          enter-from-class="opacity-0"
+          enter-to-class="opacity-100"
+          leave-active-class="transition-all duration-300 ease-in"
+          leave-from-class="opacity-100"
+          leave-to-class="opacity-0"
+        >
+          <div
+            v-if="isOverDropZone"
+            class="z-100 fixed inset-0 bg-primary/20 backdrop-blur-sm"
+          />
+        </Transition>
         <slot />
       </div>
     </div>

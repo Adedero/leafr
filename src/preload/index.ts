@@ -1,4 +1,9 @@
-import { contextBridge, ipcRenderer, webUtils, type IpcRendererEvent } from "electron";
+import {
+  contextBridge,
+  ipcRenderer,
+  webUtils,
+  type IpcRendererEvent
+} from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 import { PROTOCOL_NAME } from "../main/utils/constants";
 import type { BeforeBookCloseInput } from "../main/handlers/books/before-book-close";

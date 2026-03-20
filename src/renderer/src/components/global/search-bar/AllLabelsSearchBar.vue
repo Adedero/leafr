@@ -5,7 +5,7 @@ const { text } = useBooksSearch();
 <template>
   <InputText
     v-model="text"
-    placeholder="Title or author..."
+    placeholder="Search labels..."
     icon="lucide:search"
   />
 </template>

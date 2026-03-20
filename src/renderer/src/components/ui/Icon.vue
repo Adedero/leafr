@@ -29,6 +29,7 @@ import LucideChevronUp from "~icons/lucide/chevron-up";
 import LucideHighlighter from "~icons/lucide/highlighter";
 import LucideMinus from "~icons/lucide/minus";
 import LucideFileSliders from "~icons/lucide/file-sliders";
+import LucideCheck from "~icons/lucide/check";
 
 export interface IconProps {
   name: IconName;
@@ -65,7 +66,8 @@ const iconMap = {
   "lucide:chevron-up": LucideChevronUp,
   "lucide:highlighter": LucideHighlighter,
   "lucide:minus": LucideMinus,
-  "lucide:file-sliders": LucideFileSliders
+  "lucide:file-sliders": LucideFileSliders,
+  "lucide:check": LucideCheck
 } as const;
 
 export type IconName = keyof typeof iconMap;

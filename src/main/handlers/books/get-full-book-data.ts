@@ -1,7 +1,9 @@
 import db from "../../database";
 import type { FullBook } from "../../database/schema";
 
-export default async function getFullBookData(bookId: string): Promise<FullBook | undefined> {
+export default async function getFullBookData(
+  bookId: string
+): Promise<FullBook | undefined> {
   const book = await db.query.books.findFirst({
     where: { id: bookId },
     with: {

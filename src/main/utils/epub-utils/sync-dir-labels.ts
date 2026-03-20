@@ -2,7 +2,10 @@ import db, { table } from "../../database";
 import { and, eq, inArray } from "drizzle-orm";
 
 // Sync directory labels for a book
-export async function syncDirLabels(bookId: string, labels: string[]): Promise<void> {
+export async function syncDirLabels(
+  bookId: string,
+  labels: string[]
+): Promise<void> {
   const normalize = (s: string) => s.trim().toLowerCase();
 
   const book = await db.query.books.findFirst({
@@ -19,7 +22,9 @@ export async function syncDirLabels(bookId: string, labels: string[]): Promise<v
 
   const newSet = new Set(labels.map(normalize));
 
-  const toRemove = existingDirLabels.filter((l) => !newSet.has(normalize(l.name)));
+  const toRemove = existingDirLabels.filter(
+    (l) => !newSet.has(normalize(l.name))
+  );
 
   const toAdd = [...newSet].filter((name) => !existingSet.has(name));
 
@@ -47,7 +52,12 @@ export async function syncDirLabels(bookId: string, labels: string[]): Promise<v
       const addedLabels = await tx
         .select({ id: table.labels.id, name: table.labels.name })
         .from(table.labels)
-        .where(and(inArray(table.labels.name, toAdd), eq(table.labels.fromDirectory, true)));
+        .where(
+          and(
+            inArray(table.labels.name, toAdd),
+            eq(table.labels.fromDirectory, true)
+          )
+        );
 
       await tx
         .insert(table.booksToLabels)

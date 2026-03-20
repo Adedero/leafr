@@ -16,7 +16,5 @@ export default async function handleLibDirAdd({
     return;
   }
 
-  syncBooks(rootDir).then(() => {
-    
-  });
+  syncBooks(rootDir).then(() => {});
 }

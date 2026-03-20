@@ -261,6 +261,7 @@
     "useInterval": true,
     "useIntervalFn": true,
     "useKeyModifier": true,
+    "useLabelUtils": true,
     "useLastChanged": true,
     "useLink": true,
     "useLocalStorage": true,

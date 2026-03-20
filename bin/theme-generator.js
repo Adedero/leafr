@@ -2,9 +2,20 @@ import { join } from "node:path";
 import themes from "../themes.js";
 import { writeFileSync } from "node:fs";
 
-const CSS_PATH = join(process.cwd(), "src/renderer/src/assets/styles/theme.css");
+const CSS_PATH = join(
+  process.cwd(),
+  "src/renderer/src/assets/styles/theme.css"
+);
 const THEMES_PATH = join(process.cwd(), "src/renderer/src/constants/themes.ts");
-const COLOR_KEYS = ["background", "text", "accent", "secondary", "surface", "muted", "border"];
+const COLOR_KEYS = [
+  "background",
+  "text",
+  "accent",
+  "secondary",
+  "surface",
+  "muted",
+  "border"
+];
 
 function generateThemeFile() {
   const content = `const THEMES = ${JSON.stringify(themes)};export default THEMES;export type Theme = (typeof THEMES)[number];`;
@@ -70,7 +81,9 @@ function generateThemeCSS() {
       `@custom-variant ${theme.name} (&:where([data-theme=${theme.name}], [data-theme=${theme.name}] *));`
     );
   }
-  lines.push('@custom-variant any-dark (&:where([data-theme^="dark"], [data-theme^="dark"] *));');
+  lines.push(
+    '@custom-variant any-dark (&:where([data-theme^="dark"], [data-theme^="dark"] *));'
+  );
 
   //const content = lines.join("\n");
   const content = lines.join("");

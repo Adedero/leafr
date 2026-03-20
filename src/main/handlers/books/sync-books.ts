@@ -84,7 +84,7 @@ export default async function syncBooks(rootDir?: string) {
       }
     }
   }
-  
+
   return {
     added,
     removed,

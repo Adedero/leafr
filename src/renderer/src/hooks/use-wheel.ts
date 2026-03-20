@@ -30,7 +30,12 @@ export function useWheel(el: TargetEl | TargetEl[], options: WheelOptions) {
   function resolveGesture(e: WheelEvent): WheelGesture {
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
       const dir = deltaX > 0 ? 1 : -1;
-      return { direction: dir === 1 ? "right" : "left", axis: "x", dir, event: e };
+      return {
+        direction: dir === 1 ? "right" : "left",
+        axis: "x",
+        dir,
+        event: e
+      };
     } else {
       const dir = deltaY > 0 ? 1 : -1;
       return { direction: dir === 1 ? "down" : "up", axis: "y", dir, event: e };
@@ -57,7 +62,9 @@ export function useWheel(el: TargetEl | TargetEl[], options: WheelOptions) {
 
   onMounted(() => {
     const els = Array.isArray(el) ? el : [el];
-    els.forEach((e) => toValue(e)?.addEventListener("wheel", onWheel, { passive }));
+    els.forEach((e) =>
+      toValue(e)?.addEventListener("wheel", onWheel, { passive })
+    );
   });
 
   onUnmounted(() => {

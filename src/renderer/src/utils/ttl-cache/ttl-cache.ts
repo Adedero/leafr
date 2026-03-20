@@ -79,7 +79,9 @@ export class TTLCache {
   get<T>(key: string): T | undefined {
     // check localStorage first
     if (this.useLocalStorage) {
-      const stored = this.deserialize<T>(localStorage.getItem(this.prefixed(key)));
+      const stored = this.deserialize<T>(
+        localStorage.getItem(this.prefixed(key))
+      );
       if (stored) {
         if (this.isExpired(stored)) {
           this.remove(key);
@@ -122,7 +124,11 @@ export class TTLCache {
     this.memoryCache.clear();
   }
 
-  async fetch<T>(key: string, fetcher: () => Promise<T>, ttl?: number): Promise<T> {
+  async fetch<T>(
+    key: string,
+    fetcher: () => Promise<T>,
+    ttl?: number
+  ): Promise<T> {
     const cached = this.get<T>(key);
     if (cached !== undefined) return cached;
     const result = await fetcher();

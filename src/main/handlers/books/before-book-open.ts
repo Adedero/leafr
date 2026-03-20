@@ -7,7 +7,10 @@ export default async function beforeBookOpen(bookId: string) {
 
   try {
     // Update lastOpenedAt
-    await db.update(table.books).set({ lastOpenedAt: now }).where(eq(table.books.id, bookId));
+    await db
+      .update(table.books)
+      .set({ lastOpenedAt: now })
+      .where(eq(table.books.id, bookId));
 
     // Check if the latest session is still open
     const [latestSession] = await db
