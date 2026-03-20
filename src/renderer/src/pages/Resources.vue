@@ -153,7 +153,7 @@ const resources: BookResource[] = [
           class="block bg-surface shadow-md p-4 border-2 border-border"
           @click="openExternalLink(resource.link)"
         >
-          <Icon :name="resource.icon" class="text-xl" />
+          <!-- <Icon :name="resource.icon" class="text-xl" /> -->
           <h3 class="font-bold">
             {{ resource.title }}
           </h3>
