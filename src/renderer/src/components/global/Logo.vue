@@ -2,17 +2,19 @@
 interface Props {
   width?: string | number;
   height?: string | number;
-  color?: string;
+  colorCircle?: string;
+  colorLeaves?: string;
 }
 
 const {
-  width = 90,
-  height = 54,
-  color = "var(--color-accent)"
-} = defineProps<Props>();
+  width = 40,
+  height = 40,
+  colorCircle = "var(--color-primary)",
+  colorLeaves = "var(--color-background)"
+  } = defineProps<Props>();
 
-const DEFAULT_WIDTH = 90;
-const DEFAULT_HEIGHT = 54;
+const DEFAULT_WIDTH = 40;
+const DEFAULT_HEIGHT = 40;
 const RATIO = DEFAULT_WIDTH / DEFAULT_HEIGHT;
 
 const size = computed(() => {
@@ -33,6 +35,57 @@ const size = computed(() => {
   <svg
     :width="size.width"
     :height="size.height"
+    viewBox="0 0 61 61"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M30.0117 60.2185C46.5867 60.2185 60.0234 46.7818 60.0234 30.2068C60.0234 13.6318 46.5867 0.195129 30.0117 0.195129C13.4367 0.195129 0 13.6318 0 30.2068C0 46.7818 13.4367 60.2185 30.0117 60.2185Z"
+      :fill="colorCircle"
+    />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M29.0207 7.70572V25.1868C22.9476 13.7971 15.0066 16.6611 29.0207 7.70572Z"
+      :fill="colorLeaves"
+    />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M29.0777 28.6494L29.0287 39.8287C29.0287 39.8287 27.6 34.5099 21.5919 30.3727C15.5839 26.2356 12.7761 28.0582 14.8451 23.0835C16.9133 18.1096 17.5535 9.98294 29.0784 28.6487L29.0777 28.6494Z"
+      :fill="colorLeaves"
+    />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M29.009 52.7086C29.009 52.7086 18.0752 47.685 14.9232 38.7216C13.7927 35.5052 10.7649 25.9717 17.9276 30.4962C22.6063 33.4516 29.0419 36.7016 29.009 52.7086Z"
+      :fill="colorLeaves"
+    />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M31.002 7.70572V25.1868C37.075 13.7971 45.0161 16.6611 31.002 7.70572Z"
+      :fill="colorLeaves"
+    />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M30.9449 28.6494L30.9939 39.8287C30.9939 39.8287 32.4227 34.5099 38.4307 30.3727C44.4387 26.2356 47.2465 28.0582 45.1776 23.0835C43.1094 18.1096 42.4692 9.98294 30.9442 28.6487L30.9449 28.6494Z"
+      :fill="colorLeaves"
+    />
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M31.0137 52.7086C31.0137 52.7086 41.9474 47.685 45.0994 38.7216C46.23 35.5052 49.2578 25.9717 42.095 30.4962C37.4164 33.4516 30.9808 36.7016 31.0137 52.7086Z"
+      :fill="colorLeaves"
+    />
+  </svg>
+</template>
+
+<!-- <template>
+  <svg
+    :width="size.width"
+    :height="size.height"
     viewBox="0 0 90 54"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -50,4 +103,4 @@ const size = computed(() => {
       :fill="color"
     />
   </svg>
-</template>
+</template> -->

@@ -34,7 +34,7 @@ const allowCheck = computed(
             v-else
             class="flex justify-center items-center bg-surface w-full h-full text-muted"
           >
-            <Logo color="currentcolor" />
+            <Logo  />
           </div>
         </div>
       </div>

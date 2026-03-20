@@ -10,6 +10,7 @@ import bookHandlers from "./handlers/books";
 import { pathToFileURL } from "node:url";
 import labelHandlers from "./handlers/labels";
 import fileHandlers from "./handlers/files";
+import { resolve } from "node:path";
 
 let mainWindow: BrowserWindow | null = null;
 let pendingFile: string | null = null;
@@ -29,7 +30,8 @@ function createWindow(): void {
     webPreferences: {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false
-    }
+    },
+    icon: resolve(process.cwd(), "build/icon.png")
   });
 
   mainWindow.on("ready-to-show", () => {

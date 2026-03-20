@@ -56,8 +56,9 @@ async function open() {
       class="grid grid-rows-12 border-r-2 border-r-border h-full overflow-hidden shrink-0"
       :style="{ width: uiStore.navbarWidth }"
     >
-      <header class="flex justify-center items-center row-span-1 p-2">
+      <header class="flex flex-col justify-center items-center row-span-1 p-2">
         <Logo :width="40" />
+        <p class="font-bold text-[0.7rem] text-center">Leafr</p>
       </header>
 
       <nav class="flex flex-col gap-2 row-span-11">

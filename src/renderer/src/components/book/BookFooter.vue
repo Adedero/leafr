@@ -91,7 +91,7 @@ function onMouseLeave() {
                 :src="assetUrl(book.coverImagePath)"
                 class="w-full h-full object-cover"
               />
-              <Logo v-else :width="40" color="var(--color-text)" />
+              <Logo v-else :width="40" />
             </div>
 
             <div class="min-w-0">
