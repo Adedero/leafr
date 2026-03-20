@@ -3,6 +3,6 @@ import { initDirectories, watchLibDir } from "./directories";
 
 export default async function startup() {
   initDirectories();
-  await initializeBooks();
   await watchLibDir();
+  await initializeBooks();
 }

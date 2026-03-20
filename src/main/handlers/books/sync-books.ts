@@ -72,18 +72,19 @@ export default async function syncBooks(rootDir?: string) {
     } catch (e) {
       logger.error(`Failed to sync book ${filePath}`, e);
     }
+  }
 
-    for (const book of dbBooks) {
-      if (!pathSet.has(book.filePath)) {
-        try {
-          await removeBook(book);
-          removed.push(book.filePath);
-        } catch (e) {
-          logger.error(`Failed to remove missing book ${book.filePath}`, e);
-        }
+  for (const book of dbBooks) {
+    if (!pathSet.has(book.filePath)) {
+      try {
+        await removeBook(book);
+        removed.push(book.filePath);
+      } catch (e) {
+        logger.error(`Failed to remove missing book ${book.filePath}`, e);
       }
     }
   }
+  
   return {
     added,
     removed,

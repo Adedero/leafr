@@ -9,6 +9,7 @@ import { PROTOCOL_NAME } from "./utils/constants";
 import bookHandlers from "./handlers/books";
 import { pathToFileURL } from "node:url";
 import labelHandlers from "./handlers/labels";
+import fileHandlers from "./handlers/files";
 
 function createWindow(): void {
   // Create the browser window.
@@ -59,6 +60,7 @@ fontHandlers();
 linkHandlers();
 bookHandlers();
 labelHandlers();
+fileHandlers();
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

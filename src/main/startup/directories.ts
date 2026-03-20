@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync } from "node:fs";
-import chokidar from "chokidar";
+import { watch } from "chokidar";
 import {
   CACHE_PATH,
   COVER_IMAGE_PATH,
@@ -15,7 +15,13 @@ import handleFileUnlink from "../utils/epub-utils/handle-file-unlink";
 import emit from "../utils/emit";
 
 export function initDirectories() {
-  const allPaths = [DATABASE_PATH, LOGS_PATH, COVER_IMAGE_PATH, TEMP_PATH, CACHE_PATH];
+  const allPaths = [
+    DATABASE_PATH,
+    LOGS_PATH,
+    COVER_IMAGE_PATH,
+    TEMP_PATH,
+    CACHE_PATH
+  ];
   for (const path of allPaths) {
     if (!existsSync(path)) {
       mkdirSync(path, { recursive: true });
@@ -30,12 +36,19 @@ export function initDirectories() {
 export async function watchLibDir() {
   const dir = await getLibPath();
 
-  const watcher = chokidar.watch(dir, {
-    ignored: (path, stats) => !stats?.isFile() || !path.endsWith(".epub"),
-    persistent: true
+  if (!existsSync(dir)) {
+    mkdirSync(dir, { recursive: true });
+  }
+
+  const watcher = watch(dir, {
+    ignored: (path, stats) => !!stats?.isFile() && !path.endsWith(".epub"),
+    persistent: true,
+    ignoreInitial: true
   });
 
+
   watcher.on("add", (path) => {
+    console.log("new file: ", path);
     handleFileAdd({ filePath: path, rootDir: dir }).then(() => {
       emit("file:add", null);
     });
@@ -56,7 +69,7 @@ export async function watchLibDir() {
   });
   watcher.on("unlinkDir", (path) => {
     handleLibDirEvent({ path, rootDir: dir });
-    emit("lib-dir:remove", null);
+    emit("lib-dir:unlink", null);
   });
 
   watcher.on("error", (err) => {

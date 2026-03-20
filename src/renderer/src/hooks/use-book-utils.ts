@@ -52,6 +52,11 @@ export const useBookUtils = () => {
     return books;
   };
 
+  const saveOpenedFiles = async (paths: string[]) => {
+    const bookIds = await window.api.books.saveOpenedFiles(paths);
+    return bookIds;
+  };
+
   const saveBookLocations = async (input: SaveBookLocationsInput) => {
     const res = await window.api.books.saveBookLocation(input);
     return res;
@@ -73,6 +78,7 @@ export const useBookUtils = () => {
     getBook,
     openAndNavigate,
     saveBookLocations,
+    saveOpenedFiles,
     syncBooks,
     updateReadingProgress
   };

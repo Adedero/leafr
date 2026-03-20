@@ -1,3 +1,4 @@
+import { eq } from "drizzle-orm";
 import db, { table } from "../../database";
 import { syncDirLabels } from "./sync-dir-labels";
 import * as EPub from "epub";
@@ -8,18 +9,21 @@ import type { NewBook } from "../../database/schema";
 import { normalizePath } from "../normalize-path";
 
 type SyncFileResult =
-  | { type: "added"; filePath: string }
-  | { type: "renamed"; filePath: string }
+  | { type: "added"; filePath: string; bookId: string }
+  | { type: "updated"; filePath: string; bookId: string }
+  | { type: "renamed"; filePath: string; bookId: string }
   | { type: "error"; filePath: string };
 
 export async function syncSingleFile({
   filePath,
   fileHash,
-  labels
+  labels,
+  existingBookId
 }: {
   filePath: string;
   fileHash: string;
   labels: string[];
+  existingBookId?: string;
 }): Promise<SyncFileResult> {
   const epub = new EPub.EPub(filePath);
   await epub.parse();
@@ -27,14 +31,15 @@ export async function syncSingleFile({
   const { metadata } = epub;
   const cover = await extractCover(epub, fileHash);
 
-  try {
-    if (!cover) throw new Error("No cover found");
-    await writeFile(cover.path, cover.data);
-  } catch (error) {
-    logger.error(`Failed to extract cover for ${filePath}`, error);
+  if (cover) {
+    try {
+      await writeFile(cover.path, cover.data);
+    } catch (error) {
+      logger.error(`Failed to extract cover for ${filePath}`, error);
+    }
   }
 
-  const newBook: NewBook = {
+  const bookData: NewBook = {
     filePath,
     fileURL: normalizePath(filePath),
     fileHash,
@@ -45,12 +50,26 @@ export async function syncSingleFile({
     language: metadata.language,
     publisher: metadata.publisher,
     publishedDate: metadata.date,
-    addedAt: new Date().toISOString()
+    updatedAt: new Date().toISOString()
   };
 
-  const [inserted] = await db.insert(table.books).values(newBook).returning();
+  let bookId = existingBookId;
 
-  await syncDirLabels(inserted.id, labels);
+  if (existingBookId) {
+    await db.update(table.books).set(bookData).where(eq(table.books.id, existingBookId));
+  } else {
+    const [inserted] = await db
+      .insert(table.books)
+      .values({ ...bookData, addedAt: new Date().toISOString() })
+      .returning();
+    bookId = inserted.id;
+  }
 
-  return { type: "added", filePath };
+  if (bookId) {
+    await syncDirLabels(bookId, labels);
+  } else {
+    return { type: "error", filePath };
+  }
+
+  return { type: existingBookId ? "updated" : "added", filePath, bookId };
 }

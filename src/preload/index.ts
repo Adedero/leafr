@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer, type IpcRendererEvent } from "electron";
+import { contextBridge, ipcRenderer, webUtils, type IpcRendererEvent } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 import { PROTOCOL_NAME } from "../main/utils/constants";
 import type { BeforeBookCloseInput } from "../main/handlers/books/before-book-close";
@@ -20,6 +20,8 @@ const api = {
     sync: () => ipcRenderer.invoke("books:sync"),
     getFullBook: (bookId: string) =>
       ipcRenderer.invoke("books:get-full-book", bookId),
+    saveOpenedFiles: (paths: string[]) =>
+      ipcRenderer.invoke("books:save-opened-files", paths),
     beforeBookOpen: (bookId: string) =>
       ipcRenderer.invoke("books:before-book-open", bookId),
     beforeBookClose: (input: BeforeBookCloseInput) =>
@@ -31,6 +33,13 @@ const api = {
   },
   labels: {
     getAllLabels: () => ipcRenderer.invoke("labels:get-all")
+  },
+  files: {
+    openDialog: (options?: Electron.OpenDialogOptions) =>
+      ipcRenderer.invoke("files:open-dialog", options),
+    startDrag: (fileName: string) =>
+      ipcRenderer.send("files:drag-start", fileName),
+    getFilePath: (file: File) => webUtils.getPathForFile(file)
   },
   on: <T extends keyof Emits>(channel: T, fn: (payload: Emits[T]) => void) => {
     const wrapper = (_event: IpcRendererEvent, payload: Emits[T]) =>

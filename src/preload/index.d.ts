@@ -33,6 +33,13 @@ declare global {
       labels: {
         getAllLabels: () => Promise<GetAllLabelsResponse>;
       };
+      files: {
+        openDialog: (
+          options?: Electron.OpenDialogOptions
+        ) => Promise<string[] | null>;
+        startDrag: (fileName: string) => void;
+        getFilePath: (file: File) => Promise<string>;
+      };
       on: <T extends keyof Emits>(
         channel: T,
         fn: (payload: Emits[T]) => void

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { open } = useExternalLink();
+const { openExternalLink } = useApi();
 
 interface BookResource {
   title: string;
@@ -13,21 +13,24 @@ const resources: BookResource[] = [
   // ─── Free / Open Access ───────────────────────────────────────
   {
     title: "Project Gutenberg",
-    description: "70,000+ free public domain ebooks. The oldest digital library.",
+    description:
+      "70,000+ free public domain ebooks. The oldest digital library.",
     link: "https://www.gutenberg.org",
     icon: "lucide:book-open",
     category: "free"
   },
   {
     title: "Standard Ebooks",
-    description: "Beautifully formatted, typo-corrected public domain classics.",
+    description:
+      "Beautifully formatted, typo-corrected public domain classics.",
     link: "https://standardebooks.org",
     icon: "lucide:sparkles",
     category: "free"
   },
   {
     title: "Open Library",
-    description: "Borrow or download millions of books. Part of Internet Archive.",
+    description:
+      "Borrow or download millions of books. Part of Internet Archive.",
     link: "https://openlibrary.org",
     icon: "lucide:library",
     category: "free"
@@ -41,7 +44,8 @@ const resources: BookResource[] = [
   },
   {
     title: "Feedbooks",
-    description: "Public domain and original ebooks, optimized for mobile reading.",
+    description:
+      "Public domain and original ebooks, optimized for mobile reading.",
     link: "https://www.feedbooks.com",
     icon: "lucide:rss",
     category: "free"
@@ -117,7 +121,8 @@ const resources: BookResource[] = [
   // ─── Community / Discovery ────────────────────────────────────
   {
     title: "Goodreads",
-    description: "Track, discover, and review books. World's largest book community.",
+    description:
+      "Track, discover, and review books. World's largest book community.",
     link: "https://www.goodreads.com",
     icon: "lucide:users",
     category: "community"
@@ -131,7 +136,8 @@ const resources: BookResource[] = [
   },
   {
     title: "The StoryGraph",
-    description: "Track and discover books based on mood and pace. Goodreads alternative.",
+    description:
+      "Track and discover books based on mood and pace. Goodreads alternative.",
     link: "https://www.thestorygraph.com",
     icon: "lucide:bar-chart-2",
     category: "community"
@@ -140,12 +146,12 @@ const resources: BookResource[] = [
 </script>
 
 <template>
-  <div class="px-4 py-6 space-y-20">
+  <div class="space-y-20 px-4 py-6">
     <div class="flex flex-wrap gap-4">
       <div v-for="resource in resources" :key="resource.title">
         <button
-          class="block p-4 shadow-md border-2 border-border bg-surface"
-          @click="open(resource.link)"
+          class="block bg-surface shadow-md p-4 border-2 border-border"
+          @click="openExternalLink(resource.link)"
         >
           <Icon :name="resource.icon" class="text-xl" />
           <h3 class="font-bold">

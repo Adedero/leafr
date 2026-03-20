@@ -15,16 +15,40 @@ export default async function handleFileAdd({ filePath, rootDir }: HandleFileAdd
     return;
   }
   const fileHash = hashFile(filePath);
-  const dirLabels = extractLabels(filePath, rootDir);
+  const dirLabels = extractLabels(rootDir, filePath);
 
-  const existing = await db.query.books.findFirst({
-    where: { fileHash },
-    columns: { id: true, fileHash: true, filePath: true }
+  const bookByPath = await db.query.books.findFirst({
+    where: { filePath },
+    columns: { id: true, fileHash: true }
   });
 
-  if (existing && existing.filePath !== filePath) {
-    await db.update(table.books).set({ filePath }).where(eq(table.books.id, existing.id));
-    await syncDirLabels(existing.id, dirLabels);
+  if (bookByPath) {
+    if (bookByPath.fileHash !== fileHash) {
+      // File content changed. Re-extract metadata and cover.
+      try {
+        await syncSingleFile({ filePath, fileHash, labels: dirLabels, existingBookId: bookByPath.id });
+      } catch (error) {
+        logger.error(`Error re-syncing modified file ${filePath}:`, error);
+      }
+    } else {
+      // Just re-sync labels in case directories changed.
+      await syncDirLabels(bookByPath.id, dirLabels);
+    }
+    return;
+  }
+
+  const existingByHash = await db.query.books.findFirst({
+    where: { fileHash },
+    columns: { id: true, filePath: true }
+  });
+
+  if (existingByHash && existingByHash.filePath !== filePath) {
+    // File was moved or renamed. Update path and re-extract metadata/cover.
+    try {
+      await syncSingleFile({ filePath, fileHash, labels: dirLabels, existingBookId: existingByHash.id });
+    } catch (error) {
+      logger.error(`Error re-syncing moved file ${filePath}:`, error);
+    }
     return;
   }
 
