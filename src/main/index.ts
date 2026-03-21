@@ -10,17 +10,18 @@ import bookHandlers from "./handlers/books";
 import { pathToFileURL } from "node:url";
 import labelHandlers from "./handlers/labels";
 import fileHandlers from "./handlers/files";
-import { resolve } from "node:path";
+import { getIcon } from "./utils/get-icon";
 
 let mainWindow: BrowserWindow | null = null;
-let pendingFile: string | null = null;
+
+let lastOpenedFile: string | null = null;
+
 const getArgvFile = () => {
   const args = process.argv.slice(app.isPackaged ? 1 : 2);
   return args.find((arg) => arg.endsWith(".epub")) ?? null;
 };
 
 function createWindow(): void {
-  // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
@@ -31,7 +32,7 @@ function createWindow(): void {
       preload: join(__dirname, "../preload/index.js"),
       sandbox: false
     },
-    icon: resolve(process.cwd(), "build/icon.png")
+    icon: getIcon()
   });
 
   mainWindow.on("ready-to-show", () => {
@@ -43,13 +44,19 @@ function createWindow(): void {
     return { action: "deny" };
   });
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
+  mainWindow.on("closed", () => {
+    mainWindow = null;
+  });
+
   if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
     mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
   } else {
-    mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
+    mainWindow.loadFile(join(__dirname, "../renderer/index.html"), {
+      hash: "home"
+    });
   }
+
+  mainWindow.webContents.openDevTools();
 }
 
 protocol.registerSchemesAsPrivileged([
@@ -71,47 +78,38 @@ bookHandlers();
 labelHandlers();
 fileHandlers();
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
-  // Register protocol
   protocol.handle(PROTOCOL_NAME, (request) => {
     let path = request.url.replace(`${PROTOCOL_NAME}://`, "");
     path = decodeURIComponent(path);
-    // Convert c/... -> C:/...
+
     if (/^[a-z]\//i.test(path)) {
       path = path[0].toUpperCase() + ":" + path.slice(1);
     }
+
     const fileUrl = pathToFileURL(path).toString();
     return net.fetch(fileUrl);
   });
 
   await startup();
 
-  // Set app user model id for windows
   electronApp.setAppUserModelId("com.electron");
 
-  // Default open or close DevTools by F12 in development
-  // and ignore CommandOrControl + R in production.
-  // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
   app.on("browser-window-created", (_, window) => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  // IPC test
-  ipcMain.on("ping", () => console.log("pong"));
+  ipcMain.handle("get-pending-file", () => {
+    const file = lastOpenedFile;
+    lastOpenedFile = null;
+    return file;
+  });
 
   createWindow();
 
-  if (pendingFile) {
-    openFileInRenderer(pendingFile);
-    pendingFile = null;
-  }
-
-  // handle Windows/Linux argv
   const argvFile = getArgvFile();
   if (argvFile) {
+    lastOpenedFile = argvFile;
     openFileInRenderer(argvFile);
   }
 
@@ -123,9 +121,12 @@ app.whenReady().then(async () => {
       const file = argv
         .slice(app.isPackaged ? 1 : 2)
         .find((a) => a.endsWith(".epub"));
-      if (file) openFileInRenderer(file);
 
-      // focus the existing window
+      if (file) {
+        lastOpenedFile = file;
+        openFileInRenderer(file);
+      }
+
       if (mainWindow) {
         if (mainWindow.isMinimized()) mainWindow.restore();
         mainWindow.focus();
@@ -133,25 +134,21 @@ app.whenReady().then(async () => {
     });
   }
 
-  app.on("activate", function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
+  app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
 app.on("open-file", (event, path) => {
   event.preventDefault();
-  if (mainWindow) {
+
+  lastOpenedFile = path;
+
+  if (mainWindow && !mainWindow.isDestroyed()) {
     openFileInRenderer(path);
-  } else {
-    pendingFile = path;
   }
 });
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
@@ -159,13 +156,23 @@ app.on("window-all-closed", () => {
 });
 
 app.on("before-quit", () => {
-  // Close any open books, save state, etc.
-  mainWindow?.webContents.send("app-quit");
+  if (mainWindow && !mainWindow.isDestroyed()) {
+    mainWindow.webContents.send("app-quit");
+  }
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-
 function openFileInRenderer(path: string) {
-  mainWindow?.webContents.send("open-file", path);
+  if (!mainWindow || mainWindow.isDestroyed()) return;
+
+  const send = () => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send("open-file", path);
+    }
+  };
+
+  if (mainWindow.webContents.isLoading()) {
+    mainWindow.webContents.once("did-finish-load", send);
+  } else {
+    send();
+  }
 }

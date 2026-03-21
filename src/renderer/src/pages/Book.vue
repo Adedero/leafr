@@ -7,7 +7,7 @@ const { settings } = useBookSettings();
 const uiStore = useUiStore();
 const { isClicked } = useBooksSearch();
 
-const bookId = route.params.bookId.toString();
+const bookId = computed(() => route.params.bookId.toString());
 
 // reregister event listeners when rendition resizes
 const {
@@ -16,8 +16,8 @@ const {
   error: errorFetchingBook,
   mutate: fetchBook
 } = useSWRV(
-  () => `books:full-book-${bookId}`,
-  () => getBook(bookId),
+  () => `books:full-book-${bookId.value}`,
+  () => getBook(bookId.value),
   {
     revalidateOnFocus: false
   }

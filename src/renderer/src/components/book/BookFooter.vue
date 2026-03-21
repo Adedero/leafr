@@ -108,8 +108,8 @@ function onMouseLeave() {
           </div>
 
           <!-- Location Info & Slider -->
-          <div v-if="location" class="flex justify-center items-center">
-            <div class="md:text-center truncate">
+          <div class="flex justify-center items-center">
+            <div v-if="location" class="md:text-center truncate">
               <p class="font-semibold text-sm">
                 {{ location.current?.label }}
               </p>
