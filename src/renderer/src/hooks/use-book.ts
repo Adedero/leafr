@@ -64,7 +64,6 @@ export const useBook = (
           manager: "continuous",
           flow: "scrolled",
           axis: "vertical"
-          // 👇 remove navigation listeners elsewhere based on this mode
         };
 
       case "single":
@@ -256,7 +255,7 @@ export const useBook = (
           color: `${text} !important`,
           "font-family":
             settings.value.fontFamily.toLowerCase() === "default"
-              ? ""
+              ? "inherit !important"
               : `${settings.value.fontFamily} !important`,
           "word-spacing": `${settings.value.wordSpacing}px !important`
         },
